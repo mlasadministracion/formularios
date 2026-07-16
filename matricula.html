@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hoja de Matrícula 2026 - My Little Artists School</title>
+<style>
+  :root{
+    --azul:#0f2b5f;
+    --naranja:#db662c;
+    --verde:#366430;
+    --borde:#b9c0c7;
+    --texto:#20303c;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:#e9edf0;
+    font-family:Arial, Helvetica, sans-serif;
+    color:var(--texto);
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+  /* Vista en pantalla: formulario más grande (de cerca) con scroll */
+  @media screen{
+    body{ overflow:auto; padding:20px; }
+    .hoja{ zoom:1.8; }
+  }
+  /* Botón de imprimir (solo en pantalla) */
+  .barra-acciones{
+    text-align:center;
+    margin:24px auto 40px;
+  }
+  .btn-imprimir{
+    background:var(--azul);
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    padding:12px 28px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 2px 6px rgba(0,0,0,.2);
+    transition:background .15s;
+  }
+  .btn-imprimir:hover{ background:#163a72; }
+  .hoja{
+    width:820px;
+    min-height:1060px;          /* proporción carta 8.5x11 */
+    margin:24px auto;
+    background:#fff;
+    padding:26px 30px 30px;
+    border:1px solid #ccc;
+    box-shadow:0 2px 10px rgba(0,0,0,.12);
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* ---------- Cabecera ---------- */
+  .cabecera{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:16px;
+  }
+  .logo{
+    flex:0 0 auto;
+  }
+  .logo img{
+    width:96px;
+    height:auto;
+    display:block;
+  }
+  h1.titulo{
+    flex:1;
+    text-align:center;
+    color:var(--azul);
+    font-size:30px;
+    letter-spacing:1px;
+    margin:6px 0 0;
+    font-weight:800;
+  }
+  .folio{
+    border:1.5px solid var(--azul);
+    border-radius:4px;
+    padding:8px 12px;
+    font-size:12px;
+    font-weight:bold;
+    min-width:180px;
+    line-height:2.1;
+  }
+  .folio span{color:var(--azul);}
+  .campo{
+    display:inline-block;
+    border-bottom:1px solid #333;
+    min-width:80px;
+  }
+  .folio .campo{border-bottom:1px dotted #333;}
+
+  /* ---------- Campos rellenables ---------- */
+  input.in, input.in-cell, input.in-inline, input.in-folio{
+    border:none;
+    background:transparent;
+    font-family:inherit;
+    color:#000;
+    outline:none;
+    padding:0;
+  }
+  input.in{                 /* debajo de una etiqueta */
+    display:block;
+    width:100%;
+    height:22px;
+    font-size:11px;
+    font-weight:normal;
+  }
+  input.in-cell{            /* llena la celda (familiares/escolaridad) */
+    display:block;
+    width:100%;
+    height:38px;
+    font-size:11px;
+    font-weight:normal;
+  }
+  input.in-inline{          /* en línea con subrayado */
+    border-bottom:1px solid #333;
+    font-size:11px;
+    font-weight:normal;
+  }
+  input.in-folio{
+    border-bottom:1px dotted #333;
+    width:90px;
+    font-size:11px;
+    color:#000;
+  }
+  input:focus{ background:#eef4ff; }
+  input::placeholder{ color:#9aa4ad; font-style:italic; font-weight:normal; }
+  .separador{
+    border:none;border-top:2px dotted var(--naranja);
+    margin:14px 0 18px;
+  }
+
+  /* ---------- Secciones ---------- */
+  .barra{
+    color:#fff;
+    text-align:center;
+    font-weight:bold;
+    letter-spacing:2px;
+    padding:6px;
+    font-size:14px;
+    margin-top:16px;
+  }
+  .barra--azul{background:var(--azul);}
+  .barra--naranja{background:var(--naranja);}
+  .barra--verde{background:var(--verde);}
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:11px;
+    table-layout:fixed;
+  }
+  td{
+    border:1px solid var(--borde);
+    height:46px;
+    vertical-align:top;
+    padding:4px 6px;
+    font-weight:bold;
+  }
+  td .val{
+    display:block;
+    font-weight:normal;
+    height:22px;
+  }
+  td .val-doc{
+    margin-top:14px;
+    line-height:2.4;
+  }
+  .label-col{background:#fff;}
+
+  /* Estudiante: quitar bordes externos superpuestos con la barra */
+  .tabla-sec td{border-color:var(--borde);}
+
+  /* ---------- Datos familiares ---------- */
+  .fam thead td{
+    text-align:center;
+    height:34px;
+    background:#f3f5f7;
+  }
+  .fam .sub{
+    font-weight:normal;
+    font-style:italic;
+    font-size:9px;
+    color:#555;
+    display:block;
+  }
+  .fam td.rot{width:150px;}
+  .verde-línea{
+    border:none;border-top:3px solid var(--verde);
+    margin:0 0 4px;
+  }
+  td.acu, td.resp{
+    vertical-align:middle;
+    font-weight:bold;
+    font-size:11px;
+    height:38px;
+  }
+  td.acu .campo, td.resp .campo{min-width:90px;}
+
+  /* ---------- Escolaridad ---------- */
+  td.grado{
+    text-align:center;
+    font-weight:bold;
+    font-size:12px;
+    height:30px;
+    vertical-align:middle;
+  }
+  .campo-largo{min-width:300px;}
+
+  /* ---------- Texto legal ---------- */
+  .legal{
+    font-size:9.5px;
+    text-align:justify;
+    line-height:1.5;
+    margin-top:18px;
+    color:#333;
+  }
+  .legal p{margin:0 0 10px;}
+  .legal b{color:#000;}
+
+  /* ---------- Firmas ---------- */
+  /* Firmas */
+  .firmas{
+    display:flex;
+    justify-content:space-between;
+    gap:40px;
+    margin-top:auto;            /* empuja las firmas hacia el pie */
+    padding-top:40px;
+    text-align:center;
+    font-size:10px;
+  }
+  .firma{flex:1;}
+  .firma .linea{
+    border-top:1px solid #000;
+    height:1px;
+  }
+  .firma .linea-arriba{margin-top:30px;}   /* espacio para firmar arriba */
+  .firma .rol{font-weight:bold;margin:3px 0 46px;}
+  .firma .nombre{font-weight:bold;font-size:9.5px;margin-top:4px;}
+
+  @media print{
+    @page{ size:Letter portrait; margin:8mm; }
+    html,body{background:#fff;}
+    .barra-acciones{ display:none !important; }
+    input::placeholder{ color:transparent !important; }
+    .hoja{
+      box-shadow:none;
+      border:none;
+      margin:0 auto;
+      width:820px;
+      min-height:0;             /* sin altura forzada al imprimir */
+      padding:0;
+      zoom:0.80;                /* ajusta todo a una sola hoja */
+    }
+    /* Compactar espacios verticales para aprovechar la página */
+    .barra{margin-top:10px;}
+    .separador{margin:10px 0 12px;}
+    .legal{margin-top:12px;}
+    .legal p{margin-bottom:7px;}
+    .firmas{padding-top:20px;}
+    .firma .rol{margin:3px 0 34px;}
+    .firma .linea-arriba{margin-top:20px;}
+    /* Evitar cortes de sección entre páginas */
+    table, .firmas, .legal{ break-inside:avoid; page-break-inside:avoid; }
+  }
+</style>
+</head>
+<body>
+  <div class="hoja">
+
+    <!-- CABECERA -->
+    <div class="cabecera">
+      <div class="logo">
+        <img src="logo.png" alt="My Little Artists School">
+      </div>
+      <h1 class="titulo">HOJA DE MATRÍCULA 2026</h1>
+      <div class="folio">
+        <span>Folio:</span> <input type="text" class="in-folio" placeholder="Ej. 001"><br>
+        <span>Matrícula Nº:</span> <input type="text" class="in-folio" placeholder="Ej. 2026-001">
+      </div>
+    </div>
+    <hr class="separador">
+
+    <!-- DATOS DEL ESTUDIANTE -->
+    <div class="barra barra--azul">DATOS DEL ESTUDIANTE</div>
+    <table class="tabla-sec">
+      <tr>
+        <td colspan="10">APELLIDOS<input type="text" class="in" placeholder="Apellidos del estudiante"></td>
+        <td colspan="10">NOMBRES<input type="text" class="in" placeholder="Nombres del estudiante"></td>
+      </tr>
+      <tr>
+        <td colspan="10">DOCUMENTO DE IDENTIDAD
+          <span class="val val-doc">Tipo de doc.: <input type="text" class="in-inline" style="width:120px" placeholder="T.I. / R.C. / C.C."> Nº: <input type="text" class="in-inline" style="width:120px" placeholder="Número"></span></td>
+        <td colspan="5">EPS<input type="text" class="in" placeholder="Nombre de la EPS"></td>
+        <td colspan="5">RH<input type="text" class="in" placeholder="Ej. O+"></td>
+      </tr>
+      <tr>
+        <td colspan="10">LUGAR DE NACIMIENTO<input type="text" class="in" placeholder="Ciudad, país"></td>
+        <td colspan="5">DIA / MES / AÑO<input type="text" class="in" placeholder="DD/MM/AAAA"></td>
+        <td colspan="5">EDAD<input type="text" class="in" placeholder="Años"></td>
+      </tr>
+      <tr>
+        <td colspan="20">DIRECCIÓN<input type="text" class="in" placeholder="Calle / carrera, número, apto"></td>
+      </tr>
+      <tr>
+        <td colspan="5">CIUDAD<input type="text" class="in" placeholder="Ciudad"></td>
+        <td colspan="5">BARRIO<input type="text" class="in" placeholder="Barrio"></td>
+        <td colspan="5">TELÉFONO<input type="text" class="in" placeholder="Teléfono fijo"></td>
+        <td colspan="5">GÉNERO<input type="text" class="in" placeholder="M / F"></td>
+      </tr>
+    </table>
+
+    <!-- DATOS FAMILIARES -->
+    <div class="barra barra--naranja">DATOS FAMILIARES</div>
+    <table class="fam">
+      <thead>
+        <tr>
+          <td class="rot"></td>
+          <td>PADRE</td>
+          <td>MADRE</td>
+          <td>ACUDIENTE<span class="sub">(DIFERENTE A PADRE O MADRE)</span></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="rot">NOMBRES / APELLIDOS</td><td><input type="text" class="in-cell" placeholder="Nombres y apellidos"></td><td><input type="text" class="in-cell" placeholder="Nombres y apellidos"></td><td><input type="text" class="in-cell" placeholder="Nombres y apellidos"></td></tr>
+        <tr><td class="rot">TIPO Y NÚMERO DE DOCUMENTO</td><td><input type="text" class="in-cell" placeholder="Ej. C.C. 123456"></td><td><input type="text" class="in-cell" placeholder="Ej. C.C. 123456"></td><td><input type="text" class="in-cell" placeholder="Ej. C.C. 123456"></td></tr>
+        <tr><td class="rot">EXPEDIDA EN</td><td><input type="text" class="in-cell" placeholder="Ciudad de expedición"></td><td><input type="text" class="in-cell" placeholder="Ciudad de expedición"></td><td><input type="text" class="in-cell" placeholder="Ciudad de expedición"></td></tr>
+        <tr><td class="rot">FECHA DE NACIMIENTO</td><td><input type="text" class="in-cell" placeholder="DD/MM/AAAA"></td><td><input type="text" class="in-cell" placeholder="DD/MM/AAAA"></td><td><input type="text" class="in-cell" placeholder="DD/MM/AAAA"></td></tr>
+        <tr><td class="rot">CORREO ELECTRÓNICO</td><td><input type="text" class="in-cell" placeholder="correo@ejemplo.com"></td><td><input type="text" class="in-cell" placeholder="correo@ejemplo.com"></td><td><input type="text" class="in-cell" placeholder="correo@ejemplo.com"></td></tr>
+        <tr><td class="rot">TELÉFONO CELULAR</td><td><input type="text" class="in-cell" placeholder="Celular"></td><td><input type="text" class="in-cell" placeholder="Celular"></td><td><input type="text" class="in-cell" placeholder="Celular"></td></tr>
+        <tr>
+          <td colspan="3" class="resp">Responsable económico: <input type="text" class="in-inline" style="width:60%" placeholder="Nombre completo del responsable"></td>
+          <td colspan="1" class="acu">Parentesco acudiente: <input type="text" class="in-inline" style="width:100%" placeholder="Ej. Tío, abuela"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- ESCOLARIDAD -->
+    <div class="barra barra--verde">ESCOLARIDAD</div>
+    <table>
+      <tr>
+        <td colspan="3" class="grado">SE MATRICULA PARA EL GRADO <input type="text" class="in-inline" style="width:300px" placeholder="Ej. Primero, Transición"></td>
+      </tr>
+      <tr>
+        <td style="text-align:center;height:30px;">INSTITUCIÓN DE PROCEDENCIA</td>
+        <td style="text-align:center;">ÚLTIMO GRADO CURSADO</td>
+        <td style="text-align:center;">AÑO</td>
+      </tr>
+      <tr>
+        <td><input type="text" class="in-cell" placeholder="Nombre de la institución"></td>
+        <td><input type="text" class="in-cell" placeholder="Ej. Transición"></td>
+        <td><input type="text" class="in-cell" placeholder="AAAA"></td>
+      </tr>
+    </table>
+
+    <!-- TEXTO LEGAL -->
+    <div class="legal">
+      <p>De acuerdo con el artículo 87 de la Ley General de Educación, los establecimientos educativos deberán contar con un manual de convivencia en el que se definan los derechos y obligaciones de los estudiantes, así como de los padres o tutores. Al firmar la matrícula correspondiente en representación de sus hijos, el padre o acudiente estará aceptando dicho manual.</p>
+      <p>En cumplimiento de la Ley 1581 de 2012 y el Decreto Reglamentario 1377 de 2013, cuyo objetivo es el desarrollo del derecho constitucional de protección de datos personales. Como padre de familia y acudiente, autorizo de manera libre, expresa, voluntaria y debidamente informada a todas las dependencias académicas y/o administrativas de <b>My Little Artists School</b>, en calidad de responsable del tratamiento de datos, para recolectar, recaudar, almacenar, usar, circular, suprimir, procesar, compilar, intercambiar, dar tratamiento, actualizar y disponer de los datos e imágenes que se suministran y que se incorporen en distintas bases o bancos de datos, o en repositorios electrónicos de todo tipo que se señalan en este documento. Los datos personales serán utilizados en el desarrollo de las funciones propias del colegio, de forma directa o a través de terceros. La información será tratada con base en la política de tratamiento de datos personales de <b>My Little Artists School</b>.</p>
+    </div>
+
+    <!-- FIRMAS -->
+    <div class="firmas">
+      <div class="firma">
+        <div class="linea linea-arriba"></div>
+        <div class="rol">Firma Madre</div>
+        <div class="linea"></div>
+        <div class="nombre">Gloria Amparo Gonzalez Castiblanco - Directora.</div>
+      </div>
+      <div class="firma">
+        <div class="linea linea-arriba"></div>
+        <div class="rol">Firma Padre/ Acudiente</div>
+        <div class="linea"></div>
+        <div class="nombre">Katherin Gabriela Acevedo González - Coordinadora académica.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="barra-acciones">
+    <button type="button" class="btn-imprimir" onclick="window.print()">🖨️ Imprimir</button>
+  </div>
+</body>
+</html>
