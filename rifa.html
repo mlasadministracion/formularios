@@ -137,8 +137,10 @@
     box-shadow:0 20px 46px var(--shadow);position:relative;overflow:hidden;
   }
   .cta::after{
-    content:"🎟️";position:absolute;font-size:180px;opacity:.06;right:-20px;bottom:-40px;transform:rotate(-15deg)
+    content:"🎟️";position:absolute;font-size:180px;opacity:.06;right:-20px;bottom:-40px;transform:rotate(-15deg);
+    pointer-events:none;z-index:0;
   }
+  .cta>*{position:relative;z-index:1}
   .cta h2{font-family:'Baloo 2';font-weight:800;font-size:clamp(20px,4vw,32px);margin-bottom:8px}
   .cta p{color:#cdd6ef;font-weight:500;max-width:560px;margin:0 auto 22px;font-size:15px}
   .btn-link{
