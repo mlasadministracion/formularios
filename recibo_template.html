@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<style>
+  @page {
+    size: letter landscape;
+    margin: 1.2cm 1.5cm;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  @font-face { font-family: 'Play'; font-weight: 400; src: url('fonts/Play-Regular.ttf'); }
+  @font-face { font-family: 'Play'; font-weight: 700; src: url('fonts/Play-Bold.ttf'); }
+  body { font-family: 'Play', Arial, sans-serif; font-size: 10pt; color: #000; }
+
+  .recibo {
+    border: 2px solid #000;
+    width: 100%;
+  }
+
+  /* ENCABEZADO */
+  .encabezado {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #000;
+  }
+  .encabezado .col-logo {
+    width: 33.33%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 0;
+  }
+  .encabezado .col-nombre {
+    width: 66.66%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 0;
+  }
+  .encabezado img.logo {
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+  }
+  .encabezado img.nombre {
+    height: 100px;
+    object-fit: contain;
+  }
+  .encabezado .col-nombre .info-colegio {
+    text-align: center;
+  }
+  .encabezado .col-nombre .info-colegio .nombre-principal {
+    font-size: 18pt;
+    font-weight: bold;
+    display: block;
+  }
+  .encabezado .col-nombre .info-colegio .detalle {
+    font-size: 10pt;
+    display: block;
+    line-height: 1.6;
+  }
+
+  /* TABLAS GENERALES */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  td, th {
+    padding: 6px 10px;
+    font-size: 11pt;
+  }
+
+  /* TABLA DATOS ESTUDIANTE */
+  .t-datos td {
+    border: 1px solid #000;
+    height: 28px;
+  }
+  .t-datos td.lbl {
+    font-weight: bold;
+    white-space: nowrap;
+    width: 13%;
+  }
+  .t-datos td.val {
+    width: 12%;
+  }
+  .t-datos td.lbl-r {
+    font-weight: bold;
+    white-space: nowrap;
+    text-align: right;
+    width: 13%;
+  }
+  .t-datos td.val-r {
+    width: 25%;
+  }
+  .t-datos td.full-lbl {
+    font-weight: bold;
+    white-space: nowrap;
+    width: 15%;
+  }
+  .t-datos td.full-val {
+    width: 85%;
+  }
+
+  /* TABLA CONCEPTOS */
+  .t-conceptos th {
+    background-color: #ff1919;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid #000;
+    font-size: 11pt;
+    height: 30px;
+  }
+  .t-conceptos td {
+    border: 1px solid #000;
+    height: 28px;
+  }
+  .t-conceptos td.right {
+    text-align: right;
+  }
+  .t-conceptos tr.total-row td {
+    background-color: #ff1919;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    height: 30px;
+  }
+  .t-conceptos tr.total-row td.right {
+    text-align: right;
+  }
+
+  /* TABLA PAGOS */
+  .t-pagos td {
+    border: 1px solid #000;
+    height: 28px;
+  }
+  .t-pagos td.lbl {
+    width: 70%;
+  }
+  .t-pagos td.val {
+    text-align: right;
+    width: 30%;
+  }
+
+  /* INSTRUCCIONES */
+  .instrucciones {
+    padding: 8px 10px;
+    font-size: 9.5pt;
+    color: #215e99;
+    border-top: 1px solid #000;
+    line-height: 1.5;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="recibo">
+
+  <!-- ENCABEZADO -->
+  <div class="encabezado">
+    <div class="col-logo">
+      <img class="logo" src="logo.png" alt="Logo">
+    </div>
+    <div class="col-nombre">
+      <div class="info-colegio">
+        <span class="nombre-principal">MY LITTLES ARTISTS SCHOOL S.A.S.</span>
+        <span class="detalle">NIT. 902069730-8</span>
+        <span class="detalle">TEL. 3112579268</span>
+        <span class="detalle">Lote 3 la estancia</span>
+        <span class="detalle">Madrid Cundinamarca</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DATOS ESTUDIANTE -->
+  <table class="t-datos">
+    <tr>
+      <td class="lbl">COBRO NO.:</td>
+      <td class="val">{cobro}</td>
+      <td class="lbl-r">CÓDIGO:</td>
+      <td class="val-r">{codigo}</td>
+    </tr>
+    <tr>
+      <td class="lbl">RECIBO NO.:</td>
+      <td class="val">{recibo}</td>
+      <td class="lbl-r">NOMBRE:</td>
+      <td class="val-r">{estudiante}</td>
+    </tr>
+    <tr>
+      <td class="lbl">MES:</td>
+      <td class="val">{mes_upper}</td>
+      <td class="lbl-r">CURSO:</td>
+      <td class="val-r">{curso}</td>
+    </tr>
+    <tr>
+      <td class="lbl">AÑO:</td>
+      <td class="val">2026</td>
+      <td class="lbl-r">REF. PAGO:</td>
+      <td class="val-r">{referencia de pago}</td>
+    </tr>
+    <tr>
+      <td class="full-lbl">NOMBRE ACUDIENTE:</td>
+      <td class="full-val" colspan="3">{acudiente}</td>
+    </tr>
+  </table>
+
+  <!-- CONCEPTOS -->
+  <table class="t-conceptos">
+    <thead>
+      <tr>
+        <th style="width:70%">CONCEPTO</th>
+        <th style="width:30%">TOTAL</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr data-id="pension">
+        <td>Pensión</td>
+        <td class="right">{pension}</td>
+      </tr>
+      <tr data-id="almuerzo">
+        <td>Almuerzo (Correspondiente a {dias almuerzo} días hábiles del mes de {mes_title})</td>
+        <td class="right">{almuerzo}</td>
+      </tr>
+      <tr data-id="total" class="total-row">
+        <td>TOTAL A PAGAR:</td>
+        <td class="right">{total}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- PAGOS PARCIALES -->
+  <table class="t-pagos">
+    <tr>
+      <td class="lbl">Pago del 1 al 5 de {mes_title} de 2026:</td>
+      <td class="val">{pago 1}</td>
+    </tr>
+    <tr>
+      <td class="lbl">Pago del 6 al 10 de {mes_title} de 2026:</td>
+      <td class="val">{pago 2}</td>
+    </tr>
+    <tr>
+      <td class="lbl">Pago a partir del 11 de {mes_title} de 2026:</td>
+      <td class="val">{pago 3}</td>
+    </tr>
+  </table>
+
+  <!-- INSTRUCCIONES -->
+  <div class="instrucciones">
+    Consignar en Cuenta de Ahorros BANCOLOMBIA No. <strong>38300012283</strong> o la llave <strong>0092553987</strong>,
+    como referencia o descripción será el número de documento de identidad del estudiante, reportar el pago mediante correo
+    electrónico <strong>contabilidadgmas@gmail.com</strong>, adjuntando comprobante.
+  </div>
+
+</div>
+
+</body>
+</html>
