@@ -1,0 +1,2982 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulario de Admisiones - My Little Artists School</title>
+<style>
+  :root {
+    --azul: #0f2b5f;
+    --azul-light: #163a72;
+    --azul-soft: #eef4fc;
+    --naranja: #db662c;
+    --verde: #366430;
+    --borde: #b9c4d0;
+    --borde-light: #dbe4ee;
+    --linea: #b9c4d0;
+    --linea-guia: #9cb0c5;
+    --texto: #1c2833;
+    --texto-muted: #566573;
+    --fondo-body: #e9edf0;
+    --blanco: #ffffff;
+    --sombra-card: 0 2px 10px rgba(15, 43, 95, 0.08);
+    --escala-pantalla: 1.15;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--fondo-body);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--texto);
+    font-size: 8.8pt;
+    line-height: 1.25;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* ==================== BARRA DE HERRAMIENTAS ==================== */
+  .toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--blanco);
+    border-bottom: 1.5px solid #ccd5e0;
+    padding: 10px 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+
+  .btn {
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 9pt;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease-in-out;
+  }
+  .btn:active { transform: scale(0.97); }
+
+  .btn-primary {
+    background: var(--azul);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(15, 43, 95, 0.25);
+  }
+  .btn-primary:hover { background: var(--azul-light); }
+
+  .btn-secondary {
+    background: #506175;
+    color: #fff;
+  }
+  .btn-secondary:hover { background: #3d4a59; }
+
+  .btn-demo {
+    display: none; /* Oculto por defecto para usuarios finales */
+    background: #eaf2fd;
+    color: var(--azul);
+    border: 1px solid #bed3ee;
+  }
+  .btn-demo:hover { background: #d7e6fc; }
+
+  .btn-danger {
+    background: #fff0f0;
+    color: #c02626;
+    border: 1px solid #fecaca;
+  }
+  .btn-danger:hover { background: #fee2e2; }
+
+  .toolbar-meta {
+    margin-left: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 8.5pt;
+    color: var(--texto-muted);
+    font-weight: 600;
+  }
+
+  .progress-pill {
+    background: #e2e8f0;
+    border-radius: 12px;
+    padding: 3px 9px;
+    color: var(--azul);
+    font-size: 8pt;
+    font-weight: 700;
+  }
+
+  /* ==================== ESTRUCTURA DE PÁGINAS A4 ==================== */
+  .document {
+    width: 210mm;
+    margin: 18px auto;
+  }
+
+  .page {
+    width: 210mm;
+    height: 297mm;
+    max-height: 297mm;
+    background: var(--blanco);
+    margin: 0 auto 22px;
+    padding: 7.5mm 8mm 12mm;
+    position: relative;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+    overflow: hidden;
+    page-break-after: always;
+    break-after: page;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .page:last-child {
+    margin-bottom: 30px;
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+  /* Marco decorativo perimetral */
+  .page::before {
+    content: "";
+    position: absolute;
+    inset: 3.5mm;
+    border: 1px solid #d4deea;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page-inner {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ==================== CABECERA INSTITUCIONAL ==================== */
+  .cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 1.5mm;
+  }
+  .logo {
+    flex: 0 0 auto;
+  }
+  .logo img {
+    width: 80px;
+    height: auto;
+    display: block;
+  }
+  h1.titulo {
+    flex: 1;
+    text-align: center;
+    color: var(--azul);
+    font-size: 19px;
+    letter-spacing: 0.8px;
+    margin: 0;
+    font-weight: 800;
+    line-height: 1.15;
+  }
+  .subtitulo-cabecera {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--naranja);
+    letter-spacing: 1px;
+    text-align: center;
+    margin-top: 2px;
+  }
+  .cabecera-derecha {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 0 0 auto;
+  }
+  .folio {
+    border: 1.5px solid var(--azul);
+    border-radius: 4px;
+    padding: 4px 9px;
+    font-size: 9.5px;
+    font-weight: bold;
+    min-width: 220px;
+    background: #fafcff;
+    line-height: 1.55;
+  }
+  .folio label {
+    color: var(--azul);
+    font-weight: 800;
+    font-size: 8.5px;
+    white-space: nowrap;
+  }
+  input.in-folio {
+    border: none;
+    border-bottom: 1px dotted #333;
+    width: 110px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #000;
+    background: transparent;
+    padding: 0 2px;
+    outline: none;
+  }
+  input.in-folio:focus-visible {
+    background: var(--azul-soft);
+    border-bottom-color: var(--azul);
+  }
+
+  .separador {
+    border: none;
+    border-top: 2px dotted var(--naranja);
+    margin: 4px 0 6px;
+  }
+
+  /* Foto 3x4cm */
+  .photo {
+    width: 27mm;
+    height: 34mm;
+    border: 1.5px solid var(--azul);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    color: #6a7c92;
+    font-weight: 700;
+    font-size: 8pt;
+    background: #f7faff;
+    cursor: pointer;
+    text-align: center;
+    transition: border-color 0.15s;
+    flex-shrink: 0;
+  }
+  .photo:hover { border-color: var(--naranja); }
+  .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+    position: absolute;
+    inset: 0;
+  }
+  .photo input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+  .photo .hint {
+    pointer-events: none;
+    line-height: 1.15;
+    padding: 0 2px;
+  }
+  .photo .hint svg {
+    display: block;
+    margin: 0 auto 2px;
+    width: 18px;
+    height: 18px;
+    fill: #6a7c92;
+  }
+
+  /* ==================== SELECTOR DE FECHAS (DD/MM/AAAA) ==================== */
+  .campo-fecha {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+  }
+  .campo-fecha input.in-fecha {
+    width: 100%;
+    flex: 1;
+    min-width: 0;
+    padding-right: 20px;
+    font-family: inherit;
+    font-size: 8.5pt;
+    letter-spacing: 0.3px;
+  }
+  .btn-cal {
+    position: absolute;
+    right: 1px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 11.5px;
+    line-height: 1;
+    padding: 1px 3px;
+    opacity: 0.7;
+    transition: opacity 0.15s, transform 0.1s;
+    user-select: none;
+  }
+  .btn-cal:hover {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.18);
+  }
+  .campo-fecha input.fecha-invalida {
+    border-bottom: 2px solid #e2231a !important;
+    background: #fff2f2 !important;
+    color: #c01810 !important;
+  }
+  .campo-fecha input.fecha-valida {
+    border-bottom: 1.5px solid var(--verde) !important;
+  }
+
+  /* Popover calendario interactivo */
+  .datepicker-popover {
+    position: absolute;
+    z-index: 9999;
+    background: #ffffff;
+    border: 1.5px solid var(--azul);
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(15, 43, 95, 0.25);
+    width: 260px;
+    padding: 10px 12px 12px;
+    font-family: inherit;
+    font-size: 11px;
+    color: var(--texto);
+    display: none !important;
+    box-sizing: border-box;
+  }
+  .datepicker-popover.activo { display: block !important; }
+  .dp-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+  .dp-nav {
+    background: #f0f4f8;
+    border: 1px solid var(--linea);
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 13px;
+    color: var(--azul);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .15s, color .15s;
+    user-select: none;
+  }
+  .dp-nav:hover { background: var(--azul); color: #fff; }
+  .dp-selectores { display: flex; gap: 4px; flex: 1; justify-content: center; }
+  .dp-select {
+    font-size: 11px;
+    font-family: inherit;
+    border: 1px solid var(--linea);
+    border-radius: 4px;
+    padding: 2px 4px;
+    background: #fff;
+    color: var(--azul);
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+  }
+  .dp-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: bold;
+    font-size: 9.5px;
+    color: #666;
+    margin-bottom: 4px;
+  }
+  .dp-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+  }
+  .dp-day {
+    text-align: center;
+    height: 24px;
+    line-height: 24px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 11px;
+    transition: background .12s, color .12s;
+    user-select: none;
+  }
+  .dp-day:hover { background: #e2ecf8; color: var(--azul); font-weight: bold; }
+  .dp-day.otro-mes { color: #ccc; }
+  .dp-day.seleccionado { background: var(--azul) !important; color: #ffffff !important; font-weight: bold; }
+  .dp-day.hoy { border: 1.5px solid var(--naranja); font-weight: bold; }
+  .dp-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1px solid #eef2f5;
+  }
+  .dp-btn-aux {
+    background: none;
+    border: none;
+    color: var(--azul);
+    font-size: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+  .dp-btn-aux:hover { background: #eef4ff; text-decoration: underline; }
+  .dp-btn-aux.limpiar { color: #c01810; }
+
+  .photo {
+    border: 1.5px solid var(--linea);
+    border-radius: 3.5mm;
+    min-height: 34mm;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    color: #6a7c92;
+    font-weight: 700;
+    font-size: 9pt;
+    background: #f7faff;
+    cursor: pointer;
+    text-align: center;
+    transition: border-color 0.15s;
+  }
+  .photo:hover { border-color: var(--azul); }
+
+  .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+    position: absolute;
+    inset: 0;
+  }
+  .photo input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+  .photo .hint {
+    pointer-events: none;
+    line-height: 1.2;
+    padding: 0 4px;
+  }
+  .photo .hint svg {
+    display: block;
+    margin: 0 auto 3px;
+    width: 20px;
+    height: 20px;
+    fill: #6a7c92;
+  }
+
+  /* ==================== BARRAS DE SECCIÓN ==================== */
+  .barra {
+    color: #fff;
+    text-align: center;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    padding: 3.5px 6px;
+    font-size: 11px;
+    margin-top: 5px;
+    border-radius: 2px 2px 0 0;
+    text-transform: uppercase;
+  }
+  .barra--azul { background: var(--azul); }
+  .barra--naranja { background: var(--naranja); }
+  .barra--verde { background: var(--verde); }
+
+  /* ==================== INPUTS Y CAMPOS ==================== */
+  input[type="text"],
+  input[type="date"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  select,
+  textarea {
+    font-family: inherit;
+    font-size: 8.5pt;
+    color: var(--texto);
+    border: 0;
+    border-bottom: 1.1px solid var(--borde);
+    outline: none;
+    background: transparent;
+    padding: 1px 3px;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    background: var(--azul-soft) !important;
+    border-bottom: 1.5px solid var(--azul) !important;
+    border-radius: 2px 2px 0 0;
+  }
+
+  /* Placeholders elegantes estilo ayuda / guía */
+  ::placeholder {
+    color: #9aa4ad;
+    font-style: italic;
+    font-weight: 400;
+    opacity: 0.92;
+    font-size: 8.2pt;
+  }
+  ::-webkit-input-placeholder {
+    color: #9aa4ad;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 8.2pt;
+  }
+  ::-moz-placeholder {
+    color: #9aa4ad;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 8.2pt;
+  }
+  :-ms-input-placeholder {
+    color: #9aa4ad;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 8.2pt;
+  }
+
+  /* Select con aspecto de ayuda / placeholder */
+  select.select-as-help {
+    color: #7a8a9c;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 8.4pt;
+    background-color: transparent;
+    border: 0;
+    border-bottom: 1.2px dashed #9cb0c5;
+    padding: 1.5px 18px 1.5px 4px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.15s ease-in-out;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%237a8a9c' d='M0 0l5 5 5-5z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 4px center !important;
+    background-size: 8px 5px !important;
+    border-radius: 2px 2px 0 0;
+  }
+  select.select-as-help:hover {
+    background-color: #f1f5fa;
+    border-bottom-color: var(--azul-light);
+  }
+  select.select-as-help:focus,
+  select.select-as-help:focus-visible {
+    background-color: #eef5fc !important;
+    border-bottom: 1.5px solid var(--azul) !important;
+  }
+  /* Estado cuando tiene valor seleccionado */
+  select.select-as-help.has-value,
+  select.select-as-help:has(option:not([value=""]):checked) {
+    color: var(--azul) !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    border-bottom: 1.2px solid var(--azul) !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%230f2b5f' d='M0 0l5 5 5-5z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 4px center !important;
+    background-size: 8px 5px !important;
+  }
+  select.select-as-help option {
+    color: var(--texto);
+    font-style: normal;
+    font-weight: 600;
+    background: #fff;
+  }
+  select.select-as-help option[value=""] {
+    color: #7a8a9c;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .line-field {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 1.6mm 0;
+    font-weight: 700;
+  }
+  .line-field label { flex: 0 0 auto; }
+  .line-field input {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Casillas y Radio buttons estilizados */
+  .check-opt, .radio-opt {
+    display: inline-flex;
+    align-items: center;
+    gap: 3.5px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 8.4pt;
+    font-weight: 600;
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 4.2mm;
+    height: 4.2mm;
+    border: 1.2px solid #5a738e;
+    background: #fff;
+    margin: 0;
+    cursor: pointer;
+    vertical-align: middle;
+    display: inline-grid;
+    place-content: center;
+    transition: all 0.12s ease-in-out;
+  }
+
+  input[type="checkbox"] { border-radius: 2px; }
+  input[type="checkbox"]:checked {
+    background: var(--azul);
+    border-color: var(--azul);
+  }
+  input[type="checkbox"]:checked::after {
+    content: "✓";
+    font-size: 8pt;
+    color: #fff;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  input[type="radio"] { border-radius: 50%; }
+  input[type="radio"]:checked {
+    background: #fff;
+    border-color: var(--azul);
+    border-width: 1.5px;
+  }
+  input[type="radio"]:checked::after {
+    content: "";
+    width: 2.2mm;
+    height: 2.2mm;
+    border-radius: 50%;
+    background: var(--azul);
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3.5mm; }
+  .field-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 4px;
+    align-items: end;
+    margin: 1.4mm 0;
+  }
+  label {
+    color: var(--azul);
+    font-weight: 700;
+  }
+
+  .field-row label {
+    color: var(--azul);
+    font-weight: 700;
+    font-size: 8.3pt;
+    white-space: nowrap;
+  }
+  .field-row input { width: 100%; }
+
+  .inline {
+    display: flex;
+    align-items: center;
+    gap: 2.8mm;
+    flex-wrap: wrap;
+  }
+  .small-input { width: 13mm; text-align: center; }
+  .medium-input { width: 32mm; }
+  .wide-input { width: 100%; }
+
+  /* ==================== BLOQUE DE PADRES ==================== */
+  .parent-block {
+    margin-bottom: 2mm;
+    padding-bottom: 1.6mm;
+    border-bottom: 1px dotted #d0dbe7;
+  }
+  .parent-block:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+  .parent-title {
+    font-weight: 800;
+    margin-bottom: 0.8mm;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .parent-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 0 5mm;
+  }
+  .parent-grid .full { grid-column: 1 / -1; }
+
+  /* ==================== CONTACTOS DE EMERGENCIA ==================== */
+  .emergency-title {
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 2mm;
+    font-size: 8.2pt;
+    color: var(--texto-muted);
+  }
+  .emergency-card {
+    background: #fbfdff;
+    border: 1px solid #dce5ef;
+    border-radius: 2.5mm;
+    padding: 2.5mm 3.5mm;
+  }
+  .emergency-card-title {
+    font-size: 8.8pt;
+    font-weight: 800;
+    color: var(--azul);
+    margin-bottom: 1mm;
+  }
+
+  /* ==================== TABLAS INSTITUCIONALES ==================== */
+  .tabla-contenedor {
+    width: 100%;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9.5px;
+    table-layout: fixed;
+    background: #fff;
+  }
+
+  td {
+    border: 1px solid var(--borde);
+    vertical-align: top;
+    padding: 2.5px 5px;
+    font-size: 9px;
+  }
+
+  table.tabla-sec {
+    border: 1px solid var(--borde);
+    margin-bottom: 2px;
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  table.tabla-sec td {
+    border: 1px solid var(--borde);
+    height: 35px;
+    vertical-align: top;
+    padding: 2px 5px;
+  }
+
+  td label, table.tabla-sec td label {
+    display: block;
+    cursor: pointer;
+    user-select: none;
+    line-height: 1.15;
+    font-size: 8.5px;
+    font-weight: 800;
+    color: var(--azul);
+    letter-spacing: 0.3px;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+  }
+
+  /* Inputs y selects dentro de celdas de tabla */
+  input.in, select.in, input.in-cell {
+    border: none;
+    background-color: transparent;
+    font-family: inherit;
+    color: #000;
+    outline: none;
+    padding: 0 2px;
+    width: 100%;
+    font-size: 9.5px;
+    font-weight: normal;
+  }
+
+  input.in, select.in {
+    display: block;
+    height: 18px;
+  }
+
+  input.in-cell {
+    display: block;
+    height: 22px;
+  }
+
+  input.in:focus-visible, select.in:focus-visible, input.in-cell:focus-visible {
+    background-color: var(--azul-soft) !important;
+    border-bottom: 1.5px solid var(--azul) !important;
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: #9aa4ad;
+    font-style: italic;
+    font-weight: normal;
+  }
+
+  /* Tabla Familiar (4 columnas adosada a .barra) */
+  table.fam {
+    border: 1px solid var(--borde);
+    margin-bottom: 2px;
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  table.fam thead td {
+    text-align: center;
+    height: 22px;
+    background: #f1f5fa;
+    color: var(--azul);
+    font-weight: 800;
+    vertical-align: middle;
+    font-size: 9px;
+    letter-spacing: 0.5px;
+    border: 1px solid var(--borde);
+  }
+  table.fam .sub {
+    font-weight: normal;
+    font-style: italic;
+    font-size: 7.5px;
+    color: #555;
+    display: block;
+  }
+  table.fam td.rot {
+    width: 135px;
+    color: var(--azul);
+    vertical-align: middle;
+    font-size: 8.5px;
+    font-weight: 800;
+    background: #fafcff;
+    padding: 2px 5px;
+    line-height: 1.2;
+    border: 1px solid var(--borde);
+  }
+  table.fam tbody td {
+    vertical-align: middle;
+    padding: 1.5px 4px;
+    height: 23px;
+    border: 1px solid var(--borde);
+  }
+
+  /* Tabla académica unificada */
+  .academic-unified-table {
+    border: 1px solid var(--borde);
+    margin-bottom: 2px;
+  }
+  .academic-unified-table th, .academic-unified-table td {
+    border: 1px solid var(--borde);
+    text-align: center;
+    padding: 1.2mm 0.6mm;
+  }
+  .academic-unified-table th {
+    background: #f1f5fa;
+    color: var(--azul);
+    font-weight: 800;
+    font-size: 7.8pt;
+  }
+  .academic-unified-table .grade-label {
+    background: #f1f5fa;
+    font-weight: 800;
+    text-align: left;
+    padding-left: 2mm;
+    color: var(--azul);
+    border: 1px solid var(--borde);
+  }
+  .academic-unified-table input {
+    width: 100%;
+    text-align: center;
+    font-size: 8pt;
+    border: 0;
+    padding: 0;
+    background: transparent;
+  }
+  .academic-unified-table .col-subhead { font-size: 7.5pt; font-weight: 700; }
+
+  /* Tabla de Crecimiento */
+  .growth {
+    border: 1px solid var(--borde);
+    margin-bottom: 2px;
+  }
+  .growth th {
+    background: #f1f5fa;
+    color: var(--azul);
+    font-size: 8pt;
+    font-weight: 800;
+    border: 1px solid var(--borde);
+  }
+  .growth td {
+    border: 1px solid var(--borde);
+    padding: 2px 4px;
+  }
+  .growth td input {
+    width: 100%;
+    text-align: center;
+    border: 0;
+    font-size: 8.5pt;
+    background: transparent;
+  }
+
+  /* ==================== PÁGINA 3 - PROCEDIMIENTO Y REQUISITOS ==================== */
+  .admissions ol {
+    margin: 0 0 3mm 4mm;
+    padding-left: 4mm;
+    font-size: 8.2pt;
+  }
+  .admissions li {
+    margin: 0 0 2.2mm 0;
+    line-height: 1.25;
+    font-weight: 600;
+    text-align: justify;
+  }
+  .requirements-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5mm;
+  }
+  .requirements-table td {
+    border: 0;
+    border-bottom: 1px dotted #dce4ee;
+    padding: 1.1mm 1mm;
+    text-align: left;
+    font-size: 8.2pt;
+  }
+  .requirements-table tr:hover td { background: #f8fbff; }
+  .requirements-table .yn-col {
+    width: 28mm;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .in-doc-select {
+    width: 26mm;
+    font-size: 8.2pt;
+    text-align: center;
+  }
+
+  .legal-text {
+    margin: 1.6mm 0;
+    line-height: 1.22;
+    font-size: 8pt;
+    text-align: justify;
+    color: #273746;
+  }
+
+  /* Firmas */
+  .signature-area {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8mm;
+    margin-top: 5mm;
+    align-items: end;
+  }
+  .signature-box {
+    text-align: center;
+    position: relative;
+  }
+  .signature-box canvas {
+    width: 100%;
+    height: 19mm;
+    border-bottom: 1.5px solid var(--azul);
+    cursor: crosshair;
+    display: block;
+    background: #fafcff;
+    touch-action: none;
+    border-radius: 2px 2px 0 0;
+  }
+  .signature-box canvas:hover {
+    background: var(--azul-soft);
+  }
+  .sign-actions {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1.5mm;
+  }
+  .btn-sign-upload, .btn-sign-clear {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    border-radius: 4px;
+    font-size: 7pt;
+    font-weight: 700;
+    padding: 2px 8px;
+    cursor: pointer;
+    line-height: 1.3;
+    box-sizing: border-box;
+    transition: all 0.15s ease;
+    user-select: none;
+  }
+  .btn-sign-upload {
+    background: #eef4fc;
+    color: var(--azul);
+    border: 1px solid #b9c4d0;
+  }
+  .btn-sign-upload:hover {
+    background: #dbe8fa;
+    border-color: var(--azul);
+  }
+  .btn-sign-clear {
+    background: #f8fafc;
+    color: #566573;
+    border: 1px solid #cbd5e1;
+  }
+  .btn-sign-clear:hover {
+    background: #fee2e2;
+    color: #b91c1c;
+    border-color: #fca5a5;
+  }
+  .clear-sign { display: none; }
+  .signature-label {
+    font-weight: 800;
+    font-size: 8.5pt;
+    margin-top: 1.5mm;
+    color: var(--azul);
+  }
+  .signature-director {
+    width: 52%;
+    margin: 4mm auto 0;
+  }
+
+  /* ==================== PIE DE PÁGINA ==================== */
+  .footer {
+    position: absolute;
+    left: 3.5mm;
+    right: 3.5mm;
+    bottom: 3.5mm;
+    height: 8.5mm;
+    background: var(--azul);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 8.2pt;
+    letter-spacing: 0.8px;
+    user-select: none;
+    z-index: 10;
+  }
+  .footer .stars {
+    position: absolute;
+    right: 4.5mm;
+    font-size: 11pt;
+    letter-spacing: 2mm;
+    color: #ffd166;
+  }
+
+  /* ==================== REGLAS DE IMPRESIÓN ==================== */
+  .no-print { display: block; }
+
+  @media print {
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+    html, body {
+      background: #fff;
+      color: #000;
+      font-size: 8.8pt !important;
+    }
+    .toolbar { display: none !important; }
+    .document {
+      width: 210mm !important;
+      max-width: 210mm !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      zoom: 1 !important;
+    }
+    .document {
+      width: 210mm !important;
+      max-width: 210mm !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    .page {
+      margin: 0 !important;
+      box-shadow: none !important;
+      width: 210mm !important;
+      height: 297mm !important;
+      max-height: 297mm !important;
+      page-break-after: always !important;
+      break-after: page !important;
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+      overflow: hidden !important;
+      padding: 7.5mm 8mm 12mm !important;
+      font-size: 8.8pt !important;
+    }
+    .section-title {
+      font-size: 9.8pt !important;
+      padding: 1.2mm 8mm !important;
+      top: -3.2mm !important;
+    }
+    input[type="text"],
+    input[type="date"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    select,
+    textarea {
+      font-size: 8.5pt !important;
+      padding: 1px 3px !important;
+    }
+    input[type="checkbox"],
+    input[type="radio"] {
+      width: 4.2mm !important;
+      height: 4.2mm !important;
+    }
+    .small-input { width: 13mm !important; }
+    .medium-input { width: 32mm !important; }
+    table { font-size: 8.2pt !important; }
+    th { font-size: 7.9pt !important; }
+    .admissions ol { font-size: 8.2pt !important; }
+    .requirements-table td { font-size: 8.2pt !important; padding: 1.1mm 1mm !important; }
+    .legal-text { font-size: 8pt !important; line-height: 1.22 !important; }
+    .signature-box canvas { height: 19mm !important; background: transparent !important; }
+    .sign-actions, .btn-cal, .datepicker-popover { display: none !important; }
+    ::placeholder {
+      color: transparent !important;
+      opacity: 0 !important;
+    }
+    select.select-as-help:not(.has-value) {
+      color: transparent !important;
+      background-image: none !important;
+      border-bottom: 1px solid #777 !important;
+    }
+    select.select-as-help.has-value {
+      color: #000 !important;
+      font-weight: 700 !important;
+      background-image: none !important;
+      border-bottom: 1px solid #000 !important;
+    }
+    .campo-fecha input.in-fecha { padding-right: 0 !important; }
+    .campo-fecha input.fecha-invalida, .campo-fecha input.fecha-valida {
+      border-bottom: 1px solid #333 !important;
+      background: transparent !important;
+      color: #000 !important;
+    }
+    .page:last-child {
+      page-break-after: auto !important;
+      break-after: auto !important;
+    }
+    .footer {
+      position: absolute !important;
+      left: 3.5mm !important;
+      right: 3.5mm !important;
+      bottom: 3.5mm !important;
+      margin-top: 0 !important;
+    }
+    .page::before {
+      display: block !important;
+    }
+    .no-print { display: none !important; }
+  
+    .cabecera { margin-bottom: 2px !important; }
+    .separador { margin: 3px 0 5px !important; }
+    .barra { margin-top: 4px !important; padding: 2px 4px !important; font-size: 10.5px !important; }
+    table { font-size: 9px !important; }
+    td { height: 30px !important; padding: 1.5px 3px !important; font-size: 8.5px !important; }
+    input.in, select.in { height: 17px !important; font-size: 9px !important; }
+    input.in-cell { height: 22px !important; font-size: 9px !important; }
+    table.fam thead td { height: 19px !important; }
+    table.fam tbody td { height: 20px !important; }
+
+  
+    /* Preservar distribución en impresión */
+    #page1 .cabecera { margin-bottom: 2mm !important; }
+    #page1 .separador { margin: 3.5mm 0 5mm !important; }
+    #page1 .barra { margin-top: 4.5mm !important; padding: 3px 6px !important; font-size: 11.5px !important; }
+    #page1 .academic-unified-table th, #page1 .academic-unified-table td { padding: 1.8mm 0.5mm !important; }
+    #page1 table.tabla-sec td { height: 42px !important; padding: 3px 5px !important; }
+    #page1 table.tabla-sec input.in, #page1 table.tabla-sec select.in { height: 21px !important; font-size: 9.8px !important; }
+    #page1 table.fam thead td { height: 28px !important; }
+    #page1 table.fam tbody td { height: 36px !important; padding: 2px 4px !important; }
+    #page1 table.fam input.in-cell { height: 24px !important; font-size: 9.8px !important; }
+
+    #page2 .barra { margin-top: 2.5mm !important; padding: 2.5px 5px !important; font-size: 10.5px !important; }
+    #page2 .barra:first-child, #page2 .barra[style*="margin-top"] { margin-top: 0.8mm !important; }
+    #page2 table.tabla-sec td { height: 33px !important; padding: 2px 4px !important; }
+    #page2 table.tabla-sec input.in, #page2 table.tabla-sec select.in { height: 18px !important; }
+    #page2 .growth th, #page2 .growth td { padding: 1.7mm 3px !important; }
+    #page2 textarea#conducta_vacunas { height: 21mm !important; }
+
+  }@media screen {
+    .document {
+      width: 210mm;
+      max-width: none;
+      margin: 20px auto 50px;
+    }
+    .page {
+      width: 210mm;
+      height: 297mm;
+      min-height: 297mm;
+      max-height: 297mm;
+      padding: 7.5mm 8mm 12mm;
+      margin-bottom: 30px;
+      box-sizing: border-box;
+      position: relative;
+      overflow: hidden;
+    }
+  }@media screen and (max-width: 960px) {
+    .document { width: 100%; max-width: 100%; margin: 0; }
+    .page {
+      width: 100%;
+      height: auto;
+      min-height: auto;
+      max-height: none;
+      padding: 24px 14px 45px;
+      margin-bottom: 24px;
+    }
+    .page::before { display: none; }
+    .top-grid { grid-template-columns: 1fr 90px; }
+    .section-title { font-size: 9pt; padding: 4px 14px; }
+    .two-col, .parent-grid { grid-template-columns: 1fr; }
+    .footer { position: relative; left: auto; right: auto; bottom: auto; margin-top: 20px; }
+  }
+
+  /* ==================== DISTRIBUCIÓN EQUILIBRADA DE PÁGINAS 1 Y 2 ==================== */
+  /* --- PÁGINA 1: Distribución amplia y equilibrada, con holgura sobre el pie de página --- */
+  #page1 .cabecera {
+    margin-bottom: 2mm;
+  }
+  #page1 .separador {
+    margin: 3.5mm 0 5mm;
+  }
+  #page1 .barra {
+    margin-top: 4.5mm;
+    padding: 3.5px 7px;
+    font-size: 11.5px;
+    letter-spacing: 1.3px;
+  }
+  #page1 .academic-unified-table {
+    margin-bottom: 2.5mm;
+  }
+  #page1 .academic-unified-table th,
+  #page1 .academic-unified-table td {
+    padding: 1.8mm 0.5mm;
+  }
+  #page1 .academic-unified-table input {
+    height: 20px;
+    font-size: 9pt;
+  }
+  #page1 table.tabla-sec {
+    margin-bottom: 2.5mm;
+  }
+  #page1 table.tabla-sec td {
+    height: 42px;
+    padding: 3px 6px;
+  }
+  #page1 table.tabla-sec td label {
+    font-size: 8.8px;
+    margin-bottom: 2.5px;
+    letter-spacing: 0.3px;
+  }
+  #page1 table.tabla-sec input.in,
+  #page1 table.tabla-sec select.in {
+    height: 22px;
+    font-size: 10px;
+  }
+  #page1 table.fam thead td {
+    height: 28px;
+    font-size: 9.8px;
+    letter-spacing: 0.5px;
+  }
+  #page1 table.fam td.rot {
+    font-size: 8.8px;
+    padding: 2px 5px;
+  }
+  #page1 table.fam tbody td {
+    height: 36px;
+    padding: 2px 5px;
+  }
+  #page1 table.fam input.in-cell {
+    height: 25px;
+    font-size: 10px;
+  }
+
+  /* --- PÁGINA 2: Distribución equilibrada de las 7 secciones con holgura sobre el pie --- */
+  #page2 .barra {
+    margin-top: 2.5mm;
+    padding: 3px 6px;
+    font-size: 10.8px;
+    letter-spacing: 1.1px;
+  }
+  #page2 .barra:first-child,
+  #page2 .barra[style*="margin-top"] {
+    margin-top: 0.8mm !important;
+  }
+  #page2 table.tabla-sec {
+    margin-bottom: 2px;
+  }
+  #page2 table.tabla-sec td {
+    height: 33px;
+    padding: 2.5px 5px;
+  }
+  #page2 table.tabla-sec td label {
+    font-size: 8.2px;
+    margin-bottom: 2px;
+  }
+  #page2 table.tabla-sec input.in,
+  #page2 table.tabla-sec select.in {
+    height: 19px;
+    font-size: 9.5px;
+  }
+  #page2 .growth th,
+  #page2 .growth td {
+    padding: 1.7mm 3px;
+  }
+  #page2 .growth td input {
+    height: 19px;
+    font-size: 8.8pt;
+  }
+  #page2 textarea#conducta_vacunas {
+    height: 21mm !important;
+    line-height: 5.5mm;
+    font-size: 8.8pt;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- BARRA DE ACCIONES SUPERIOR -->
+<header class="toolbar no-print">
+  <button type="button" class="btn btn-primary" onclick="imprimirConValidacion()">
+    🖨️ Imprimir / Guardar como PDF
+  </button>
+  <button type="button" class="btn btn-demo" id="btn-demo" onclick="fillDemoData()" style="display: none;" title="Modo pruebas: Rellenar datos de prueba">
+    📝 Rellenar datos de prueba
+  </button>
+  <button type="button" class="btn btn-secondary" onclick="saveDraft()">
+    💾 Guardar borrador
+  </button>
+  <button type="button" class="btn btn-secondary" onclick="loadDraft()">
+    📂 Cargar borrador
+  </button>
+  <button type="button" class="btn btn-danger" onclick="resetFormWithConfirm()">
+    🗑️ Limpiar formulario
+  </button>
+  <div class="toolbar-meta" style="display:inline-flex;align-items:center;gap:12px;">
+    <div style="display:inline-flex;align-items:center;gap:4px;background:#f0f4f9;padding:3px 8px;border-radius:6px;border:1.5px solid #cbd5e1;">
+      <span style="font-size:8.5pt;font-weight:700;color:var(--texto-muted)">Vista:</span>
+      <button type="button" onclick="window.cambiarZoom(-0.1)" title="Reducir tamaño en pantalla" style="border:none;background:#e2e8f0;border-radius:4px;cursor:pointer;font-weight:900;font-size:13px;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;color:var(--azul);">➖</button>
+      <span id="zoomLevel" style="font-size:8.5pt;font-weight:800;color:var(--azul);min-width:40px;text-align:center;cursor:pointer;" onclick="window.resetZoom()" title="Clic para restablecer al 100%">115%</span>
+      <button type="button" onclick="window.cambiarZoom(0.1)" title="Aumentar tamaño en pantalla" style="border:none;background:#e2e8f0;border-radius:4px;cursor:pointer;font-weight:900;font-size:13px;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;color:var(--azul);">➕</button>
+    </div>
+    <div>
+      <span>Progreso:</span>
+      <span id="progressIndicator" class="progress-pill">0%</span>
+    </div>
+  </div>
+</header>
+
+<form id="admissionForm" class="document" onsubmit="return false">
+
+<!-- ===================== PÁGINA 1 ===================== -->
+<section class="page" id="page1">
+<div class="page-inner">
+  <div class="cabecera">
+    <div class="logo">
+      <img src="logo.png" alt="My Little Artists School">
+    </div>
+    <div style="flex: 1; text-align: center;">
+      <h1 class="titulo">FORMULARIO DE ADMISIONES</h1>
+      <div class="subtitulo-cabecera">AÑO LECTIVO 2026</div>
+    </div>
+    <div class="cabecera-derecha">
+      <div class="folio">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 2px;">
+          <label for="fecha_ingreso" style="font-size: 8.5px; font-weight: 800; color: var(--azul);">FECHA INGRESO:</label>
+          <div class="campo-fecha" style="width: 110px;">
+            <input type="text" id="fecha_ingreso" name="fecha_ingreso" class="in-folio in-fecha" style="width: 100%;" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off" title="Fecha de radicación o ingreso">
+            <button type="button" class="btn-cal no-print" tabindex="-1" title="Seleccionar fecha en calendario">📅</button>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 2px;">
+          <label for="matricula" style="font-size: 8.5px; font-weight: 800; color: var(--azul);">MATRÍCULA Nº:</label>
+          <input type="text" id="matricula" name="matricula" class="in-folio" style="width: 110px;" placeholder="Ej. 2026-001" title="Número de matrícula">
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px;">
+          <label for="nuip" style="font-size: 8.5px; font-weight: 800; color: var(--azul);">NUIP:</label>
+          <input type="text" id="nuip" name="nuip" class="in-folio" style="width: 110px;" placeholder="Número único" title="Número único de identificación personal">
+        </div>
+      </div>
+
+      <label class="photo" title="Haga clic para subir una foto del estudiante">
+        <div class="hint">
+          <svg viewBox="0 0 24 24"><path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/></svg>
+          FOTO<br><span style="font-size:6pt;font-weight:normal;color:#7f8c8d">3×4 cm</span>
+        </div>
+        <img id="photoPreview" alt="Foto del estudiante">
+        <input type="file" id="photoInput" accept="image/*" onchange="previewPhoto(event)">
+      </label>
+    </div>
+  </div>
+  <hr class="separador">
+
+  <!-- SECCIÓN 1: NIVEL Y GRADO ACADÉMICO -->
+  <div class="barra barra--azul">NIVEL Y GRADO ACADÉMICO</div>
+  <div class="tabla-contenedor">
+    <table class="academic-unified-table">
+      <thead>
+        <tr>
+          <th rowspan="2" style="width:16mm" class="grade-label">Nivel</th>
+          <th colspan="4">Educación preescolar (Maternal)</th>
+          <th colspan="3">Jardín Infantil</th>
+          <th colspan="5">Educación básica (Primaria)</th>
+        </tr>
+        <tr class="col-subhead">
+          <th title="Sala cuna">S</th>
+          <th title="Gateadores">G</th>
+          <th title="Caminadores">C</th>
+          <th title="Párvulos">P</th>
+          <th title="Pre-Jardín">PJ</th>
+          <th title="Jardín">J</th>
+          <th title="Transición">T</th>
+          <th>1°</th><th>2°</th><th>3°</th><th>4°</th><th>5°</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="grade-label">Grado</td>
+          <td><input class="small-input" name="nivel_s" maxlength="4" placeholder="X" title="Marque con X si cursa Sala Cuna"></td>
+          <td><input class="small-input" name="nivel_g" maxlength="4" placeholder="X" title="Marque con X si cursa Gateadores"></td>
+          <td><input class="small-input" name="nivel_c" maxlength="4" placeholder="X" title="Marque con X si cursa Caminadores"></td>
+          <td><input class="small-input" name="nivel_p" maxlength="4" placeholder="X" title="Marque con X si cursa Párvulos"></td>
+          <td><input class="small-input" name="nivel_pj" maxlength="4" placeholder="X" title="Marque con X si cursa Pre-Jardín"></td>
+          <td><input class="small-input" name="nivel_j" maxlength="4" placeholder="X" title="Marque con X si cursa Jardín"></td>
+          <td><input class="small-input" name="nivel_t" maxlength="4" placeholder="X" title="Marque con X si cursa Transición"></td>
+          <td><input class="small-input" name="grado_1" maxlength="4" placeholder="X" title="Marque con X si cursa Primero"></td>
+          <td><input class="small-input" name="grado_2" maxlength="4" placeholder="X" title="Marque con X si cursa Segundo"></td>
+          <td><input class="small-input" name="grado_3" maxlength="4" placeholder="X" title="Marque con X si cursa Tercero"></td>
+          <td><input class="small-input" name="grado_4" maxlength="4" placeholder="X" title="Marque con X si cursa Cuarto"></td>
+          <td><input class="small-input" name="grado_5" maxlength="4" placeholder="X" title="Marque con X si cursa Quinto"></td>
+        </tr>
+        <tr>
+          <td class="grade-label">Año</td>
+          <td><input class="small-input" name="anio_s" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2026)"></td>
+          <td><input class="small-input" name="anio_g" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2026)"></td>
+          <td><input class="small-input" name="anio_c" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2026)"></td>
+          <td><input class="small-input" name="anio_p" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2026)"></td>
+          <td><input class="small-input" name="anio_pj" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2026)"></td>
+          <td><input class="small-input" name="anio_j" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2026)"></td>
+          <td><input class="small-input" name="anio_t" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2026)"></td>
+          <td><input class="small-input" name="anio_1" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2026)"></td>
+          <td><input class="small-input" name="anio_2" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2026)"></td>
+          <td><input class="small-input" name="anio_3" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2026)"></td>
+          <td><input class="small-input" name="anio_4" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2026)"></td>
+          <td><input class="small-input" name="anio_5" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2026)"></td>
+        </tr>
+        <tr>
+          <td class="grade-label">Edad</td>
+          <td><input class="small-input" name="edad_s" maxlength="3" placeholder="Edad" title="Edad en años"></td>
+          <td><input class="small-input" name="edad_g" maxlength="3" placeholder="Edad" title="Edad en años"></td>
+          <td><input class="small-input" name="edad_c" maxlength="3" placeholder="Edad" title="Edad en años"></td>
+          <td><input class="small-input" name="edad_p" maxlength="3" placeholder="Edad" title="Edad en años"></td>
+          <td><input class="small-input" name="edad_pj" maxlength="3" placeholder="Edad" title="Edad en años"></td>
+          <td><input class="small-input" name="edad_j" maxlength="3" placeholder="Edad" title="Edad en años"></td>
+          <td><input class="small-input" name="edad_t" maxlength="3" placeholder="Edad" title="Edad en años"></td>
+          <td><input class="small-input" name="edad_1" maxlength="3" placeholder="Edad" title="Edad en años"></td>
+          <td><input class="small-input" name="edad_2" maxlength="3" placeholder="Edad" title="Edad en años"></td>
+          <td><input class="small-input" name="edad_3" maxlength="3" placeholder="Edad" title="Edad en años"></td>
+          <td><input class="small-input" name="edad_4" maxlength="3" placeholder="Edad" title="Edad en años"></td>
+          <td><input class="small-input" name="edad_5" maxlength="3" placeholder="Edad" title="Edad en años"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECCIÓN 2: DATOS DEL NIÑO O LA NIÑA -->
+  <div class="barra barra--naranja">DATOS DEL NIÑO O LA NIÑA</div>
+  <div class="tabla-contenedor">
+    <table class="tabla-sec">
+      <tr>
+        <td colspan="12">
+          <label for="nombres_nino">NOMBRES Y APELLIDOS COMPLETOS</label>
+          <input type="text" id="nombres_nino" name="nombres_nino" class="in" placeholder="Nombres y apellidos completos del estudiante" autocomplete="name" title="Nombres y apellidos completos del niño o la niña">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5">
+          <label for="nacimiento_lugar">LUGAR DE NACIMIENTO</label>
+          <input type="text" id="nacimiento_lugar" name="nacimiento_lugar" class="in" placeholder="Ciudad, departamento, país" title="Ciudad y departamento de nacimiento">
+        </td>
+        <td colspan="4">
+          <label for="fecha_nacimiento">FECHA DE NACIMIENTO</label>
+          <div class="campo-fecha">
+            <input type="text" id="fecha_nacimiento" name="fecha_nacimiento" class="in in-fecha" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="bday" title="Fecha de nacimiento del estudiante">
+            <button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button>
+          </div>
+        </td>
+        <td colspan="3">
+          <label for="sexo">SEXO</label>
+          <select id="sexo" name="sexo" class="in select-as-help" title="Sexo biológico del estudiante">
+            <option value="" selected>Seleccione...</option>
+            <option value="Femenino">Femenino</option>
+            <option value="Masculino">Masculino</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5">
+          <label for="eps">EPS A LA QUE ESTÁ AFILIADO(A)</label>
+          <input type="text" id="eps" name="eps" list="lista_eps" class="in" placeholder="Nombre de EPS o asegurador" autocomplete="off" title="Entidad promotora de salud">
+          <datalist id="lista_eps">
+            <option value="Sanitas">Sanitas</option>
+            <option value="Salud Total">Salud Total</option>
+            <option value="Compensar">Compensar</option>
+            <option value="Famisanar">Famisanar</option>
+            <option value="Sura">Sura</option>
+            <option value="Nueva EPS">Nueva EPS</option>
+            <option value="Aliansalud">Aliansalud</option>
+            <option value="Coosalud">Coosalud</option>
+            <option value="Capital Salud">Capital Salud</option>
+            <option value="Mutual Ser">Mutual Ser</option>
+            <option value="Salud Bolívar">Salud Bolívar</option>
+            <option value="Servicio de Salud FF.MM.">Servicio de Salud FF.MM.</option>
+            <option value="Particular">Particular</option>
+          </datalist>
+        </td>
+        <td colspan="3">
+          <label for="rh">GRUPO SANGUÍNEO Y RH</label>
+          <select id="rh" name="rh" class="in select-as-help" title="Grupo sanguíneo y factor RH">
+            <option value="" selected>Seleccione RH...</option>
+            <option value="O+">O+</option><option value="O-">O-</option>
+            <option value="A+">A+</option><option value="A-">A-</option>
+            <option value="B+">B+</option><option value="B-">B-</option>
+            <option value="AB+">AB+</option><option value="AB-">AB-</option>
+          </select>
+        </td>
+        <td colspan="4">
+          <label for="medicina_prepagada">¿MEDICINA PREPAGADA?</label>
+          <select id="medicina_prepagada" name="medicina_prepagada" class="in select-as-help" title="¿Cuenta con medicina prepagada?">
+            <option value="" selected>Seleccione...</option>
+            <option value="si">Sí</option>
+            <option value="no">No</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="7">
+          <label for="prepagada_cual">COMPAÑÍA O PLAN PREPAGADA</label>
+          <input type="text" id="prepagada_cual" name="prepagada_cual" class="in" placeholder="Ej. Colmédica, Colsanitas, Medplus (o si no aplica)" title="Compañía de medicina prepagada o plan complementario">
+        </td>
+        <td colspan="5">
+          <label for="hermanos">No. DE HERMANOS Y LUGAR QUE OCUPA</label>
+          <input type="text" id="hermanos" name="hermanos" class="in" placeholder="Ej. 2 hermanos, ocupa el 1° lugar" title="Número de hermanos y lugar entre ellos">
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- SECCIÓN 3: INFORMACIÓN DE LOS PADRES Y/O ACUDIENTE -->
+  <div class="barra barra--azul">INFORMACIÓN DE LOS PADRES Y/O ACUDIENTE</div>
+  <div class="tabla-contenedor">
+    <table class="fam">
+      <thead>
+        <tr>
+          <td class="rot">INFORMACIÓN</td>
+          <td>PADRE</td>
+          <td>MADRE</td>
+          <td>ACUDIENTE <span class="sub">(DIFERENTE A PADRE O MADRE)</span></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="rot">NOMBRES Y APELLIDOS</td>
+          <td><input type="text" id="papa_nombres" name="papa_nombres" class="in-cell" placeholder="Nombres y apellidos" autocomplete="name" title="Nombres y apellidos completos del padre de familia"></td>
+          <td><input type="text" id="mama_nombres" name="mama_nombres" class="in-cell" placeholder="Nombres y apellidos" autocomplete="name" title="Nombres y apellidos completos de la madre de familia"></td>
+          <td><input type="text" id="acudiente_nombres" name="acudiente_nombres" class="in-cell" placeholder="Nombres y apellidos" autocomplete="name" title="Nombres y apellidos completos del acudiente autorizado"></td>
+        </tr>
+        <tr>
+          <td class="rot">DOCUMENTO IDENTIDAD</td>
+          <td><input type="text" id="papa_doc" name="papa_doc" class="in-cell" placeholder="Número de documento" title="Número de documento del padre"></td>
+          <td><input type="text" id="mama_doc" name="mama_doc" class="in-cell" placeholder="Número de documento" title="Número de documento de la madre"></td>
+          <td><input type="text" id="acudiente_doc" name="acudiente_doc" class="in-cell" placeholder="Número de documento" title="Número de documento del acudiente"></td>
+        </tr>
+        <tr>
+          <td class="rot">EXPEDIDO EN (DE)</td>
+          <td><input type="text" id="papa_doc_de" name="papa_doc_de" class="in-cell" placeholder="Lugar expedición (ej. Bogotá)" title="Lugar de expedición del documento del padre"></td>
+          <td><input type="text" id="mama_doc_de" name="mama_doc_de" class="in-cell" placeholder="Lugar expedición (ej. Medellín)" title="Lugar de expedición del documento de la madre"></td>
+          <td><input type="text" id="acudiente_doc_de" name="acudiente_doc_de" class="in-cell" placeholder="Lugar expedición (ej. Bogotá)" title="Lugar de expedición del documento del acudiente"></td>
+        </tr>
+        <tr>
+          <td class="rot">PROFESIÓN</td>
+          <td><input type="text" id="papa_profesion" name="papa_profesion" class="in-cell" placeholder="Profesión u ocupación" title="Profesión u ocupación del padre"></td>
+          <td><input type="text" id="mama_profesion" name="mama_profesion" class="in-cell" placeholder="Profesión u ocupación" title="Profesión u ocupación de la madre"></td>
+          <td><input type="text" id="acudiente_profesion" name="acudiente_profesion" class="in-cell" placeholder="Profesión u ocupación" title="Profesión u ocupación del acudiente"></td>
+        </tr>
+        <tr>
+          <td class="rot">EMPRESA</td>
+          <td><input type="text" id="papa_empresa" name="papa_empresa" class="in-cell" placeholder="Empresa o lugar trabajo" title="Empresa o lugar de trabajo del padre"></td>
+          <td><input type="text" id="mama_empresa" name="mama_empresa" class="in-cell" placeholder="Empresa o lugar trabajo" title="Empresa o lugar de trabajo de la madre"></td>
+          <td><input type="text" id="acudiente_empresa" name="acudiente_empresa" class="in-cell" placeholder="Empresa o lugar trabajo" title="Empresa o lugar de trabajo del acudiente"></td>
+        </tr>
+        <tr>
+          <td class="rot">TELÉFONO FIJO</td>
+          <td><input type="tel" id="papa_tel" name="papa_tel" class="in-cell" placeholder="Teléfono fijo" autocomplete="tel" title="Teléfono fijo del padre"></td>
+          <td><input type="tel" id="mama_tel" name="mama_tel" class="in-cell" placeholder="Teléfono fijo" autocomplete="tel" title="Teléfono fijo de la madre"></td>
+          <td><input type="tel" id="acudiente_tel" name="acudiente_tel" class="in-cell" placeholder="Teléfono fijo" autocomplete="tel" title="Teléfono fijo del acudiente"></td>
+        </tr>
+        <tr>
+          <td class="rot">TELÉFONO CELULAR</td>
+          <td><input type="tel" id="papa_cel" name="papa_cel" class="in-cell" placeholder="Celular (ej. 310 1234567)" autocomplete="tel" title="Teléfono celular del padre"></td>
+          <td><input type="tel" id="mama_cel" name="mama_cel" class="in-cell" placeholder="Celular (ej. 315 1234567)" autocomplete="tel" title="Teléfono celular de la madre"></td>
+          <td><input type="tel" id="acudiente_cel" name="acudiente_cel" class="in-cell" placeholder="Celular (ej. 320 1234567)" autocomplete="tel" title="Teléfono celular del acudiente"></td>
+        </tr>
+        <tr>
+          <td class="rot">CORREO ELECTRÓNICO</td>
+          <td><input type="email" id="papa_email" name="papa_email" class="in-cell" placeholder="correo@ejemplo.com" autocomplete="email" title="Correo electrónico del padre"></td>
+          <td><input type="email" id="mama_email" name="mama_email" class="in-cell" placeholder="correo@ejemplo.com" autocomplete="email" title="Correo electrónico de la madre"></td>
+          <td><input type="email" id="acudiente_email" name="acudiente_email" class="in-cell" placeholder="correo@ejemplo.com" autocomplete="email" title="Correo electrónico del acudiente"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<footer class="footer">PÁGINA 1 DE 3 <span class="stars">★ ★ ★</span></footer>
+</section>
+
+<!-- ===================== PÁGINA 2 ===================== -->
+<section class="page" id="page2">
+<div class="page-inner">
+
+  <!-- SECCIÓN 4: CONTACTOS DE EMERGENCIA -->
+  <div class="barra barra--naranja" style="margin-top: 1mm;">CONTACTOS DE EMERGENCIA</div>
+  <div style="font-size: 8px; color: var(--azul); font-weight: 700; margin: 2px 0 3px; text-align: center;">Citar al menos dos contactos adicionales a padres o acudientes para casos de emergencia:</div>
+  <div class="tabla-contenedor">
+    <table class="tabla-sec">
+      <thead>
+        <tr style="background: #f1f5fa;">
+          <th colspan="6" style="text-align: left; padding: 2px 5px; color: var(--azul); font-size: 9px; font-weight: 800; border: 1px solid var(--borde);">1. PRIMER CONTACTO</th>
+          <th colspan="6" style="text-align: left; padding: 2px 5px; color: var(--azul); font-size: 9px; font-weight: 800; border: 1px solid var(--borde);">2. SEGUNDO CONTACTO</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="3">
+            <label for="em1_nom">NOMBRE COMPLETO</label>
+            <input type="text" id="em1_nom" name="emergencia1_nombre" class="in" placeholder="Nombres y apellidos completos" title="Nombres y apellidos del primer contacto">
+          </td>
+          <td colspan="3">
+            <label for="em1_rel">PARENTESCO</label>
+            <input type="text" id="em1_rel" name="emergencia1_relacion" class="in" placeholder="Parentesco (ej. Abuela)" title="Parentesco del primer contacto">
+          </td>
+          <td colspan="3">
+            <label for="em2_nom">NOMBRE COMPLETO</label>
+            <input type="text" id="em2_nom" name="emergencia2_nombre" class="in" placeholder="Nombres y apellidos completos" title="Nombres y apellidos del segundo contacto">
+          </td>
+          <td colspan="3">
+            <label for="em2_rel">PARENTESCO</label>
+            <input type="text" id="em2_rel" name="emergencia2_relacion" class="in" placeholder="Parentesco (ej. Tío)" title="Parentesco del segundo contacto">
+          </td>
+        </tr>
+        <tr>
+          <td colspan="6">
+            <label for="em1_dir">DIRECCIÓN DE CONTACTO</label>
+            <input type="text" id="em1_dir" name="emergencia1_direccion" class="in" placeholder="Dirección completa" title="Dirección de residencia del primer contacto">
+          </td>
+          <td colspan="6">
+            <label for="em2_dir">DIRECCIÓN DE CONTACTO</label>
+            <input type="text" id="em2_dir" name="emergencia2_direccion" class="in" placeholder="Dirección completa" title="Dirección de residencia del segundo contacto">
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <label for="em1_tel">TELÉFONO FIJO</label>
+            <input type="tel" id="em1_tel" name="emergencia1_tel" class="in" placeholder="Tel. fijo" title="Teléfono fijo del primer contacto">
+          </td>
+          <td colspan="2">
+            <label for="em1_cel">CELULAR</label>
+            <input type="tel" id="em1_cel" name="emergencia1_cel" class="in" placeholder="Celular" title="Teléfono celular del primer contacto">
+          </td>
+          <td colspan="2">
+            <label for="em1_mail">CORREO ELECTRÓNICO</label>
+            <input type="email" id="em1_mail" name="emergencia1_email" class="in" placeholder="correo@ejemplo.com" title="Correo electrónico del primer contacto">
+          </td>
+          <td colspan="2">
+            <label for="em2_tel">TELÉFONO FIJO</label>
+            <input type="tel" id="em2_tel" name="emergencia2_tel" class="in" placeholder="Tel. fijo" title="Teléfono fijo del segundo contacto">
+          </td>
+          <td colspan="2">
+            <label for="em2_cel">CELULAR</label>
+            <input type="tel" id="em2_cel" name="emergencia2_cel" class="in" placeholder="Celular" title="Teléfono celular del segundo contacto">
+          </td>
+          <td colspan="2">
+            <label for="em2_mail">CORREO ELECTRÓNICO</label>
+            <input type="email" id="em2_mail" name="emergencia2_email" class="in" placeholder="correo@ejemplo.com" title="Correo electrónico del segundo contacto">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECCIÓN 5: ANTECEDENTES DE EMBARAZO Y PARTO -->
+  <div class="barra barra--verde">ANTECEDENTES DE EMBARAZO Y PARTO</div>
+  <div class="tabla-contenedor">
+    <table class="tabla-sec">
+      <tr>
+        <td colspan="3">
+          <label for="parto">PARTO</label>
+          <select id="parto" name="parto" class="in select-as-help" title="Tipo de parto">
+            <option value="">Seleccione...</option>
+            <option value="normal">Normal</option>
+            <option value="cesarea">Cesárea</option>
+          </select>
+        </td>
+        <td colspan="3">
+          <label for="gestacion">GESTACIÓN</label>
+          <select id="gestacion" name="gestacion" class="in select-as-help" title="Tiempo de gestación">
+            <option value="">Seleccione...</option>
+            <option value="termino">A término</option>
+            <option value="pretermi">Pretérmino (&lt; 38 sem)</option>
+            <option value="postermi">Postérmino (&gt; 42 sem)</option>
+          </select>
+        </td>
+        <td colspan="6">
+          <label for="bebe_nacer">BEBÉ AL NACER</label>
+          <input type="text" id="bebe_nacer" name="bebe_nacer" class="in" placeholder="Estado (ej. Vigoroso y saludable)" title="Estado del bebé al momento del nacimiento">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <label for="talla_nacer">TALLA AL NACER (cm)</label>
+          <input type="text" id="talla_nacer" name="talla_nacer" class="in" placeholder="cm (ej. 50)" title="Talla en centímetros al nacer">
+        </td>
+        <td colspan="3">
+          <label for="peso_nacer">PESO AL NACER (g)</label>
+          <input type="text" id="peso_nacer" name="peso_nacer" class="in" placeholder="gramos (ej. 3200)" title="Peso en gramos al nacer">
+        </td>
+        <td colspan="3">
+          <label for="lactancia">¿LACTANCIA MATERNA?</label>
+          <select id="lactancia" name="lactancia" class="in select-as-help" title="¿Tuvo lactancia materna?">
+            <option value="">Seleccione...</option>
+            <option value="si">Sí</option>
+            <option value="no">No</option>
+          </select>
+        </td>
+        <td colspan="3">
+          <label for="lactancia_hasta">¿HASTA QUÉ MES LACTÓ?</label>
+          <input type="text" id="lactancia_hasta" name="lactancia_hasta" class="in" placeholder="Ej. 6 meses" title="Meses durante los cuales recibió lactancia">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <label for="tetero">¿UTILIZA O UTILIZÓ TETERO?</label>
+          <select id="tetero" name="tetero" class="in select-as-help" title="¿Utiliza o utilizó tetero?">
+            <option value="">Seleccione...</option>
+            <option value="si">Sí</option>
+            <option value="no">No</option>
+          </select>
+        </td>
+        <td colspan="6">
+          <label for="tetero_hasta">¿HASTA QUÉ EDAD UTILIZÓ?</label>
+          <input type="text" id="tetero_hasta" name="tetero_hasta" class="in" placeholder="Ej. 2 años" title="Edad hasta la que utilizó tetero">
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- SECCIÓN 6: HOSPITALARIOS -->
+  <div class="barra barra--verde">HOSPITALARIOS</div>
+  <div class="tabla-contenedor">
+    <table class="tabla-sec">
+      <tr>
+        <td colspan="4">
+          <label for="hospitalizado">¿HA ESTADO HOSPITALIZADO?</label>
+          <select id="hospitalizado" name="hospitalizado" class="in select-as-help" title="¿El niño(a) ha estado hospitalizado?">
+            <option value="">Seleccione...</option>
+            <option value="si">Sí</option>
+            <option value="no">No</option>
+          </select>
+        </td>
+        <td colspan="8">
+          <label for="hospital_causa">CAUSA O MOTIVO</label>
+          <input type="text" id="hospital_causa" name="hospital_causa" class="in" placeholder="Diagnóstico o motivo de hospitalización" title="Motivo de la hospitalización">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <label for="hospital_fecha">¿EN QUÉ FECHA?</label>
+          <div class="campo-fecha">
+            <input type="text" id="hospital_fecha" name="hospital_fecha" class="in in-fecha" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off" title="Fecha de la hospitalización">
+            <button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button>
+          </div>
+        </td>
+        <td colspan="8">
+          <label for="hospital_clinica">CLÍNICA / HOSPITAL</label>
+          <input type="text" id="hospital_clinica" name="hospital_clinica" class="in" placeholder="Nombre de la institución o centro asistencial" title="Nombre del hospital o clínica">
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- SECCIÓN 7: MEDICAMENTOS Y ALERGIAS -->
+  <div class="barra barra--verde">MEDICAMENTOS Y ALERGIAS</div>
+  <div class="tabla-contenedor">
+    <table class="tabla-sec">
+      <tr>
+        <td colspan="6">
+          <label for="med_actual">ACTUALMENTE SE LE SUMINISTRA</label>
+          <input type="text" id="med_actual" name="med_actual" class="in" placeholder="Medicamento, dosis y horarios (o 'Ninguno')" title="Medicamentos administrados en la actualidad">
+        </td>
+        <td colspan="6">
+          <label for="enfermedad_tratamiento">ENFERMEDAD EN TRATAMIENTO</label>
+          <input type="text" id="enfermedad_tratamiento" name="enfermedad_tratamiento" class="in" placeholder="Diagnóstico o condición médica en tratamiento (o 'Ninguna')" title="Enfermedades o diagnósticos actuales">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <label for="alergia_medicamento">ALÉRGICO A CUÁL MEDICAMENTO</label>
+          <input type="text" id="alergia_medicamento" name="alergia_medicamento" class="in" placeholder="Medicamentos que le causan alergia (o 'Ninguno')" title="Alergias farmacológicas conocidas">
+        </td>
+        <td colspan="6">
+          <label for="alimentos_no">ALIMENTOS QUE NO PUEDE CONSUMIR</label>
+          <input type="text" id="alimentos_no" name="alimentos_no" class="in" placeholder="Alimentos restringidos o intolerancias (o 'Ninguno')" title="Intolerancias alimentarias o alimentos prohibidos">
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- SECCIÓN 8: CONTROL DE CRECIMIENTO Y DESARROLLO -->
+  <div class="barra barra--verde">CONTROL DE CRECIMIENTO Y DESARROLLO</div>
+  <div class="tabla-contenedor">
+    <table class="growth">
+      <thead>
+        <tr>
+          <th style="width:36mm;text-align:left;padding-left:3mm">Control</th>
+          <th>Fecha de último control</th>
+          <th>Peso actual</th>
+          <th>Talla actual</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th style="text-align:left;padding-left:3mm">Primer semestre</th>
+          <td><div class="campo-fecha"><input type="text" name="crecimiento1_fecha" class="in-fecha in" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off"><button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button></div></td>
+          <td><input type="text" name="crecimiento1_peso" class="in" placeholder="kg (ej. 14.2)"></td>
+          <td><input type="text" name="crecimiento1_talla" class="in" placeholder="cm (ej. 92)"></td>
+        </tr>
+        <tr>
+          <th style="text-align:left;padding-left:3mm">Segundo semestre</th>
+          <td><div class="campo-fecha"><input type="text" name="crecimiento2_fecha" class="in-fecha in" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off"><button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button></div></td>
+          <td><input type="text" name="crecimiento2_peso" class="in" placeholder="kg (ej. 15.6)"></td>
+          <td><input type="text" name="crecimiento2_talla" class="in" placeholder="cm (ej. 98)"></td>
+        </tr>
+        <tr>
+          <th style="text-align:left;padding-left:3mm">Tercer semestre</th>
+          <td><div class="campo-fecha"><input type="text" name="crecimiento3_fecha" class="in-fecha in" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off"><button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button></div></td>
+          <td><input type="text" name="crecimiento3_peso" class="in" placeholder="kg (ej. 17.0)"></td>
+          <td><input type="text" name="crecimiento3_talla" class="in" placeholder="cm (ej. 103)"></td>
+        </tr>
+        <tr>
+          <th style="text-align:left;padding-left:3mm">Cuarto semestre</th>
+          <td><div class="campo-fecha"><input type="text" name="crecimiento4_fecha" class="in-fecha in" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off"><button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button></div></td>
+          <td><input type="text" name="crecimiento4_peso" class="in" placeholder="kg (ej. 18.5)"></td>
+          <td><input type="text" name="crecimiento4_talla" class="in" placeholder="cm (ej. 108)"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECCIÓN 9: SEGUIMIENTO ODONTOLÓGICO -->
+  <div class="barra barra--verde">SEGUIMIENTO ODONTOLÓGICO</div>
+  <div class="tabla-contenedor">
+    <table class="tabla-sec">
+      <tr>
+        <td colspan="4">
+          <label for="edad_lavado">¿DESDE QUÉ EDAD SE LAVA LOS DIENTES?</label>
+          <input type="text" id="edad_lavado" name="edad_lavado" class="in" placeholder="Ej. 2 años" title="Edad de inicio del hábito del cepillado">
+        </td>
+        <td colspan="4">
+          <label for="frecuencia_cepillado">FRECUENCIA DE CEPILLADO</label>
+          <select id="frecuencia_cepillado" name="frecuencia_cepillado" class="in select-as-help" title="Frecuencia diaria de higiene oral">
+            <option value="">Seleccione...</option>
+            <option value="1">1 vez al día</option>
+            <option value="2">2 veces al día</option>
+            <option value="3">3 veces al día</option>
+            <option value="mas">&gt; 3 veces al día</option>
+          </select>
+        </td>
+        <td colspan="4">
+          <label for="no_le_gusta">¿LE AGRADA EL CEPILLADO?</label>
+          <select id="no_le_gusta" name="no_le_gusta" class="in select-as-help" title="¿Tiene agrado por la higiene oral?">
+            <option value="">Seleccione...</option>
+            <option value="si">Sí le gusta</option>
+            <option value="no">No le gusta</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <label for="caries">¿TIENE CARIES?</label>
+          <select id="caries" name="caries" class="in select-as-help" title="¿Presenta caries actualmente?">
+            <option value="">Seleccione...</option>
+            <option value="si">Sí</option>
+            <option value="no">No</option>
+          </select>
+        </td>
+        <td colspan="4">
+          <label for="odonto_control">¿ASISTE A CONTROL ODONTOLÓGICO?</label>
+          <select id="odonto_control" name="odonto_control" class="in select-as-help" title="¿Acude a controles periódicos?">
+            <option value="">Seleccione...</option>
+            <option value="si">Sí</option>
+            <option value="no">No</option>
+          </select>
+        </td>
+        <td colspan="4">
+          <label for="ultima_visita_odonto">ÚLTIMA VISITA ODONTOLÓGICA</label>
+          <div class="campo-fecha">
+            <input type="text" id="ultima_visita_odonto" name="ultima_visita_odonto" class="in in-fecha" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off" title="Fecha de última visita">
+            <button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- SECCIÓN 10: CARNÉ DE VACUNAS -->
+  <div class="barra barra--verde">CARNÉ DE VACUNAS</div>
+  <div class="tabla-contenedor">
+    <table class="tabla-sec">
+      <tr>
+        <td colspan="12">
+          <label for="vacunas_esquema">¿POSEE EL CARNÉ DE VACUNAS CON ESQUEMA COMPLETO SEGÚN SU EDAD?</label>
+          <select id="vacunas_esquema" name="vacunas_esquema" class="in select-as-help" title="Esquema completo según PAI">
+            <option value="">Seleccione...</option>
+            <option value="si">Sí cuenta con esquema completo</option>
+            <option value="no">No cuenta con esquema completo</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="12" style="height: auto; padding: 3px 5px;">
+          <label for="conducta_vacunas">CONDUCTA A SEGUIR / OBSERVACIONES MÉDICAS</label>
+          <textarea id="conducta_vacunas" name="conducta_vacunas" class="in" style="height: 18mm; width: 100%; border: none; resize: none; background: transparent; font-family: inherit; font-size: 9px;" placeholder="Escriba aquí la conducta a seguir si el esquema no está completo..."></textarea>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+</div>
+<footer class="footer">PÁGINA 2 DE 3 <span class="stars">★ ★ ★</span></footer>
+</section>
+
+<!-- ===================== PÁGINA 3 ===================== -->
+<section class="page" id="page3">
+<div class="page-inner">
+  <div class="barra barra--azul" style="margin-top: 1.5mm;">PROCEDIMIENTO DE ADMISIONES</div>
+  <div style="border: 1px solid var(--borde); border-top: none; padding: 3mm 4mm 2mm; background: #fff; margin-bottom: 2mm;">
+    <ol style="margin: 0 0 2mm 3mm; padding-left: 3mm; font-size: 8pt; font-weight: 600; line-height: 1.25; text-align: justify;">
+      <li style="margin-bottom: 1.5mm;">Radicar el formulario de admisiones debidamente diligenciado en las instalaciones de la Institución.<br>
+          La inscripción se realiza formalmente mediante la radicación o envío del formulario de admisiones.</li>
+      <li style="margin-bottom: 1.5mm;">Si el niño o la niña ha cursado algún nivel en alguna institución educativa, por favor adjuntar el formulario de admisiones y el paz y salvo respectivo expedido por dicha institución.<br>
+          La inscripción <b>NO</b> garantiza un cupo para el (la) niño(a) en la institución. El aporte pagado por la adquisición del formulario de admisiones no es reembolsable ni tampoco será aplicado a concepto alguno en caso de que sea aceptado(a).</li>
+      <li style="margin-bottom: 1.5mm;">De acuerdo a la disponibilidad de cupos, la Institución se pondrá en contacto con usted para efectos de iniciar el proceso de matrícula. El cupo se obtiene por medio de la firma de la ficha (libro) de matrícula, la firma del contrato de prestación de servicios educativos y el pago de los derechos de matrícula.<br>
+          Sin la firma de estos documentos y/o el pago de derechos de matrícula, el cupo se considerará <b>NO</b> reservado y podrá ser otorgado a otro niño(a).</li>
+      <li style="margin-bottom: 1.5mm;">Los siguientes documentos son requisitos adicionales de la matrícula y deberán adjuntarse a más tardar 30 días después de iniciado el año escolar:</li>
+    </ol>
+
+    <!-- TABLA DE REQUISITOS DOCUMENTALES -->
+    <table class="requirements-table" style="border: 1px solid var(--borde);">
+      <tbody>
+        <tr><td style="text-align: left; padding: 1.5px 5px;">1. Curva de crecimiento, talla y peso.</td><td class="yn-col" style="width: 25mm;"><select id="doc_curva" name="doc_curva" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+        <tr><td style="text-align: left; padding: 1.5px 5px;">2. Certificado que asista al programa de crecimiento y desarrollo.</td><td class="yn-col" style="width: 25mm;"><select id="doc_crecimiento" name="doc_crecimiento" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+        <tr><td style="text-align: left; padding: 1.5px 5px;">3. Registro civil del (la) niño(a) para niños menores de 7 años.</td><td class="yn-col" style="width: 25mm;"><select id="doc_registro" name="doc_registro" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+        <tr><td style="text-align: left; padding: 1.5px 5px;">4. Fotocopia de la tarjeta de identidad para niños mayores de 7 años.</td><td class="yn-col" style="width: 25mm;"><select id="doc_tarjeta" name="doc_tarjeta" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+        <tr><td style="text-align: left; padding: 1.5px 5px;">5. Carné de vacunas actualizado.</td><td class="yn-col" style="width: 25mm;"><select id="doc_vacunas" name="doc_vacunas" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+        <tr><td style="text-align: left; padding: 1.5px 5px;">6. Examen de audiometría y optometría.</td><td class="yn-col" style="width: 25mm;"><select id="doc_audio" name="doc_audio" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+        <tr><td style="text-align: left; padding: 1.5px 5px;">7. Examen odontológico vigente.</td><td class="yn-col" style="width: 25mm;"><select id="doc_odont" name="doc_odont" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+        <tr><td style="text-align: left; padding: 1.5px 5px;">8. Certificado médico general.</td><td class="yn-col" style="width: 25mm;"><select id="doc_medico" name="doc_medico" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+        <tr><td style="text-align: left; padding: 1.5px 5px;">9. Fotocopia del carné de la EPS o medicina prepagada.</td><td class="yn-col" style="width: 25mm;"><select id="doc_eps" name="doc_eps" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+        <tr><td style="text-align: left; padding: 1.5px 5px;">10. Cuatro (4) fotos de 3×4 cm en fondo blanco o azul.</td><td class="yn-col" style="width: 25mm;"><select id="doc_fotos" name="doc_fotos" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+        <tr><td style="text-align: left; padding: 1.5px 5px;">11. Fotocopia de la cédula de ciudadanía de los padres.</td><td class="yn-col" style="width: 25mm;"><select id="doc_cedulas" name="doc_cedulas" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+        <tr><td style="text-align: left; padding: 1.5px 5px;">12. Una foto familiar de 9×13 cm.</td><td class="yn-col" style="width: 25mm;"><select id="doc_foto9x13" name="doc_foto9x13" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+      </tbody>
+    </table>
+
+    <!-- DECLARACIONES LEGALES -->
+    <p class="legal-text" style="margin-top: 2.5mm; font-size: 7.8pt; line-height: 1.2; text-align: justify; color: #333;">
+      El proyecto pedagógico del plantel, por convicción propia y dando cumplimiento fiel a lo establecido en la Constitución Política de Colombia, admite a niños y niñas sin discriminación alguna respecto a su raza, color, religión, orientación sexual o nacionalidad.
+    </p>
+    <p class="legal-text" style="font-size: 7.8pt; line-height: 1.2; text-align: justify; color: #333;">
+      Nuestra Institución se obliga a ubicar a los niños y niñas en un ambiente apropiado e idóneo de aprendizaje, seguridad y bienestar; al mismo tiempo se reserva el derecho de conformar los grupos de aprendizaje con un número de niños, edad, sexo, necesidad y compatibilidad con el PEI, siempre dentro del límite estipulado por las autoridades competentes.
+    </p>
+    <p class="legal-text" style="font-size: 7.8pt; line-height: 1.2; text-align: justify; color: #333;">
+      Mediante la firma del presente formulario de admisión, certificamos que toda información contenida en el mismo es correcta, veraz y comprobable. Declaramos expresamente aceptar los planes de estudio, las normas académicas, los talleres de padres y requerimientos económicos de la institución educativa.
+    </p>
+  </div>
+
+  <!-- BLOQUES DE FIRMAS -->
+  <div class="barra barra--azul">COMPROMISO Y FIRMAS</div>
+  <div style="border: 1px solid var(--borde); border-top: none; padding: 3mm 4mm; background: #fff;">
+    <div class="signature-area" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; margin-bottom: 2.5mm;">
+      <div class="signature-box" style="border: 1px solid var(--borde); border-radius: 4px; padding: 2mm; background: #fafcff; text-align: center;">
+        <canvas id="sigPapa" title="Firme aquí con el mouse, lápiz táctil o dedo" style="width: 100%; height: 18mm; background: #fff; border-bottom: 1.5px solid var(--azul); display: block;"></canvas>
+        <div class="sign-actions no-print" style="margin: 2px 0;">
+          <label class="btn-sign-upload" title="Subir archivo o foto de la firma (PNG, JPG)">
+            📁 Subir firma
+            <input type="file" id="upload_sigPapa" accept="image/*" onchange="uploadSignature(event, 'sigPapa')" style="display:none;">
+          </label>
+          <button type="button" class="btn-sign-clear" onclick="clearSignature('sigPapa')" title="Borrar firma">✕ Borrar</button>
+        </div>
+        <div class="signature-label" style="font-size: 8.5px; font-weight: 800; color: var(--azul); margin-top: 2px;">FIRMA DEL PAPÁ</div>
+      </div>
+      <div class="signature-box" style="border: 1px solid var(--borde); border-radius: 4px; padding: 2mm; background: #fafcff; text-align: center;">
+        <canvas id="sigMama" title="Firme aquí con el mouse, lápiz táctil o dedo" style="width: 100%; height: 18mm; background: #fff; border-bottom: 1.5px solid var(--azul); display: block;"></canvas>
+        <div class="sign-actions no-print" style="margin: 2px 0;">
+          <label class="btn-sign-upload" title="Subir archivo o foto de la firma (PNG, JPG)">
+            📁 Subir firma
+            <input type="file" id="upload_sigMama" accept="image/*" onchange="uploadSignature(event, 'sigMama')" style="display:none;">
+          </label>
+          <button type="button" class="btn-sign-clear" onclick="clearSignature('sigMama')" title="Borrar firma">✕ Borrar</button>
+        </div>
+        <div class="signature-label" style="font-size: 8.5px; font-weight: 800; color: var(--azul); margin-top: 2px;">FIRMA DE LA MAMÁ</div>
+      </div>
+    </div>
+
+    <div class="signature-box signature-director" style="max-width: 90mm; margin: 0 auto; border: 1px solid var(--borde); border-radius: 4px; padding: 2mm; background: #fafcff; text-align: center;">
+      <canvas id="sigDirector" title="Firma o sello oficial de la dirección" style="width: 100%; height: 18mm; background: #fff; border-bottom: 1.5px solid var(--azul); display: block;"></canvas>
+      <div class="sign-actions no-print" style="margin: 2px 0;">
+        <label class="btn-sign-upload" title="Subir firma o sello institucional (PNG, JPG)">
+          📁 Subir firma
+          <input type="file" id="upload_sigDirector" accept="image/*" onchange="uploadSignature(event, 'sigDirector')" style="display:none;">
+        </label>
+        <button type="button" class="btn-sign-clear" onclick="clearSignature('sigDirector')" title="Borrar firma">✕ Borrar</button>
+      </div>
+      <div class="signature-label" style="font-size: 8.5px; font-weight: 800; color: var(--azul); margin-top: 2px;">FIRMA DIRECCIÓN INSTITUCIONAL</div>
+    </div>
+  </div>
+</div>
+<footer class="footer">PÁGINA 3 DE 3 <span class="stars">★ ★ ★</span></footer>
+</section>
+
+</form>
+
+<script>
+// ==================== CALENDARIO POPOVER Y VALIDADOR DD/MM/AAAA ====================
+const MESES_CAL = [
+  'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+  'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+];
+const DIAS_SEMANA_CAL = ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá', 'Do'];
+
+let datepickerPopover = null;
+let selectMesCal, selectAnioCal, daysContainerCal, inputFechaActivo = null;
+let fechaVistaCal = new Date();
+
+function esBisiesto(anio) {
+  return (anio % 4 === 0 && (anio % 100 !== 0 || anio % 400 === 0));
+}
+
+function diasEnMes(mes, anio) {
+  return [31, esBisiesto(anio) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][mes];
+}
+
+function parsearFecha(str) {
+  if (!str) return null;
+  const match = str.trim().match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (!match) return null;
+  return new Date(parseInt(match[3], 10), parseInt(match[2], 10) - 1, parseInt(match[1], 10));
+}
+
+function validarFecha(input) {
+  const val = input.value.trim();
+  if (!val) {
+    input.classList.remove('fecha-invalida', 'fecha-valida');
+    input.setCustomValidity('');
+    input.title = '';
+    return true;
+  }
+
+  const match = val.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  let error = '';
+
+  if (!match) {
+    error = 'Formato incompleto o inválido. Use DD/MM/AAAA.';
+  } else {
+    const dia = parseInt(match[1], 10);
+    const mes = parseInt(match[2], 10);
+    const anio = parseInt(match[3], 10);
+
+    if (mes < 1 || mes > 12) {
+      error = 'El mes debe estar entre 01 y 12.';
+    } else if (anio < 1920 || anio > 2035) {
+      error = 'El año debe estar entre 1920 y 2035.';
+    } else {
+      const maxDias = diasEnMes(mes - 1, anio);
+      if (dia < 1 || dia > maxDias) {
+        error = `El mes ${MESES_CAL[mes - 1]} de ${anio} solo tiene ${maxDias} días.`;
+      }
+    }
+  }
+
+  if (error) {
+    input.classList.remove('fecha-valida');
+    input.classList.add('fecha-invalida');
+    input.setCustomValidity(error);
+    input.title = error;
+    return false;
+  } else {
+    input.classList.remove('fecha-invalida');
+    input.classList.add('fecha-valida');
+    input.setCustomValidity('');
+    input.title = 'Fecha válida';
+    return true;
+  }
+}
+
+function initDatepickerDOM() {
+  datepickerPopover = document.createElement('div');
+  datepickerPopover.id = 'datepicker-popover';
+  datepickerPopover.className = 'datepicker-popover';
+  datepickerPopover.innerHTML = `
+    <div class="dp-header">
+      <button type="button" class="dp-nav" id="dp-prev" title="Mes anterior">&lt;</button>
+      <div class="dp-selectores">
+        <select class="dp-select" id="dp-mes"></select>
+        <select class="dp-select" id="dp-anio"></select>
+      </div>
+      <button type="button" class="dp-nav" id="dp-next" title="Mes siguiente">&gt;</button>
+    </div>
+    <div class="dp-weekdays">
+      ${DIAS_SEMANA_CAL.map(d => `<span>${d}</span>`).join('')}
+    </div>
+    <div class="dp-days" id="dp-days"></div>
+    <div class="dp-footer">
+      <button type="button" class="dp-btn-aux" id="dp-hoy">Hoy</button>
+      <button type="button" class="dp-btn-aux limpiar" id="dp-limpiar">Borrar</button>
+      <button type="button" class="dp-btn-aux" id="dp-cerrar">Cerrar</button>
+    </div>
+  `;
+  document.body.appendChild(datepickerPopover);
+
+  selectMesCal = datepickerPopover.querySelector('#dp-mes');
+  selectAnioCal = datepickerPopover.querySelector('#dp-anio');
+  daysContainerCal = datepickerPopover.querySelector('#dp-days');
+
+  MESES_CAL.forEach((m, idx) => {
+    const opt = document.createElement('option');
+    opt.value = idx;
+    opt.textContent = m;
+    selectMesCal.appendChild(opt);
+  });
+
+  const anioActual = new Date().getFullYear();
+  for (let a = anioActual + 3; a >= 1930; a--) {
+    const opt = document.createElement('option');
+    opt.value = a;
+    opt.textContent = a;
+    selectAnioCal.appendChild(opt);
+  }
+
+  datepickerPopover.querySelector('#dp-prev').addEventListener('click', (e) => {
+    e.stopPropagation();
+    fechaVistaCal.setMonth(fechaVistaCal.getMonth() - 1);
+    renderizarCalendarioInsc();
+  });
+
+  datepickerPopover.querySelector('#dp-next').addEventListener('click', (e) => {
+    e.stopPropagation();
+    fechaVistaCal.setMonth(fechaVistaCal.getMonth() + 1);
+    renderizarCalendarioInsc();
+  });
+
+  selectMesCal.addEventListener('change', () => {
+    fechaVistaCal.setMonth(parseInt(selectMesCal.value, 10));
+    renderizarCalendarioInsc();
+  });
+
+  selectAnioCal.addEventListener('change', () => {
+    fechaVistaCal.setFullYear(parseInt(selectAnioCal.value, 10));
+    renderizarCalendarioInsc();
+  });
+
+  datepickerPopover.querySelector('#dp-hoy').addEventListener('click', () => {
+    if (inputFechaActivo) {
+      const hoy = new Date();
+      inputFechaActivo.value = `${String(hoy.getDate()).padStart(2, '0')}/${String(hoy.getMonth() + 1).padStart(2, '0')}/${hoy.getFullYear()}`;
+      validarFecha(inputFechaActivo);
+      inputFechaActivo.dispatchEvent(new Event('input', { bubbles: true }));
+      inputFechaActivo.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    cerrarCalendarioInsc();
+  });
+
+  datepickerPopover.querySelector('#dp-limpiar').addEventListener('click', () => {
+    if (inputFechaActivo) {
+      inputFechaActivo.value = '';
+      inputFechaActivo.classList.remove('fecha-invalida', 'fecha-valida');
+      inputFechaActivo.setCustomValidity('');
+      inputFechaActivo.dispatchEvent(new Event('input', { bubbles: true }));
+      inputFechaActivo.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    cerrarCalendarioInsc();
+  });
+
+  datepickerPopover.querySelector('#dp-cerrar').addEventListener('click', cerrarCalendarioInsc);
+
+  document.addEventListener('click', (e) => {
+    if (datepickerPopover && !datepickerPopover.contains(e.target) && !e.target.closest('.campo-fecha')) {
+      cerrarCalendarioInsc();
+    }
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') cerrarCalendarioInsc();
+  });
+}
+
+function renderizarCalendarioInsc() {
+  const mes = fechaVistaCal.getMonth();
+  const anio = fechaVistaCal.getFullYear();
+
+  selectMesCal.value = mes;
+  selectAnioCal.value = anio;
+  daysContainerCal.innerHTML = '';
+
+  const fechaInput = inputFechaActivo ? parsearFecha(inputFechaActivo.value) : null;
+  const hoy = new Date();
+
+  const primerDiaObj = new Date(anio, mes, 1);
+  let primerDiaSemana = primerDiaObj.getDay() - 1;
+  if (primerDiaSemana === -1) primerDiaSemana = 6;
+
+  const totalDias = diasEnMes(mes, anio);
+  const mesAnt = mes === 0 ? 11 : mes - 1;
+  const anioAnt = mes === 0 ? anio - 1 : anio;
+  const totalDiasAnt = diasEnMes(mesAnt, anioAnt);
+
+  for (let i = primerDiaSemana - 1; i >= 0; i--) {
+    const diaNum = totalDiasAnt - i;
+    const cell = document.createElement('div');
+    cell.className = 'dp-day otro-mes';
+    cell.textContent = diaNum;
+    cell.addEventListener('click', (e) => {
+      e.stopPropagation();
+      fechaVistaCal = new Date(anioAnt, mesAnt, diaNum);
+      renderizarCalendarioInsc();
+    });
+    daysContainerCal.appendChild(cell);
+  }
+
+  for (let d = 1; d <= totalDias; d++) {
+    const cell = document.createElement('div');
+    cell.className = 'dp-day';
+    cell.textContent = d;
+
+    if (hoy.getDate() === d && hoy.getMonth() === mes && hoy.getFullYear() === anio) {
+      cell.classList.add('hoy');
+    }
+
+    if (fechaInput && fechaInput.getDate() === d && fechaInput.getMonth() === mes && fechaInput.getFullYear() === anio) {
+      cell.classList.add('seleccionado');
+    }
+
+    cell.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (inputFechaActivo) {
+        const dStr = String(d).padStart(2, '0');
+        const mStr = String(mes + 1).padStart(2, '0');
+        inputFechaActivo.value = `${dStr}/${mStr}/${anio}`;
+        validarFecha(inputFechaActivo);
+        inputFechaActivo.dispatchEvent(new Event('input', { bubbles: true }));
+        inputFechaActivo.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      cerrarCalendarioInsc();
+    });
+
+    daysContainerCal.appendChild(cell);
+  }
+
+  const celdasUsadas = primerDiaSemana + totalDias;
+  const celdasRestantes = (celdasUsadas % 7 === 0) ? 0 : 7 - (celdasUsadas % 7);
+  const mesSig = mes === 11 ? 0 : mes + 1;
+  const anioSig = mes === 11 ? anio + 1 : anio;
+
+  for (let s = 1; s <= celdasRestantes; s++) {
+    const cell = document.createElement('div');
+    cell.className = 'dp-day otro-mes';
+    cell.textContent = s;
+    cell.addEventListener('click', (e) => {
+      e.stopPropagation();
+      fechaVistaCal = new Date(anioSig, mesSig, s);
+      renderizarCalendarioInsc();
+    });
+    daysContainerCal.appendChild(cell);
+  }
+}
+
+function posicionarCalendarioInsc(input) {
+  const rect = input.getBoundingClientRect();
+  const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+  const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+
+  let top = rect.bottom + scrollY + 4;
+  let left = rect.left + scrollX;
+
+  const popoverWidth = 265;
+  const popoverHeight = 280;
+
+  if (left + popoverWidth > window.innerWidth - 12) {
+    left = Math.max(8, window.innerWidth - popoverWidth - 12 + scrollX);
+  }
+
+  if (rect.bottom + popoverHeight > window.innerHeight && rect.top > popoverHeight) {
+    top = rect.top + scrollY - popoverHeight - 4;
+  }
+
+  datepickerPopover.style.top = `${top}px`;
+  datepickerPopover.style.left = `${left}px`;
+}
+
+function abrirCalendarioInsc(input) {
+  inputFechaActivo = input;
+  const fechaParseada = parsearFecha(input.value);
+
+  if (fechaParseada) {
+    fechaVistaCal = new Date(fechaParseada.getFullYear(), fechaParseada.getMonth(), 1);
+  } else {
+    if (input.id === 'fecha_nacimiento') {
+      const anioDefecto = new Date().getFullYear() - 4;
+      fechaVistaCal = new Date(anioDefecto, 0, 1);
+    } else {
+      fechaVistaCal = new Date();
+    }
+  }
+
+  renderizarCalendarioInsc();
+  posicionarCalendarioInsc(input);
+  datepickerPopover.style.setProperty('display', 'block', 'important');
+  datepickerPopover.classList.add('activo');
+}
+
+function cerrarCalendarioInsc() {
+  if (datepickerPopover) {
+    datepickerPopover.classList.remove('activo');
+    datepickerPopover.style.setProperty('display', 'none', 'important');
+  }
+  inputFechaActivo = null;
+}
+
+function imprimirConValidacion() {
+  const fechas = document.querySelectorAll('.in-fecha');
+  let hayError = false;
+  fechas.forEach(f => {
+    if (f.value.trim() && !validarFecha(f)) {
+      hayError = true;
+    }
+  });
+
+  if (hayError) {
+    if (!confirm('Una o más fechas tienen un formato o valor inválido (deben ser DD/MM/AAAA).\n\n¿Desea imprimir el formulario de todas formas?')) {
+      return;
+    }
+  }
+  window.print();
+}
+
+// ==================== GESTIÓN DE FOTO DEL ESTUDIANTE ====================
+function previewPhoto(event) {
+  const file = event.target.files[0];
+  const img = document.getElementById('photoPreview');
+  const hint = event.target.parentElement.querySelector('.hint');
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    img.src = e.target.result;
+    img.style.display = 'block';
+    if (hint) hint.style.display = 'none';
+    updateProgress();
+  };
+  reader.readAsDataURL(file);
+}
+
+function removePhoto() {
+  const img = document.getElementById('photoPreview');
+  const hint = document.querySelector('.photo .hint');
+  const input = document.getElementById('photoInput');
+  img.src = '';
+  img.style.display = 'none';
+  if (hint) hint.style.display = 'block';
+  if (input) input.value = '';
+  updateProgress();
+}
+
+// ==================== MOTOR DE FIRMAS UNIFICADO (PointerEvents) ====================
+const signatureCanvases = {};
+
+function setupSignature(id) {
+  const canvas = document.getElementById(id);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const ratio = Math.max(window.devicePixelRatio || 1, 1);
+
+  function resizeCanvas() {
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width === 0) return;
+    const prevImage = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    canvas.width = rect.width * ratio;
+    canvas.height = rect.height * ratio;
+    ctx.scale(ratio, ratio);
+    ctx.lineWidth = 2.2;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = '#0f2b5f';
+  }
+
+  resizeCanvas();
+  signatureCanvases[id] = { canvas, ctx, ratio, hasDrawn: false };
+
+  let isDrawing = false;
+
+  function getCoords(e) {
+    const rect = canvas.getBoundingClientRect();
+    if (typeof e.offsetX === 'number' && e.target === canvas) {
+      return { x: e.offsetX, y: e.offsetY };
+    }
+    return {
+      x: (e.clientX - rect.left) / (currentZoom || 1),
+      y: (e.clientY - rect.top) / (currentZoom || 1)
+    };
+  }
+
+  canvas.addEventListener('pointerdown', e => {
+    isDrawing = true;
+    canvas.setPointerCapture(e.pointerId);
+    const p = getCoords(e);
+    ctx.beginPath();
+    ctx.moveTo(p.x, p.y);
+  });
+
+  canvas.addEventListener('pointermove', e => {
+    if (!isDrawing) return;
+    const p = getCoords(e);
+    ctx.lineTo(p.x, p.y);
+    ctx.stroke();
+    signatureCanvases[id].hasDrawn = true;
+  });
+
+  const stopDrawing = e => {
+    if (isDrawing) {
+      isDrawing = false;
+      try { canvas.releasePointerCapture(e.pointerId); } catch (_) {}
+      updateProgress();
+    }
+  };
+
+  canvas.addEventListener('pointerup', stopDrawing);
+  canvas.addEventListener('pointercancel', stopDrawing);
+  canvas.addEventListener('pointerleave', stopDrawing);
+}
+
+function loadSignatureFromDataUrl(id, dataUrl, callback) {
+  const canvas = document.getElementById(id);
+  if (!canvas || !dataUrl) return;
+  const ctx = canvas.getContext('2d');
+  const sigInfo = signatureCanvases[id];
+  const ratio = (sigInfo && sigInfo.ratio) || Math.max(window.devicePixelRatio || 1, 1);
+  const logicalW = canvas.width / ratio;
+  const logicalH = canvas.height / ratio;
+  if (logicalW <= 0 || logicalH <= 0) return;
+
+  const img = new Image();
+  img.onload = function() {
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.restore();
+
+    const padX = 8;
+    const padY = 4;
+    const availW = Math.max(logicalW - padX * 2, 10);
+    const availH = Math.max(logicalH - padY * 2, 10);
+    const scale = Math.min(availW / img.width, availH / img.height);
+    const drawW = img.width * scale;
+    const drawH = img.height * scale;
+    const offsetX = (logicalW - drawW) / 2;
+    const offsetY = (logicalH - drawH) / 2;
+
+    ctx.drawImage(img, offsetX, offsetY, drawW, drawH);
+    if (sigInfo) sigInfo.hasDrawn = true;
+    updateProgress();
+    if (typeof callback === 'function') callback();
+  };
+  img.src = dataUrl;
+}
+
+function uploadSignature(event, id) {
+  const input = event.target;
+  const file = input.files && input.files[0];
+  if (!file) return;
+  if (!file.type.match(/^image\//i)) {
+    alert('Por favor seleccione un archivo de imagen válido (PNG, JPG, etc.).');
+    input.value = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    loadSignatureFromDataUrl(id, e.target.result);
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearSignature(id) {
+  const canvas = document.getElementById(id);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.restore();
+  if (signatureCanvases[id]) signatureCanvases[id].hasDrawn = false;
+  const fileInput = document.getElementById('upload_' + id);
+  if (fileInput) fileInput.value = '';
+  updateProgress();
+}
+
+function clearAllSignatures() {
+  ['sigPapa', 'sigMama', 'sigDirector'].forEach(clearSignature);
+}
+
+// ==================== SINCRONIZACIÓN DE SELECTORES COMO AYUDA ====================
+function syncSelectHelp(sel) {
+  if (!sel) return;
+  if (sel.value && sel.value.trim() !== '') {
+    sel.classList.add('has-value');
+  } else {
+    sel.classList.remove('has-value');
+  }
+}
+
+function updateAllSelectHelp() {
+  document.querySelectorAll('select.select-as-help').forEach(syncSelectHelp);
+}
+
+// ==================== CÁLCULO DE PROGRESO ====================
+function updateProgress() {
+  const form = document.getElementById('admissionForm');
+  if (!form) return;
+
+  const allFormFields = Array.from(form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="date"], select, textarea'));
+  let totalFields = allFormFields.length + 3; // +3 por fotos y firmas
+  let filledFields = 0;
+
+  allFormFields.forEach(input => {
+    if (input.value && input.value.trim() !== '') filledFields++;
+  });
+
+  const photo = document.getElementById('photoPreview');
+  if (photo && photo.src && photo.style.display !== 'none') filledFields++;
+  if (signatureCanvases['sigPapa'] && signatureCanvases['sigPapa'].hasDrawn) filledFields++;
+  if (signatureCanvases['sigMama'] && signatureCanvases['sigMama'].hasDrawn) filledFields++;
+
+  const pct = Math.min(100, Math.round((filledFields / totalFields) * 100));
+  const el = document.getElementById('progressIndicator');
+  if (el) {
+    el.textContent = `${pct}%`;
+    el.style.background = pct > 75 ? '#d4edda' : (pct > 35 ? '#fff3cd' : '#e2e8f0');
+    el.style.color = pct > 75 ? '#155724' : (pct > 35 ? '#856404' : '#0f2b5f');
+  }
+}
+
+// ==================== DATOS DE DEMOSTRACIÓN (1 CLIC) ====================
+function fillDemoData() {
+  const form = document.getElementById('admissionForm');
+  if (!form) return;
+
+  // Fechas en formato DD/MM/AAAA y matrícula
+  const ahora = new Date();
+  const hoyDDMM = `${String(ahora.getDate()).padStart(2, '0')}/${String(ahora.getMonth() + 1).padStart(2, '0')}/${ahora.getFullYear()}`;
+  const fechaIngreso = document.getElementById('fecha_ingreso');
+  if (fechaIngreso) {
+    fechaIngreso.value = hoyDDMM;
+    validarFecha(fechaIngreso);
+  }
+  const mat = document.getElementById('matricula');
+  if (mat) mat.value = '2026-084';
+  const nuip = document.getElementById('nuip');
+  if (nuip) nuip.value = '1.024.895.412';
+
+  // Nivel y grado
+  const fieldsVal = {
+    'nivel_t': 'X', 'anio_t': '2026', 'edad_t': '5',
+    'nombres_nino': 'Valeria Gómez Restrepo',
+    'fecha_nacimiento': '15/04/2021',
+    'nacimiento_lugar': 'Bogotá D.C.',
+    'sexo': 'Femenino',
+    'hermanos': '1 hermano, ocupa el segundo lugar',
+    'eps': 'Sanitas',
+    'prepagada_cual': 'Colsanitas',
+    'rh': 'O+',
+    'papa_nombres': 'Carlos Gómez Herrera',
+    'papa_doc': '79.845.210', 'papa_doc_de': 'Bogotá',
+    'papa_profesion': 'Ingeniero de Sistemas', 'papa_empresa': 'Tech Solutions SAS',
+    'papa_tel': '6017845120', 'papa_cel': '3104589632', 'papa_email': 'carlos.gomez@gmail.com',
+    'mama_nombres': 'Lucía Restrepo Peña',
+    'mama_doc': '52.984.632', 'mama_doc_de': 'Medellín',
+    'mama_profesion': 'Diseñadora Gráfica', 'mama_empresa': 'Estudio Creativo',
+    'mama_tel': '6017845120', 'mama_cel': '3157896541', 'mama_email': 'lucia.restrepo@gmail.com',
+    'acudiente_nombres': 'Carlos Gómez Herrera',
+    'acudiente_doc': '79.845.210', 'acudiente_doc_de': 'Bogotá',
+    'acudiente_profesion': 'Ingeniero de Sistemas', 'acudiente_empresa': 'Tech Solutions SAS',
+    'acudiente_tel': '6017845120', 'acudiente_cel': '3104589632', 'acudiente_email': 'carlos.gomez@gmail.com',
+    'emergencia1_nombre': 'Marta Elena Herrera', 'emergencia1_relacion': 'Abuela paterna',
+    'emergencia1_direccion': 'Calle 127 # 45-12', 'emergencia1_tel': '6012547896', 'emergencia1_cel': '3002589631', 'emergencia1_email': 'marta.herrera@yahoo.com',
+    'emergencia2_nombre': 'Jorge Andrés Gómez', 'emergencia2_relacion': 'Tío paterno',
+    'emergencia2_direccion': 'Carrera 15 # 98-40', 'emergencia2_tel': '6016321458', 'emergencia2_cel': '3187452103', 'emergencia2_email': 'jorge.gomez@empresa.com',
+    'bebe_nacer': 'Vigoroso y saludable', 'talla_nacer': '50', 'peso_nacer': '3200',
+    'lactancia_hasta': '18 meses', 'tetero_hasta': '2 años',
+    'hospital_fecha': '12/08/2024', 'hospital_clinica': 'Clínica Infantil Colsubsidio',
+    'alimentos_no': 'Ninguno conocido',
+    'crecimiento1_fecha': '15/05/2024', 'crecimiento1_peso': '14.2', 'crecimiento1_talla': '92',
+    'crecimiento2_fecha': '18/11/2024', 'crecimiento2_peso': '15.6', 'crecimiento2_talla': '98',
+    'crecimiento3_fecha': '10/05/2025', 'crecimiento3_peso': '17.0', 'crecimiento3_talla': '103',
+    'crecimiento4_fecha': '20/11/2025', 'crecimiento4_peso': '18.5', 'crecimiento4_talla': '108',
+    'edad_lavado': '2 años', 'ultima_visita_odonto': '15/10/2025',
+    'conducta_vacunas': 'Esquema de vacunación al día según el PAI.'
+  };
+
+  Object.entries(fieldsVal).forEach(([idOrName, val]) => {
+    const el = form.elements[idOrName] || document.getElementById(idOrName);
+    if (!el) return;
+    if (typeof val === 'boolean') {
+      el.checked = val;
+    } else {
+      el.value = val;
+    }
+  });
+
+  // Selectores y opciones de ejemplo
+  const demoSelects = {
+    'medicina_prepagada': 'si',
+    'parto': 'normal',
+    'gestacion': 'termino',
+    'lactancia': 'si',
+    'tetero': 'si',
+    'hospitalizado': 'no',
+    'frecuencia_cepillado': '3',
+    'no_le_gusta': 'si',
+    'caries': 'no',
+    'odonto_control': 'si',
+    'vacunas_esquema': 'si',
+    'doc_curva': 'si', 'doc_crecimiento': 'si', 'doc_registro': 'si',
+    'doc_tarjeta': 'no', 'doc_vacunas': 'si', 'doc_audio': 'si',
+    'doc_odont': 'si', 'doc_medico': 'si', 'doc_eps': 'si',
+    'doc_fotos': 'si', 'doc_cedulas': 'si', 'doc_foto9x13': 'si'
+  };
+
+  Object.entries(demoSelects).forEach(([name, val]) => {
+    const el = form.elements[name] || document.getElementById(name);
+    if (el) el.value = val;
+  });
+
+  updateAllSelectHelp();
+  updateProgress();
+}
+
+// ==================== PERSISTENCIA (LocalStorage) ====================
+function saveDraft() {
+  const form = document.getElementById('admissionForm');
+  const data = {};
+
+  Array.from(form.elements).forEach(el => {
+    if (!el.name) return;
+    if (el.type === 'checkbox') {
+      data[el.name] = el.checked;
+    } else if (el.type === 'radio') {
+      if (el.checked) data[el.name] = el.value;
+    } else if (el.type !== 'file') {
+      data[el.name] = el.value;
+    }
+  });
+
+  const photo = document.getElementById('photoPreview');
+  if (photo && photo.src && photo.style.display !== 'none') {
+    data['__photo__'] = photo.src;
+  }
+
+  ['sigPapa', 'sigMama', 'sigDirector'].forEach(id => {
+    if (signatureCanvases[id] && signatureCanvases[id].hasDrawn) {
+      const c = document.getElementById(id);
+      if (c) data['__sig_' + id + '__'] = c.toDataURL('image/png');
+    }
+  });
+
+  localStorage.setItem('mlas_inscripcion_borrador', JSON.stringify(data));
+  alert('✅ Borrador guardado localmente en su navegador.');
+}
+
+function loadDraft() {
+  const raw = localStorage.getItem('mlas_inscripcion_borrador');
+  if (!raw) {
+    alert('ℹ️ No hay ningún borrador guardado en este navegador.');
+    return;
+  }
+  try {
+    const data = JSON.parse(raw);
+    const form = document.getElementById('admissionForm');
+
+    Object.entries(data).forEach(([key, val]) => {
+      if (key === '__photo__') {
+        const photo = document.getElementById('photoPreview');
+        const hint = document.querySelector('.photo .hint');
+        if (photo && val) {
+          photo.src = val;
+          photo.style.display = 'block';
+          if (hint) hint.style.display = 'none';
+        }
+        return;
+      }
+
+      if (key.startsWith('__sig_') && key.endsWith('__')) {
+        const sigId = key.substring(6, key.length - 2);
+        if (val) loadSignatureFromDataUrl(sigId, val);
+        return;
+      }
+
+      const els = form.elements[key];
+      if (!els) return;
+
+      if (els instanceof RadioNodeList || els.length) {
+        const r = form.querySelector(`input[name="${key}"][value="${val}"]`);
+        if (r) r.checked = true;
+      } else if (els.type === 'checkbox') {
+        els.checked = !!val;
+      } else {
+        els.value = val;
+        if (els.classList && els.classList.contains('in-fecha')) {
+          validarFecha(els);
+        }
+      }
+    });
+
+    updateAllSelectHelp();
+    updateProgress();
+    alert('✅ Borrador cargado con éxito.');
+  } catch (err) {
+    alert('⚠️ Error al cargar el borrador.');
+  }
+}
+
+function resetFormWithConfirm() {
+  if (confirm('¿Está seguro de que desea limpiar todos los campos del formulario?')) {
+    document.getElementById('admissionForm').reset();
+    clearAllSignatures();
+    removePhoto();
+    updateProgress();
+    setTimeout(updateAllSelectHelp, 10);
+  }
+}
+
+// ==================== INICIALIZACIÓN ====================
+
+// ==================== CONTROL DE ZOOM INTERACTIVO ====================
+let currentZoom = parseFloat(localStorage.getItem('mlas_inscripcion_zoom')) || 1.15;
+
+window.cambiarZoom = function(delta) {
+  currentZoom = Math.min(1.5, Math.max(0.85, Math.round((currentZoom + delta) * 100) / 100));
+  window.aplicarZoom();
+};
+
+window.resetZoom = function() {
+  currentZoom = 1.0;
+  window.aplicarZoom();
+};
+
+window.aplicarZoom = function() {
+  document.documentElement.style.setProperty('--escala-pantalla', currentZoom);
+  const doc = document.getElementById('admissionForm') || document.querySelector('.document');
+  if (doc) {
+    doc.style.zoom = currentZoom;
+  }
+  const el = document.getElementById('zoomLevel');
+  if (el) el.textContent = `${Math.round(currentZoom * 100)}%`;
+  localStorage.setItem('mlas_inscripcion_zoom', currentZoom);
+  setTimeout(() => {
+    window.dispatchEvent(new Event('resize'));
+  }, 60);
+};
+
+window.addEventListener('beforeprint', () => {
+  const doc = document.getElementById('admissionForm') || document.querySelector('.document');
+  if (doc) doc.style.zoom = '1';
+});
+
+window.addEventListener('afterprint', () => {
+  const doc = document.getElementById('admissionForm') || document.querySelector('.document');
+  if (doc) doc.style.zoom = currentZoom;
+});
+
+// ==================== MODO DE PRUEBAS / QA ====================
+function verificarModoPrueba() {
+  // Limpiar cualquier residuo previo en localStorage para que nunca persista al recargar sin parámetros
+  try {
+    localStorage.removeItem('mlas_modo_prueba');
+  } catch (e) {}
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const hash = (window.location.hash || '').toLowerCase();
+
+  const testVal = urlParams.get('test');
+  const demoVal = urlParams.get('demo');
+  const pruebaVal = urlParams.get('prueba');
+  const modoVal = (urlParams.get('modo') || '').toLowerCase();
+
+  const esPrueba = (urlParams.has('test') && testVal !== '0' && testVal !== 'false') ||
+                   (urlParams.has('demo') && demoVal !== '0' && demoVal !== 'false') ||
+                   (urlParams.has('prueba') && pruebaVal !== '0' && pruebaVal !== 'false') ||
+                   (modoVal === 'prueba' || modoVal === 'test' || modoVal === 'demo') ||
+                   (hash === '#test' || hash === '#demo' || hash === '#prueba');
+
+  const btnDemo = document.getElementById('btn-demo') || document.querySelector('.btn-demo');
+  if (btnDemo) {
+    btnDemo.style.display = esPrueba ? 'inline-flex' : 'none';
+  }
+}
+
+window.activarModoPrueba = function() {
+  const btnDemo = document.getElementById('btn-demo') || document.querySelector('.btn-demo');
+  if (btnDemo) btnDemo.style.display = 'inline-flex';
+  alert('🛠️ Modo de pruebas activado en esta vista.');
+};
+
+window.desactivarModoPrueba = function() {
+  const btnDemo = document.getElementById('btn-demo') || document.querySelector('.btn-demo');
+  if (btnDemo) btnDemo.style.display = 'none';
+  alert('🔒 Modo de pruebas desactivado: botón oculto.');
+};
+
+// Atajo secreto de teclado: Ctrl + Shift + D
+window.addEventListener('keydown', (e) => {
+  if (e.ctrlKey && e.shiftKey && (e.key === 'D' || e.key === 'd')) {
+    e.preventDefault();
+    const btnDemo = document.getElementById('btn-demo') || document.querySelector('.btn-demo');
+    if (btnDemo) {
+      const visible = window.getComputedStyle(btnDemo).display !== 'none';
+      btnDemo.style.display = visible ? 'none' : 'inline-flex';
+    }
+  }
+});
+window.addEventListener('hashchange', verificarModoPrueba);
+window.addEventListener('popstate', verificarModoPrueba);
+
+window.addEventListener('load', () => {
+  verificarModoPrueba();
+  window.aplicarZoom();
+  initDatepickerDOM();
+  ['sigPapa', 'sigMama', 'sigDirector'].forEach(setupSignature);
+
+  // Configurar máscara automática DD/MM/AAAA y botones de calendario
+  document.querySelectorAll('.in-fecha').forEach(input => {
+    const contenedor = input.closest('.campo-fecha');
+    const btn = contenedor ? contenedor.querySelector('.btn-cal') : null;
+
+    if (btn) {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (datepickerPopover && datepickerPopover.classList.contains('activo') && inputFechaActivo === input) {
+          cerrarCalendarioInsc();
+        } else {
+          abrirCalendarioInsc(input);
+        }
+      });
+    }
+
+    input.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (datepickerPopover && datepickerPopover.classList.contains('activo') && inputFechaActivo === input) {
+        // Ya está abierto sobre este campo
+      } else {
+        abrirCalendarioInsc(input);
+      }
+    });
+
+    input.addEventListener('input', () => {
+      let v = input.value.replace(/[^\d]/g, '');
+      if (v.length > 8) v = v.slice(0, 8);
+
+      if (v.length >= 5) {
+        input.value = v.slice(0, 2) + '/' + v.slice(2, 4) + '/' + v.slice(4);
+      } else if (v.length >= 3) {
+        input.value = v.slice(0, 2) + '/' + v.slice(2);
+      } else {
+        input.value = v;
+      }
+
+      if (input.value.length === 10) {
+        validarFecha(input);
+      } else if (input.value.length === 0) {
+        input.classList.remove('fecha-invalida', 'fecha-valida');
+      }
+    });
+
+    input.addEventListener('blur', () => {
+      validarFecha(input);
+    });
+  });
+
+  // Configurar selectores de ayuda (placeholder interactivo para sexo, RH, etc.)
+  document.querySelectorAll('select.select-as-help').forEach(sel => {
+    syncSelectHelp(sel);
+    sel.addEventListener('change', () => syncSelectHelp(sel));
+    sel.addEventListener('input', () => syncSelectHelp(sel));
+  });
+
+  // Escuchar cambios para actualizar progreso en vivo
+  document.getElementById('admissionForm').addEventListener('input', updateProgress);
+  document.getElementById('admissionForm').addEventListener('change', updateProgress);
+
+  // Auto-ajuste de canvas ante redimensionamiento de ventana (preservando firmas)
+  window.addEventListener('resize', () => {
+    ['sigPapa', 'sigMama', 'sigDirector'].forEach(id => {
+      const canvas = document.getElementById(id);
+      if (!canvas) return;
+      const hasDrawn = signatureCanvases[id] && signatureCanvases[id].hasDrawn;
+      const prevData = hasDrawn ? canvas.toDataURL() : null;
+      const rect = canvas.getBoundingClientRect();
+      if (rect.width === 0) return;
+      const ratio = Math.max(window.devicePixelRatio || 1, 1);
+      canvas.width = rect.width * ratio;
+      canvas.height = rect.height * ratio;
+      const ctx = canvas.getContext('2d');
+      ctx.scale(ratio, ratio);
+      ctx.lineWidth = 2.2;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.strokeStyle = '#0f2b5f';
+      if (prevData) {
+        loadSignatureFromDataUrl(id, prevData);
+      }
+    });
+  });
+
+
+
+  updateProgress();
+});
+</script>
+</body>
+</html>

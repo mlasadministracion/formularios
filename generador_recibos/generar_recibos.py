@@ -16,9 +16,10 @@ from weasyprint import HTML
 import requests
 import config
 
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ARCHIVO_EXCEL = "https://docs.google.com/spreadsheets/d/1w7X_XNzXVqcvLIP5UThRDaPcZPwzbTXa/export?format=xlsx"
-TEMPLATE_HTML = "recibo_template.html"
-CARPETA_BASE = "recibos"
+TEMPLATE_HTML = os.path.join(SCRIPT_DIR, "recibo_template.html")
+CARPETA_BASE = os.path.join(SCRIPT_DIR, "recibos")
 COLUMNA_FIN = "V"
 FILA_ETIQUETAS = 3
 FILA_BUSQUEDA = 4

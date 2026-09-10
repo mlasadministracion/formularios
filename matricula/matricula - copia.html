@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hoja de Matrícula 2026 - My Little Artists School</title>
+<style>
+  :root{
+    --azul:#0f2b5f;
+    --naranja:#db662c;
+    --verde:#366430;
+    --borde:#b9c0c7;
+    --texto:#20303c;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:#e9edf0;
+    font-family:Arial, Helvetica, sans-serif;
+    color:var(--texto);
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+  /* Vista en pantalla: formulario responsive */
+  @media screen{
+    body{
+      overflow-x: hidden;
+      padding: 20px 10px;
+    }
+  }
+
+  /* Botón de imprimir (solo en pantalla) */
+  .barra-acciones{
+    text-align:center;
+    margin:24px auto 40px;
+  }
+  .btn-imprimir{
+    background:var(--azul);
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    padding:12px 28px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 2px 6px rgba(0,0,0,.2);
+    transition:background .15s, transform .1s;
+  }
+  .btn-imprimir:hover{ background:#163a72; }
+  .btn-imprimir:active{ transform:scale(0.98); }
+
+  .hoja{
+    width:100%;
+    max-width:820px;
+    min-height:1060px;          /* proporción carta 8.5x11 */
+    margin:24px auto;
+    background:#fff;
+    padding:26px 30px 30px;
+    border:1px solid #ccc;
+    box-shadow:0 2px 10px rgba(0,0,0,.12);
+    display:flex;
+    flex-direction:column;
+    box-sizing:border-box;
+  }
+
+  /* ---------- Cabecera ---------- */
+  .cabecera{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:16px;
+  }
+  .logo{
+    flex:0 0 auto;
+  }
+  .logo img{
+    width:96px;
+    height:auto;
+    display:block;
+  }
+  h1.titulo{
+    flex:1;
+    text-align:center;
+    color:var(--azul);
+    font-size:30px;
+    letter-spacing:1px;
+    margin:6px 0 0;
+    font-weight:800;
+  }
+  .folio{
+    border:1.5px solid var(--azul);
+    border-radius:4px;
+    padding:8px 12px;
+    font-size:12px;
+    font-weight:bold;
+    min-width:180px;
+    line-height:2.1;
+  }
+  .folio span{color:var(--azul);}
+  .campo{
+    display:inline-block;
+    border-bottom:1px solid #333;
+    min-width:80px;
+  }
+  .folio .campo{border-bottom:1px dotted #333;}
+
+  input.in, input.in-cell, input.in-inline, input.in-folio, select.in-inline, select.in{
+    border:none;
+    background:transparent;
+    font-family:inherit;
+    color:#000;
+    outline:none;
+    padding:0;
+  }
+  input.in, select.in{                 /* debajo de una etiqueta */
+    display:block;
+    width:100%;
+    height:22px;
+    font-size:11px;
+    font-weight:normal;
+  }
+  select.in{
+    cursor:pointer;
+  }
+  input.in-cell{            /* llena la celda (familiares/escolaridad) */
+    display:block;
+    width:100%;
+    height:38px;
+    font-size:11px;
+    font-weight:normal;
+  }
+  input.in-inline, select.in-inline{          /* en línea con subrayado */
+    border-bottom:1px solid #333;
+    font-size:11px;
+    font-weight:normal;
+  }
+  select.in-inline{
+    cursor:pointer;
+    height:20px;
+    vertical-align:baseline;
+  }
+  .in-doc-tipo{ width:155px; }
+  .in-doc-num{ width:110px; }
+  .doc-tipo-print{ display: none; }
+  /* Campos de documento en datos familiares */
+  .campo-doc-fam{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+    height: 38px;
+    box-sizing: border-box;
+  }
+  .in-doc-tipo-fam{
+    border: none;
+    border-bottom: 1px solid #999;
+    background: transparent;
+    font-family: inherit;
+    font-size: 11px;
+    color: #000;
+    outline: none;
+    cursor: pointer;
+    height: 22px;
+    width: 52px;
+    flex: 0 0 52px;
+    padding: 0 2px;
+  }
+  .in-doc-num-fam{
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 11px;
+    color: #000;
+    outline: none;
+    height: 22px;
+    flex: 1;
+    min-width: 0;
+    padding: 0 2px;
+  }
+  .doc-fam-print, .genero-print{ display: none; }
+  .in-resp{ width:60%; }
+  .in-acu{ width:100%; }
+  .in-grado{ width:300px; }
+  input.in-folio{
+    border-bottom:1px dotted #333;
+    width:90px;
+    font-size:11px;
+    color:#000;
+  }
+  input:focus, select:focus{ background:#eef4ff; }
+  input::placeholder{ color:#9aa4ad; font-style:italic; font-weight:normal; }
+
+  /* ---------- Campos de fecha y calendario ---------- */
+  .campo-fecha{
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+  .campo-fecha input.in{
+    flex: 1;
+    padding-right: 22px;
+  }
+  .campo-fecha input.in-cell{
+    flex: 1;
+    padding-right: 22px;
+  }
+  .btn-cal{
+    position: absolute;
+    right: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 1;
+    padding: 2px;
+    opacity: 0.6;
+    transition: opacity .15s, transform .1s;
+    user-select: none;
+  }
+  .btn-cal:hover{
+    opacity: 1;
+    transform: translateY(-50%) scale(1.15);
+  }
+  .campo-fecha input.fecha-invalida{
+    border-bottom: 2px solid #e2231a !important;
+    background: #fff2f2 !important;
+    color: #c01810 !important;
+  }
+  .campo-fecha input.fecha-valida{
+    border-bottom: 1.5px solid #366430 !important;
+  }
+
+  /* Popover flotante del calendario */
+  .datepicker-popover{
+    position: absolute;
+    z-index: 9999;
+    background: #ffffff;
+    border: 1.5px solid var(--azul);
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(15, 43, 95, 0.22);
+    width: 260px;
+    padding: 10px 12px 12px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: var(--texto);
+    display: none;
+    box-sizing: border-box;
+  }
+  .datepicker-popover.activo{
+    display: block;
+  }
+  .dp-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+  .dp-nav{
+    background: #f0f4f8;
+    border: 1px solid var(--borde);
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 13px;
+    color: var(--azul);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .15s, color .15s;
+    user-select: none;
+  }
+  .dp-nav:hover{
+    background: var(--azul);
+    color: #fff;
+  }
+  .dp-selectores{
+    display: flex;
+    gap: 4px;
+    flex: 1;
+    justify-content: center;
+  }
+  .dp-select{
+    font-size: 11px;
+    font-family: inherit;
+    border: 1px solid var(--borde);
+    border-radius: 4px;
+    padding: 2px 4px;
+    background: #fff;
+    color: var(--azul);
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+  }
+  .dp-weekdays{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: bold;
+    font-size: 9.5px;
+    color: #666;
+    margin-bottom: 4px;
+  }
+  .dp-days{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+  }
+  .dp-day{
+    text-align: center;
+    height: 25px;
+    line-height: 25px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 11px;
+    transition: background .12s, color .12s;
+    user-select: none;
+  }
+  .dp-day:hover{
+    background: #e2ecf8;
+    color: var(--azul);
+    font-weight: bold;
+  }
+  .dp-day.otro-mes{
+    color: #ccc;
+  }
+  .dp-day.seleccionado{
+    background: var(--azul) !important;
+    color: #ffffff !important;
+    font-weight: bold;
+  }
+  .dp-day.hoy{
+    border: 1.5px solid var(--naranja);
+    font-weight: bold;
+  }
+  .dp-footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1px solid #eef2f5;
+  }
+  .dp-btn-aux{
+    background: none;
+    border: none;
+    color: var(--azul);
+    font-size: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 3px 6px;
+    border-radius: 3px;
+  }
+  .dp-btn-aux:hover{
+    background: #eef4ff;
+    text-decoration: underline;
+  }
+  .dp-btn-aux.limpiar{
+    color: #c01810;
+  }
+  .separador{
+    border:none;border-top:2px dotted var(--naranja);
+    margin:14px 0 18px;
+  }
+
+  /* ---------- Secciones ---------- */
+  .barra{
+    color:#fff;
+    text-align:center;
+    font-weight:bold;
+    letter-spacing:2px;
+    padding:6px;
+    font-size:14px;
+    margin-top:16px;
+  }
+  .barra--azul{background:var(--azul);}
+  .barra--naranja{background:var(--naranja);}
+  .barra--verde{background:var(--verde);}
+
+  .tabla-contenedor{
+    width:100%;
+  }
+
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:11px;
+    table-layout:fixed;
+  }
+  td{
+    border:1px solid var(--borde);
+    height:46px;
+    vertical-align:top;
+    padding:4px 6px;
+    font-weight:bold;
+  }
+  td .val{
+    display:block;
+    font-weight:normal;
+    height:22px;
+  }
+  td .val-doc{
+    margin-top:14px;
+    line-height:2.4;
+  }
+  .label-col{background:#fff;}
+
+  /* Estudiante: quitar bordes externos superpuestos con la barra */
+  .tabla-sec td{border-color:var(--borde);}
+
+  /* ---------- Datos familiares ---------- */
+  .fam thead td{
+    text-align:center;
+    height:34px;
+    background:#f3f5f7;
+  }
+  .fam .sub{
+    font-weight:normal;
+    font-style:italic;
+    font-size:9px;
+    color:#555;
+    display:block;
+  }
+  .fam td.rot{width:150px;}
+  .verde-línea{
+    border:none;border-top:3px solid var(--verde);
+    margin:0 0 4px;
+  }
+  td.acu, td.resp{
+    vertical-align:middle;
+    font-weight:bold;
+    font-size:11px;
+    height:38px;
+  }
+  td.acu .campo, td.resp .campo{min-width:90px;}
+
+  /* ---------- Escolaridad ---------- */
+  td.grado{
+    text-align:center;
+    font-weight:bold;
+    font-size:12px;
+    height:30px;
+    vertical-align:middle;
+  }
+  .campo-largo{min-width:300px;}
+
+  /* ---------- Texto legal ---------- */
+  .legal{
+    font-size:9.5px;
+    text-align:justify;
+    line-height:1.5;
+    margin-top:18px;
+    color:#333;
+  }
+  .legal p{margin:0 0 10px;}
+  .legal b{color:#000;}
+
+  /* ---------- Firmas ---------- */
+  .firmas{
+    display:flex;
+    flex-direction:column;
+    gap:26px;
+    margin-top:auto;            /* empuja las firmas hacia el pie */
+    padding-top:30px;
+    text-align:center;
+    font-size:10px;
+  }
+  .firma-fila{
+    display:flex;
+    justify-content:space-between;
+    gap:50px;
+  }
+  .firma{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .firma .linea{
+    border-top:1px solid #000;
+    width:100%;
+    margin-top:26px;
+  }
+  .firma .rol{
+    font-weight:bold;
+    margin-top:4px;
+    font-size:10px;
+  }
+  .firma .nombre{
+    font-weight:bold;
+    font-size:9.5px;
+    margin-top:4px;
+  }
+
+  /* =========================================
+     ADAPTABILIDAD RESPONSIVA (PANTALLAS)
+     ========================================= */
+
+  /* Pantallas grandes de escritorio */
+  @media screen and (min-width: 1400px){
+    .hoja{ zoom: 1.25; }
+  }
+
+  /* Tablets y pantallas medianas */
+  @media screen and (max-width: 860px){
+    .hoja{
+      margin: 14px auto;
+      padding: 22px 20px 24px;
+    }
+  }
+
+  /* Móviles y pantallas estrechas (<= 768px) */
+  @media screen and (max-width: 768px){
+    body{
+      padding: 10px 8px;
+    }
+    .hoja{
+      padding: 16px 14px 20px;
+      margin: 8px auto;
+      min-height: auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+    .cabecera{
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+    }
+    .logo{
+      margin: 0 auto;
+    }
+    .logo img{
+      width: 80px;
+    }
+    h1.titulo{
+      font-size: 22px;
+      margin: 2px 0;
+      line-height: 1.25;
+    }
+    .folio{
+      width: 100%;
+      max-width: 290px;
+      text-align: center;
+      padding: 6px 10px;
+      line-height: 2;
+    }
+    .folio .in-folio{
+      width: 110px;
+    }
+
+    /* Tablas con desplazamiento suave en móvil */
+    .tabla-contenedor{
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 2px;
+      border: 1px solid var(--borde);
+      border-top: none;
+    }
+    .tabla-contenedor table{
+      border: none;
+    }
+    .fam{
+      min-width: 620px;
+    }
+    .fam td.rot{
+      position: sticky;
+      left: 0;
+      background: #f8fafc;
+      z-index: 2;
+      box-shadow: 2px 0 4px rgba(0,0,0,0.06);
+    }
+    .fam thead td:first-child{
+      position: sticky;
+      left: 0;
+      background: #f3f5f7;
+      z-index: 3;
+    }
+    .tabla-escolaridad{
+      min-width: 480px;
+    }
+
+    input.in, input.in-cell, input.in-inline, input.in-folio, select.in-inline, select.in{
+      font-size: 16px;
+    }
+    input.in, select.in{ height: 26px; }
+    input.in-cell{ height: 38px; }
+    select.in-inline{ height: 28px; }
+    .in-doc-tipo-fam, .in-doc-num-fam{
+      font-size: 16px;
+    }
+    .in-doc-tipo-fam{
+      height: 30px;
+      width: 58px;
+      flex: 0 0 58px;
+    }
+    .in-doc-num-fam{
+      height: 30px;
+    }
+
+    /* Texto legal legible en móvil */
+    .legal{
+      font-size: 11px;
+      line-height: 1.55;
+      margin-top: 14px;
+    }
+
+    /* Botón flotante accesible */
+    .barra-acciones{
+      position: sticky;
+      bottom: 12px;
+      z-index: 90;
+      margin: 16px auto;
+    }
+    .btn-imprimir{
+      width: 100%;
+      max-width: 260px;
+      padding: 14px 24px;
+      font-size: 16px;
+      border-radius: 30px;
+      box-shadow: 0 4px 16px rgba(15,43,95,.35);
+    }
+  }
+
+  /* Móviles estándar y pequeños (<= 640px) */
+  @media screen and (max-width: 640px){
+    /* Adaptar tabla del estudiante a bloques fluidos */
+    .tabla-sec,
+    .tabla-sec tbody,
+    .tabla-sec tr{
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+    .tabla-sec td{
+      box-sizing: border-box;
+      height: auto;
+      min-height: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .tabla-sec td[colspan="10"]{
+      flex: 0 0 100%;
+      width: 100%;
+    }
+    .tabla-sec td[colspan="20"]{
+      flex: 0 0 100%;
+      width: 100%;
+    }
+    .tabla-sec td[colspan="5"]{
+      flex: 0 0 50%;
+      width: 50%;
+    }
+    .val-doc{
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      margin-top: 6px;
+      line-height: normal;
+    }
+    .in-doc-tipo, .in-doc-num{
+      width: auto;
+      min-width: 90px;
+      flex: 1;
+    }
+    .in-resp{
+      width: calc(100% - 155px);
+      min-width: 120px;
+    }
+    .in-acu{
+      width: calc(100% - 135px);
+      min-width: 90px;
+    }
+    td.grado{
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: auto;
+      padding: 10px 6px;
+    }
+    .in-grado{
+      width: 100%;
+      max-width: 280px;
+      text-align: center;
+    }
+
+    /* Firmas apiladas en móvil */
+    .firmas{
+      gap: 20px;
+      padding-top: 20px;
+    }
+    .firma-fila{
+      flex-direction: column;
+      gap: 20px;
+    }
+    .firma{
+      width: 100%;
+      max-width: 320px;
+      margin: 0 auto;
+    }
+    .firma .linea{
+      margin-top: 20px;
+    }
+    .firma .rol{
+      margin-top: 4px;
+    }
+  }
+
+  /* Móviles muy compactos (<= 420px) */
+  @media screen and (max-width: 420px){
+    .tabla-sec td[colspan="5"]{
+      flex: 0 0 100%;
+      width: 100%;
+    }
+  }
+
+  /* =========================================
+     IMPRESIÓN (Mantiene fidelidad estricta 1 hoja)
+     ========================================= */
+  @media print{
+    @page{ size:Letter portrait; margin:8mm; }
+    html,body{background:#fff; padding:0; margin:0;}
+    .barra-acciones{ display:none !important; }
+    input::placeholder{ color:transparent !important; }
+    .hoja{
+      box-shadow:none !important;
+      border:none !important;
+      margin:0 auto !important;
+      width:820px !important;
+      max-width:820px !important;
+      min-height:0 !important;             /* sin altura forzada al imprimir */
+      padding:0 !important;
+      zoom:0.80 !important;                /* ajusta todo a una sola hoja */
+    }
+    /* Compactar espacios verticales para aprovechar la página */
+    .barra{margin-top:10px !important;}
+    .separador{margin:10px 0 12px !important;}
+    .legal{margin-top:12px !important; font-size:9.5px !important;}
+    .legal p{margin-bottom:7px !important;}
+    .firmas{
+      display:flex !important;
+      flex-direction:column !important;
+      gap:14px !important;
+      padding-top:16px !important;
+      margin-top:auto !important;
+    }
+    .firma-fila{
+      display:flex !important;
+      flex-direction:row !important;
+      justify-content:space-between !important;
+      gap:40px !important;
+    }
+    .firma{
+      flex:1 !important;
+      width:auto !important;
+    }
+    .firma .linea{
+      margin-top:18px !important;
+      border-top:1px solid #000 !important;
+      width:100% !important;
+    }
+    .firma .rol{
+      margin-top:3px !important;
+      font-size:9.5px !important;
+    }
+    .firma .nombre{
+      margin-top:3px !important;
+      font-size:9.5px !important;
+    }
+    /* Evitar cortes de sección entre páginas */
+    table, .firmas, .legal{ break-inside:avoid; page-break-inside:avoid; }
+    .tabla-contenedor{
+      overflow:visible !important;
+      border:none !important;
+    }
+    .tabla-sec, .tabla-sec tbody, .tabla-sec tr, .tabla-sec td{
+      display:table !important;
+    }
+    .tabla-sec tbody{ display:table-row-group !important; }
+    .tabla-sec tr{ display:table-row !important; }
+    .tabla-sec td{
+      display:table-cell !important;
+      height:46px !important;
+    }
+    .fam{ min-width:0 !important; width:100% !important; }
+    .fam td.rot, .fam thead td:first-child{
+      position:static !important;
+      box-shadow:none !important;
+      background:transparent !important;
+    }
+    .fam thead td{ background:#f3f5f7 !important; }
+    .tabla-escolaridad{ min-width:0 !important; width:100% !important; }
+    td.grado{ display:table-cell !important; height:30px !important; }
+    .in-grado{ width:300px !important; }
+    .in-doc-tipo{ width:155px !important; }
+    .in-doc-num{ width:110px !important; }
+    .in-resp{ width:60% !important; }
+    .in-acu{ width:100% !important; }
+    .val-doc{ display:block !important; margin-top:14px !important; line-height:2.4 !important; }
+    input.in, input.in-cell, input.in-inline, input.in-folio{
+      font-size:11px !important;
+    }
+    input.in{ height:22px !important; }
+    input.in-cell{ height:38px !important; }
+    select.in-doc-tipo{
+      display: none !important;
+    }
+    .doc-tipo-print{
+      display: inline-block !important;
+      min-width: 50px;
+      border-bottom: 1px solid #333 !important;
+      text-align: center;
+      font-size: 11px !important;
+      font-weight: bold;
+      color: #000 !important;
+      padding: 0 4px;
+      vertical-align: baseline;
+      line-height: 1.2;
+    }
+    select.in-doc-tipo-fam{
+      display: none !important;
+    }
+    .doc-fam-print{
+      display: inline-block !important;
+      min-width: 32px;
+      border-bottom: 1px solid #333 !important;
+      text-align: center;
+      font-size: 11px !important;
+      font-weight: bold;
+      color: #000 !important;
+      padding: 0 2px;
+      line-height: 1.2;
+    }
+    .campo-doc-fam{
+      height: 38px !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+    }
+    .in-doc-num-fam{
+      font-size: 11px !important;
+      height: 22px !important;
+      flex: 1 !important;
+    }
+    select.in-genero{
+      display: none !important;
+    }
+    .genero-print{
+      display: block !important;
+      width: 100% !important;
+      height: 22px !important;
+      font-size: 11px !important;
+      font-weight: normal !important;
+      color: #000 !important;
+      line-height: 22px !important;
+    }
+    .btn-cal, .datepicker-popover{
+      display: none !important;
+    }
+    .campo-fecha input.in, .campo-fecha input.in-cell{
+      padding-right: 0 !important;
+    }
+    .campo-fecha input.fecha-invalida, .campo-fecha input.fecha-valida{
+      border-bottom: 1px solid #333 !important;
+      background: transparent !important;
+      color: #000 !important;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="hoja">
+    <form id="form-matricula" method="POST" action="">
+
+    <!-- CABECERA -->
+    <div class="cabecera">
+      <div class="logo">
+        <img src="logo.png" alt="My Little Artists School">
+      </div>
+      <h1 class="titulo">HOJA DE MATRÍCULA 2026</h1>
+      <div class="folio">
+        <span>Folio:</span> <input type="text" id="folio" name="folio" class="in-folio" placeholder="Ej. 001"><br>
+        <span>Matrícula Nº:</span> <input type="text" id="matricula_numero" name="matricula_numero" class="in-folio" placeholder="Ej. 2026-001">
+      </div>
+    </div>
+    <hr class="separador">
+
+    <!-- DATOS DEL ESTUDIANTE -->
+    <div class="barra barra--azul">DATOS DEL ESTUDIANTE</div>
+    <table class="tabla-sec">
+      <tr>
+        <td colspan="10">APELLIDOS<input type="text" id="estudiante_apellidos" name="estudiante_apellidos" class="in" placeholder="Apellidos del estudiante"></td>
+        <td colspan="10">NOMBRES<input type="text" id="estudiante_nombres" name="estudiante_nombres" class="in" placeholder="Nombres del estudiante"></td>
+      </tr>
+      <tr>
+        <td colspan="10">DOCUMENTO DE IDENTIDAD
+          <span class="val val-doc">Tipo de doc.:
+            <select id="estudiante_doc_tipo" name="estudiante_doc_tipo" class="in-inline in-doc-tipo">
+              <option value="" selected>Seleccione...</option>
+              <option value="RC">RC - Registro Civil</option>
+              <option value="TI">TI - Tarjeta de Identidad</option>
+              <option value="CC">CC - Cédula de Ciudadanía</option>
+              <option value="CE">CE - Cédula de Extranjería</option>
+              <option value="PA">PA - Pasaporte</option>
+              <option value="PPT">PPT - Permiso Protección Temporal</option>
+              <option value="PEP">PEP - Permiso Especial de Permanencia</option>
+              <option value="VISA">VISA - Visa</option>
+              <option value="NUIP">NUIP - No. Único Identificación</option>
+              <option value="NES">NES - Número Establecido Secretaría</option>
+            </select>
+            <span class="doc-tipo-print" id="doc_tipo_print">&nbsp;</span>
+            Nº: <input type="text" id="estudiante_doc_numero" name="estudiante_doc_numero" class="in-inline in-doc-num" placeholder="Número">
+          </span></td>
+        <td colspan="5">EPS<input type="text" id="estudiante_eps" name="estudiante_eps" class="in" placeholder="Nombre de la EPS"></td>
+        <td colspan="5">RH<input type="text" id="estudiante_rh" name="estudiante_rh" class="in" placeholder="Ej. O+"></td>
+      </tr>
+      <tr>
+        <td colspan="10">LUGAR DE NACIMIENTO<input type="text" id="estudiante_lugar_nacimiento" name="estudiante_lugar_nacimiento" class="in" placeholder="Ciudad, país"></td>
+        <td colspan="5">DIA / MES / AÑO
+          <div class="campo-fecha">
+            <input type="text" id="estudiante_fecha_nacimiento" name="estudiante_fecha_nacimiento" class="in in-fecha" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off">
+            <button type="button" class="btn-cal" tabindex="-1" title="Seleccionar fecha en calendario">📅</button>
+          </div>
+        </td>
+        <td colspan="5">EDAD<input type="text" id="estudiante_edad" name="estudiante_edad" class="in" placeholder="Años"></td>
+      </tr>
+      <tr>
+        <td colspan="20">DIRECCIÓN<input type="text" id="estudiante_direccion" name="estudiante_direccion" class="in" placeholder="Calle / carrera, número, apto"></td>
+      </tr>
+      <tr>
+        <td colspan="5">CIUDAD<input type="text" id="estudiante_ciudad" name="estudiante_ciudad" class="in" placeholder="Ciudad"></td>
+        <td colspan="5">BARRIO<input type="text" id="estudiante_barrio" name="estudiante_barrio" class="in" placeholder="Barrio"></td>
+        <td colspan="5">TELÉFONO<input type="tel" id="estudiante_telefono" name="estudiante_telefono" class="in" placeholder="Teléfono fijo"></td>
+        <td colspan="5">GÉNERO
+          <select id="estudiante_genero" name="estudiante_genero" class="in in-genero">
+            <option value="" selected>Seleccione...</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+          </select>
+          <span class="genero-print" id="estudiante_genero_print">&nbsp;</span>
+        </td>
+      </tr>
+    </table>
+
+    <!-- DATOS FAMILIARES -->
+    <div class="barra barra--naranja">DATOS FAMILIARES</div>
+    <div class="tabla-contenedor">
+      <table class="fam">
+        <thead>
+          <tr>
+            <td class="rot"></td>
+            <td>PADRE</td>
+            <td>MADRE</td>
+            <td>ACUDIENTE<span class="sub">(DIFERENTE A PADRE O MADRE)</span></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="rot">NOMBRES / APELLIDOS</td><td><input type="text" id="padre_nombres" name="padre_nombres" class="in-cell" placeholder="Nombres y apellidos"></td><td><input type="text" id="madre_nombres" name="madre_nombres" class="in-cell" placeholder="Nombres y apellidos"></td><td><input type="text" id="acudiente_nombres" name="acudiente_nombres" class="in-cell" placeholder="Nombres y apellidos"></td></tr>
+          <tr>
+            <td class="rot">TIPO Y NÚMERO DE DOCUMENTO</td>
+            <td>
+              <div class="campo-doc-fam">
+                <select id="padre_doc_tipo" name="padre_doc_tipo" class="in-doc-tipo-fam">
+                  <option value="" selected>Tipo</option>
+                  <option value="CC">CC</option>
+                  <option value="CE">CE</option>
+                  <option value="PA">PA</option>
+                  <option value="PPT">PPT</option>
+                  <option value="PEP">PEP</option>
+                  <option value="TI">TI</option>
+                  <option value="VISA">VISA</option>
+                  <option value="RC">RC</option>
+                </select>
+                <span class="doc-fam-print" id="padre_doc_tipo_print">&nbsp;</span>
+                <input type="text" id="padre_doc_numero" name="padre_doc_numero" class="in-doc-num-fam" placeholder="Número">
+              </div>
+            </td>
+            <td>
+              <div class="campo-doc-fam">
+                <select id="madre_doc_tipo" name="madre_doc_tipo" class="in-doc-tipo-fam">
+                  <option value="" selected>Tipo</option>
+                  <option value="CC">CC</option>
+                  <option value="CE">CE</option>
+                  <option value="PA">PA</option>
+                  <option value="PPT">PPT</option>
+                  <option value="PEP">PEP</option>
+                  <option value="TI">TI</option>
+                  <option value="VISA">VISA</option>
+                  <option value="RC">RC</option>
+                </select>
+                <span class="doc-fam-print" id="madre_doc_tipo_print">&nbsp;</span>
+                <input type="text" id="madre_doc_numero" name="madre_doc_numero" class="in-doc-num-fam" placeholder="Número">
+              </div>
+            </td>
+            <td>
+              <div class="campo-doc-fam">
+                <select id="acudiente_doc_tipo" name="acudiente_doc_tipo" class="in-doc-tipo-fam">
+                  <option value="" selected>Tipo</option>
+                  <option value="CC">CC</option>
+                  <option value="CE">CE</option>
+                  <option value="PA">PA</option>
+                  <option value="PPT">PPT</option>
+                  <option value="PEP">PEP</option>
+                  <option value="TI">TI</option>
+                  <option value="VISA">VISA</option>
+                  <option value="RC">RC</option>
+                </select>
+                <span class="doc-fam-print" id="acudiente_doc_tipo_print">&nbsp;</span>
+                <input type="text" id="acudiente_doc_numero" name="acudiente_doc_numero" class="in-doc-num-fam" placeholder="Número">
+              </div>
+            </td>
+          </tr>
+          <tr><td class="rot">EXPEDIDA EN</td><td><input type="text" id="padre_doc_expedicion" name="padre_doc_expedicion" class="in-cell" placeholder="Ciudad de expedición"></td><td><input type="text" id="madre_doc_expedicion" name="madre_doc_expedicion" class="in-cell" placeholder="Ciudad de expedición"></td><td><input type="text" id="acudiente_doc_expedicion" name="acudiente_doc_expedicion" class="in-cell" placeholder="Ciudad de expedición"></td></tr>
+          <tr>
+            <td class="rot">FECHA DE NACIMIENTO</td>
+            <td>
+              <div class="campo-fecha">
+                <input type="text" id="padre_fecha_nacimiento" name="padre_fecha_nacimiento" class="in-cell in-fecha" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off">
+                <button type="button" class="btn-cal" tabindex="-1" title="Seleccionar fecha en calendario">📅</button>
+              </div>
+            </td>
+            <td>
+              <div class="campo-fecha">
+                <input type="text" id="madre_fecha_nacimiento" name="madre_fecha_nacimiento" class="in-cell in-fecha" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off">
+                <button type="button" class="btn-cal" tabindex="-1" title="Seleccionar fecha en calendario">📅</button>
+              </div>
+            </td>
+            <td>
+              <div class="campo-fecha">
+                <input type="text" id="acudiente_fecha_nacimiento" name="acudiente_fecha_nacimiento" class="in-cell in-fecha" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off">
+                <button type="button" class="btn-cal" tabindex="-1" title="Seleccionar fecha en calendario">📅</button>
+              </div>
+            </td>
+          </tr>
+          <tr><td class="rot">CORREO ELECTRÓNICO</td><td><input type="email" id="padre_correo" name="padre_correo" class="in-cell" placeholder="correo@ejemplo.com"></td><td><input type="email" id="madre_correo" name="madre_correo" class="in-cell" placeholder="correo@ejemplo.com"></td><td><input type="email" id="acudiente_correo" name="acudiente_correo" class="in-cell" placeholder="correo@ejemplo.com"></td></tr>
+          <tr><td class="rot">TELÉFONO CELULAR</td><td><input type="tel" id="padre_celular" name="padre_celular" class="in-cell" placeholder="Celular"></td><td><input type="tel" id="madre_celular" name="madre_celular" class="in-cell" placeholder="Celular"></td><td><input type="tel" id="acudiente_celular" name="acudiente_celular" class="in-cell" placeholder="Celular"></td></tr>
+          <tr>
+            <td colspan="3" class="resp">Responsable económico: <input type="text" id="responsable_economico" name="responsable_economico" class="in-inline in-resp" placeholder="Nombre completo del responsable"></td>
+            <td colspan="1" class="acu">Parentesco acudiente: <input type="text" id="acudiente_parentesco" name="acudiente_parentesco" class="in-inline in-acu" placeholder="Ej. Tío, abuela"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ESCOLARIDAD -->
+    <div class="barra barra--verde">ESCOLARIDAD</div>
+    <div class="tabla-contenedor">
+      <table class="tabla-escolaridad">
+        <tr>
+          <td colspan="3" class="grado">SE MATRICULA PARA EL GRADO <input type="text" id="grado_matricula" name="grado_matricula" class="in-inline in-grado" placeholder="Ej. Primero, Transición"></td>
+        </tr>
+        <tr>
+          <td style="text-align:center;height:30px;">INSTITUCIÓN DE PROCEDENCIA</td>
+          <td style="text-align:center;">ÚLTIMO GRADO CURSADO</td>
+          <td style="text-align:center;">AÑO</td>
+        </tr>
+        <tr>
+          <td><input type="text" id="institucion_procedencia" name="institucion_procedencia" class="in-cell" placeholder="Nombre de la institución"></td>
+          <td><input type="text" id="ultimo_grado" name="ultimo_grado" class="in-cell" placeholder="Ej. Transición"></td>
+          <td><input type="text" id="ano_escolaridad" name="ano_escolaridad" class="in-cell" placeholder="AAAA"></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- TEXTO LEGAL -->
+    <div class="legal">
+      <p>De acuerdo con el artículo 87 de la Ley General de Educación, los establecimientos educativos deberán contar con un manual de convivencia en el que se definan los derechos y obligaciones de los estudiantes, así como de los padres o tutores. Al firmar la matrícula correspondiente en representación de sus hijos, el padre o acudiente estará aceptando dicho manual.</p>
+      <p>En cumplimiento de la Ley 1581 de 2012 y el Decreto Reglamentario 1377 de 2013, cuyo objetivo es el desarrollo del derecho constitucional de protección de datos personales. Como padre de familia y acudiente, autorizo de manera libre, expresa, voluntaria y debidamente informada a todas las dependencias académicas y/o administrativas de <b>My Little Artists School</b>, en calidad de responsable del tratamiento de datos, para recolectar, recaudar, almacenar, usar, circular, suprimir, procesar, compilar, intercambiar, dar tratamiento, actualizar y disponer de los datos e imágenes que se suministran y que se incorporen en distintas bases o bancos de datos, o en repositorios electrónicos de todo tipo que se señalan en este documento. Los datos personales serán utilizados en el desarrollo de las funciones propias del colegio, de forma directa o a través de terceros. La información será tratada con base en la política de tratamiento de datos personales de <b>My Little Artists School</b>.</p>
+    </div>
+
+    <!-- FIRMAS -->
+    <div class="firmas">
+      <!-- Fila 1: Padres / Acudientes -->
+      <div class="firma-fila">
+        <div class="firma">
+          <div class="linea"></div>
+          <div class="rol">Firma de la Madre</div>
+        </div>
+        <div class="firma">
+          <div class="linea"></div>
+          <div class="rol">Firma Padre / Acudiente</div>
+        </div>
+      </div>
+
+      <!-- Fila 2: Directivas del Colegio -->
+      <div class="firma-fila">
+        <div class="firma">
+          <div class="linea"></div>
+          <div class="nombre">Gloria Amparo Gonzalez Castiblanco</div>
+          <div class="rol">Directora</div>
+        </div>
+        <div class="firma">
+          <div class="linea"></div>
+          <div class="nombre">Katherin Gabriela Acevedo González</div>
+          <div class="rol">Coordinadora académica</div>
+        </div>
+      </div>
+    </div>
+
+    </form>
+  </div>
+
+  <div class="barra-acciones">
+    <button type="button" class="btn-imprimir" onclick="imprimirConValidacion()">🖨️ Imprimir</button>
+  </div>
+
+  <script>
+  (function() {
+    // Meses en español
+    const MESES = [
+      'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+    ];
+    const DIAS_SEMANA = ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá', 'Do'];
+
+    // Crear el elemento popover del calendario dinámicamente
+    const popover = document.createElement('div');
+    popover.id = 'datepicker-popover';
+    popover.className = 'datepicker-popover';
+    popover.innerHTML = `
+      <div class="dp-header">
+        <button type="button" class="dp-nav" id="dp-prev" title="Mes anterior">&lt;</button>
+        <div class="dp-selectores">
+          <select class="dp-select" id="dp-mes"></select>
+          <select class="dp-select" id="dp-anio"></select>
+        </div>
+        <button type="button" class="dp-nav" id="dp-next" title="Mes siguiente">&gt;</button>
+      </div>
+      <div class="dp-weekdays">
+        ${DIAS_SEMANA.map(d => `<span>${d}</span>`).join('')}
+      </div>
+      <div class="dp-days" id="dp-days"></div>
+      <div class="dp-footer">
+        <button type="button" class="dp-btn-aux" id="dp-hoy">Hoy</button>
+        <button type="button" class="dp-btn-aux limpiar" id="dp-limpiar">Borrar</button>
+        <button type="button" class="dp-btn-aux" id="dp-cerrar">Cerrar</button>
+      </div>
+    `;
+    document.body.appendChild(popover);
+
+    const selectMes = popover.querySelector('#dp-mes');
+    const selectAnio = popover.querySelector('#dp-anio');
+    const daysContainer = popover.querySelector('#dp-days');
+    const btnPrev = popover.querySelector('#dp-prev');
+    const btnNext = popover.querySelector('#dp-next');
+    const btnHoy = popover.querySelector('#dp-hoy');
+    const btnLimpiar = popover.querySelector('#dp-limpiar');
+    const btnCerrar = popover.querySelector('#dp-cerrar');
+
+    // Llenar selectores de mes y año
+    MESES.forEach((m, idx) => {
+      const opt = document.createElement('option');
+      opt.value = idx;
+      opt.textContent = m;
+      selectMes.appendChild(opt);
+    });
+
+    const anioActual = new Date().getFullYear();
+    for (let a = anioActual; a >= 1930; a--) {
+      const opt = document.createElement('option');
+      opt.value = a;
+      opt.textContent = a;
+      selectAnio.appendChild(opt);
+    }
+
+    let inputActivo = null;
+    let fechaVista = new Date();
+
+    // Función para verificar si un año es bisiesto
+    function esBisiesto(anio) {
+      return (anio % 4 === 0 && (anio % 100 !== 0 || anio % 400 === 0));
+    }
+
+    // Días de cada mes
+    function diasEnMes(mes, anio) {
+      return [31, esBisiesto(anio) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][mes];
+    }
+
+    // Validar fecha en formato DD/MM/AAAA
+    window.validarFecha = function(input, forzarAlerta = false) {
+      const val = input.value.trim();
+      if (!val) {
+        input.classList.remove('fecha-invalida', 'fecha-valida');
+        input.setCustomValidity('');
+        input.title = '';
+        return true;
+      }
+
+      const match = val.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+      let error = '';
+
+      if (!match) {
+        error = 'Formato incompleto o inválido. Use DD/MM/AAAA (ej. 15/08/2018).';
+      } else {
+        const dia = parseInt(match[1], 10);
+        const mes = parseInt(match[2], 10);
+        const anio = parseInt(match[3], 10);
+        const hoy = new Date();
+
+        if (mes < 1 || mes > 12) {
+          error = 'El mes debe estar entre 01 y 12.';
+        } else if (anio < 1920 || anio > anioActual) {
+          error = `El año debe estar entre 1920 y ${anioActual}.`;
+        } else {
+          const maxDias = diasEnMes(mes - 1, anio);
+          if (dia < 1 || dia > maxDias) {
+            error = `El mes ${MESES[mes - 1]} de ${anio} solo tiene ${maxDias} días.`;
+          } else {
+            const fechaDada = new Date(anio, mes - 1, dia);
+            if (fechaDada > hoy) {
+              error = 'La fecha de nacimiento no puede ser una fecha futura.';
+            }
+          }
+        }
+      }
+
+      if (error) {
+        input.classList.remove('fecha-valida');
+        input.classList.add('fecha-invalida');
+        input.setCustomValidity(error);
+        input.title = error;
+        return false;
+      } else {
+        input.classList.remove('fecha-invalida');
+        input.classList.add('fecha-valida');
+        input.setCustomValidity('');
+        input.title = 'Fecha válida';
+
+        // Auto-cálculo de edad para el estudiante
+        if (input.id === 'estudiante_fecha_nacimiento') {
+          const dia = parseInt(match[1], 10);
+          const mes = parseInt(match[2], 10);
+          const anio = parseInt(match[3], 10);
+          const hoy = new Date();
+          let edad = hoy.getFullYear() - anio;
+          const m = (hoy.getMonth() + 1) - mes;
+          if (m < 0 || (m === 0 && hoy.getDate() < dia)) {
+            edad--;
+          }
+          const edadInput = document.getElementById('estudiante_edad');
+          if (edadInput && edad >= 0 && edad <= 30) {
+            edadInput.value = edad + (edad === 1 ? ' año' : ' años');
+          }
+        }
+        return true;
+      }
+    };
+
+    // Parsear fecha DD/MM/AAAA a objeto Date
+    function parsearFecha(str) {
+      const match = str.trim().match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+      if (!match) return null;
+      const dia = parseInt(match[1], 10);
+      const mes = parseInt(match[2], 10) - 1;
+      const anio = parseInt(match[3], 10);
+      return new Date(anio, mes, dia);
+    }
+
+    // Renderizar días en el popover
+    function renderizarCalendario() {
+      const mes = fechaVista.getMonth();
+      const anio = fechaVista.getFullYear();
+
+      selectMes.value = mes;
+      selectAnio.value = anio;
+      daysContainer.innerHTML = '';
+
+      const fechaInput = inputActivo ? parsearFecha(inputActivo.value) : null;
+      const hoy = new Date();
+
+      // Primer día del mes (0=domingo, ajustar a 0=lunes)
+      const primerDiaObj = new Date(anio, mes, 1);
+      let primerDiaSemana = primerDiaObj.getDay() - 1;
+      if (primerDiaSemana === -1) primerDiaSemana = 6;
+
+      const totalDias = diasEnMes(mes, anio);
+      const mesAnt = mes === 0 ? 11 : mes - 1;
+      const anioAnt = mes === 0 ? anio - 1 : anio;
+      const totalDiasAnt = diasEnMes(mesAnt, anioAnt);
+
+      // Días del mes anterior
+      for (let i = primerDiaSemana - 1; i >= 0; i--) {
+        const diaNum = totalDiasAnt - i;
+        const cell = document.createElement('div');
+        cell.className = 'dp-day otro-mes';
+        cell.textContent = diaNum;
+        cell.addEventListener('click', () => {
+          fechaVista = new Date(anioAnt, mesAnt, diaNum);
+          renderizarCalendario();
+        });
+        daysContainer.appendChild(cell);
+      }
+
+      // Días del mes actual
+      for (let d = 1; d <= totalDias; d++) {
+        const cell = document.createElement('div');
+        cell.className = 'dp-day';
+        cell.textContent = d;
+
+        if (
+          hoy.getDate() === d &&
+          hoy.getMonth() === mes &&
+          hoy.getFullYear() === anio
+        ) {
+          cell.classList.add('hoy');
+          cell.title = 'Hoy';
+        }
+
+        if (
+          fechaInput &&
+          fechaInput.getDate() === d &&
+          fechaInput.getMonth() === mes &&
+          fechaInput.getFullYear() === anio
+        ) {
+          cell.classList.add('seleccionado');
+        }
+
+        cell.addEventListener('click', () => {
+          if (inputActivo) {
+            const dStr = String(d).padStart(2, '0');
+            const mStr = String(mes + 1).padStart(2, '0');
+            inputActivo.value = `${dStr}/${mStr}/${anio}`;
+            window.validarFecha(inputActivo);
+            inputActivo.dispatchEvent(new Event('input', { bubbles: true }));
+            inputActivo.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+          cerrarCalendario();
+        });
+
+        daysContainer.appendChild(cell);
+      }
+
+      // Días del mes siguiente para completar cuadrícula
+      const celdasUsadas = primerDiaSemana + totalDias;
+      const celdasRestantes = (celdasUsadas % 7 === 0) ? 0 : 7 - (celdasUsadas % 7);
+      const mesSig = mes === 11 ? 0 : mes + 1;
+      const anioSig = mes === 11 ? anio + 1 : anio;
+
+      for (let s = 1; s <= celdasRestantes; s++) {
+        const cell = document.createElement('div');
+        cell.className = 'dp-day otro-mes';
+        cell.textContent = s;
+        cell.addEventListener('click', () => {
+          fechaVista = new Date(anioSig, mesSig, s);
+          renderizarCalendario();
+        });
+        daysContainer.appendChild(cell);
+      }
+    }
+
+    function posicionarCalendario(input) {
+      const rect = input.getBoundingClientRect();
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+
+      let top = rect.bottom + scrollY + 4;
+      let left = rect.left + scrollX;
+
+      const popoverWidth = 265;
+      const popoverHeight = 280;
+
+      if (left + popoverWidth > window.innerWidth - 12) {
+        left = Math.max(8, window.innerWidth - popoverWidth - 12 + scrollX);
+      }
+
+      if (rect.bottom + popoverHeight > window.innerHeight && rect.top > popoverHeight) {
+        top = rect.top + scrollY - popoverHeight - 4;
+      }
+
+      popover.style.top = `${top}px`;
+      popover.style.left = `${left}px`;
+    }
+
+    function abrirCalendario(input) {
+      inputActivo = input;
+      const fechaParseada = parsearFecha(input.value);
+
+      if (fechaParseada) {
+        fechaVista = new Date(fechaParseada.getFullYear(), fechaParseada.getMonth(), 1);
+      } else {
+        // Años sugeridos por defecto según el rol del campo
+        if (input.id === 'estudiante_fecha_nacimiento') {
+          fechaVista = new Date(2019, 0, 1);
+        } else {
+          fechaVista = new Date(1988, 0, 1);
+        }
+      }
+
+      renderizarCalendario();
+      posicionarCalendario(input);
+      popover.classList.add('activo');
+    }
+
+    function cerrarCalendario() {
+      popover.classList.remove('activo');
+      inputActivo = null;
+    }
+
+    // Eventos de navegación del popover
+    btnPrev.addEventListener('click', (e) => {
+      e.stopPropagation();
+      fechaVista.setMonth(fechaVista.getMonth() - 1);
+      renderizarCalendario();
+    });
+
+    btnNext.addEventListener('click', (e) => {
+      e.stopPropagation();
+      fechaVista.setMonth(fechaVista.getMonth() + 1);
+      renderizarCalendario();
+    });
+
+    selectMes.addEventListener('change', () => {
+      fechaVista.setMonth(parseInt(selectMes.value, 10));
+      renderizarCalendario();
+    });
+
+    selectAnio.addEventListener('change', () => {
+      fechaVista.setFullYear(parseInt(selectAnio.value, 10));
+      renderizarCalendario();
+    });
+
+    btnHoy.addEventListener('click', () => {
+      if (inputActivo) {
+        const hoy = new Date();
+        const dStr = String(hoy.getDate()).padStart(2, '0');
+        const mStr = String(hoy.getMonth() + 1).padStart(2, '0');
+        inputActivo.value = `${dStr}/${mStr}/${hoy.getFullYear()}`;
+        window.validarFecha(inputActivo);
+      }
+      cerrarCalendario();
+    });
+
+    btnLimpiar.addEventListener('click', () => {
+      if (inputActivo) {
+        inputActivo.value = '';
+        inputActivo.classList.remove('fecha-invalida', 'fecha-valida');
+        inputActivo.setCustomValidity('');
+        if (inputActivo.id === 'estudiante_fecha_nacimiento') {
+          const edadInput = document.getElementById('estudiante_edad');
+          if (edadInput) edadInput.value = '';
+        }
+      }
+      cerrarCalendario();
+    });
+
+    btnCerrar.addEventListener('click', cerrarCalendario);
+
+    // Cerrar al hacer clic fuera
+    document.addEventListener('click', (e) => {
+      if (!popover.contains(e.target) && !e.target.closest('.campo-fecha')) {
+        cerrarCalendario();
+      }
+    });
+
+    // Cerrar con Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') cerrarCalendario();
+    });
+
+    // Reposicionar al redimensionar pantalla
+    window.addEventListener('resize', () => {
+      if (popover.classList.contains('activo') && inputActivo) {
+        posicionarCalendario(inputActivo);
+      }
+    });
+
+    // Configurar todos los campos con clase .in-fecha
+    document.querySelectorAll('.in-fecha').forEach((input) => {
+      const contenedor = input.closest('.campo-fecha');
+      const btn = contenedor ? contenedor.querySelector('.btn-cal') : null;
+
+      // Al hacer clic en el botón 📅
+      if (btn) {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (popover.classList.contains('activo') && inputActivo === input) {
+            cerrarCalendario();
+          } else {
+            abrirCalendario(input);
+          }
+        });
+      }
+
+      // Máscara y auto-formateo al escribir
+      input.addEventListener('input', () => {
+        let v = input.value.replace(/[^\d]/g, '');
+        if (v.length > 8) v = v.slice(0, 8);
+
+        if (v.length >= 5) {
+          input.value = v.slice(0, 2) + '/' + v.slice(2, 4) + '/' + v.slice(4);
+        } else if (v.length >= 3) {
+          input.value = v.slice(0, 2) + '/' + v.slice(2);
+        } else {
+          input.value = v;
+        }
+
+        if (input.value.length === 10) {
+          window.validarFecha(input);
+        } else if (input.value.length === 0) {
+          input.classList.remove('fecha-invalida', 'fecha-valida');
+        }
+      });
+
+      // Validación al perder el foco (blur)
+      input.addEventListener('blur', () => {
+        window.validarFecha(input, true);
+      });
+    });
+
+    // Sincronizar valor corto de Tipo de Documento para impresión (estudiante y familiares)
+    const selectDocTipo = document.getElementById('estudiante_doc_tipo');
+    const printDocTipo = document.getElementById('doc_tipo_print');
+
+    function actualizarDocTipoPrint() {
+      if (selectDocTipo && printDocTipo) {
+        const val = selectDocTipo.value;
+        if (val) {
+          printDocTipo.textContent = val;
+        } else {
+          printDocTipo.innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+        }
+      }
+
+      ['padre', 'madre', 'acudiente'].forEach(rol => {
+        const sel = document.getElementById(rol + '_doc_tipo');
+        const span = document.getElementById(rol + '_doc_tipo_print');
+        if (sel && span) {
+          span.textContent = sel.value ? sel.value : '\u00A0\u00A0\u00A0\u00A0';
+        }
+      });
+    }
+
+    if (selectDocTipo) {
+      selectDocTipo.addEventListener('change', actualizarDocTipoPrint);
+    }
+    ['padre', 'madre', 'acudiente'].forEach(rol => {
+      const sel = document.getElementById(rol + '_doc_tipo');
+      if (sel) {
+        sel.addEventListener('change', actualizarDocTipoPrint);
+      }
+    });
+    window.addEventListener('beforeprint', actualizarDocTipoPrint);
+    actualizarDocTipoPrint();
+
+    // Sincronizar género para impresión
+    const selectGenero = document.getElementById('estudiante_genero');
+    const printGenero = document.getElementById('estudiante_genero_print');
+
+    function actualizarGeneroPrint() {
+      if (selectGenero && printGenero) {
+        printGenero.textContent = selectGenero.value ? selectGenero.value : '\u00A0';
+      }
+    }
+
+    if (selectGenero) {
+      selectGenero.addEventListener('change', actualizarGeneroPrint);
+    }
+    window.addEventListener('beforeprint', actualizarGeneroPrint);
+    actualizarGeneroPrint();
+
+    // Función global de impresión con validación preventiva
+    window.imprimirConValidacion = function() {
+      actualizarDocTipoPrint();
+      actualizarGeneroPrint();
+      const fechas = document.querySelectorAll('.in-fecha');
+      let hayError = false;
+
+      fechas.forEach(f => {
+        if (f.value.trim() && !window.validarFecha(f, true)) {
+          hayError = true;
+        }
+      });
+
+      if (hayError) {
+        if (!confirm('Una o más fechas tienen un formato o valor inválido (deben ser DD/MM/AAAA).\n\n¿Desea imprimir el formulario de todas formas?')) {
+          return;
+        }
+      }
+      window.print();
+    };
+
+  })();
+  </script>
+</body>
+</html>
