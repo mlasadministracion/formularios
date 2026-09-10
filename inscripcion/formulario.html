@@ -1239,20 +1239,113 @@
       overflow: hidden;
     }
   }@media screen and (max-width: 960px) {
-    .document { width: 100%; max-width: 100%; margin: 0; }
+    body {
+      padding: 10px 6px;
+      overflow-x: hidden;
+    }
+    .document {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 auto;
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
     .page {
-      width: 100%;
-      height: auto;
-      min-height: auto;
-      max-height: none;
-      padding: 24px 14px 45px;
-      margin-bottom: 24px;
+      width: 100% !important;
+      height: auto !important;
+      min-height: auto !important;
+      max-height: none !important;
+      padding: 16px 12px 35px;
+      margin-bottom: 20px;
+      box-sizing: border-box !important;
+      overflow-x: hidden !important;
+      overflow-y: visible !important;
+      border-radius: 8px;
     }
     .page::before { display: none; }
-    .top-grid { grid-template-columns: 1fr 90px; }
-    .section-title { font-size: 9pt; padding: 4px 14px; }
-    .two-col, .parent-grid { grid-template-columns: 1fr; }
-    .footer { position: relative; left: auto; right: auto; bottom: auto; margin-top: 20px; }
+    .page-inner {
+      height: auto;
+      width: 100%;
+    }
+
+    /* Cabecera Móvil: Logo, Título, Folio y Foto apilados armoniosamente */
+    #page1 .cabecera, .cabecera {
+      flex-direction: column !important;
+      align-items: center !important;
+      text-align: center !important;
+      gap: 10px !important;
+      margin-bottom: 8px !important;
+      width: 100% !important;
+    }
+    .cabecera > div:nth-child(2) {
+      width: 100%;
+      text-align: center;
+    }
+    .logo img {
+      width: 80px;
+      height: auto;
+    }
+    h1.titulo {
+      font-size: clamp(13px, 4.0vw, 16.5px) !important;
+      letter-spacing: normal !important;
+      line-height: 1.2;
+      text-align: center;
+    }
+    .subtitulo-cabecera {
+      font-size: 10px;
+      margin-top: 2px;
+      text-align: center;
+    }
+    .cabecera-derecha {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .folio {
+      min-width: unset !important;
+      width: auto;
+      max-width: 100%;
+      box-sizing: border-box;
+      padding: 5px 10px;
+    }
+    .photo {
+      flex-shrink: 0;
+      width: 85px !important;
+      height: 110px !important;
+      margin: 0 auto;
+    }
+
+    /* Contenedores de tablas con scroll horizontal táctil suave */
+    .tabla-contenedor {
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      margin-bottom: 4px;
+    }
+    .academic-unified-table { min-width: 540px; }
+    .fam { min-width: 540px; }
+    .tabla-sec { min-width: 520px; }
+    .growth { min-width: 480px; }
+    .requirements-table { width: 100%; min-width: 420px; }
+
+    /* Firmas en 1 sola columna en pantallas móviles */
+    .signature-area {
+      grid-template-columns: 1fr !important;
+      gap: 12px !important;
+    }
+
+    .footer {
+      position: relative;
+      left: auto;
+      right: auto;
+      bottom: auto;
+      margin-top: 20px;
+    }
   }
 
   /* ==================== DISTRIBUCIÓN EQUILIBRADA DE PÁGINAS 1 Y 2 ==================== */
@@ -1999,22 +2092,24 @@
     </ol>
 
     <!-- TABLA DE REQUISITOS DOCUMENTALES -->
-    <table class="requirements-table" style="border: 1px solid var(--borde);">
-      <tbody>
-        <tr><td style="text-align: left; padding: 1.5px 5px;">1. Curva de crecimiento, talla y peso.</td><td class="yn-col" style="width: 25mm;"><select id="doc_curva" name="doc_curva" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
-        <tr><td style="text-align: left; padding: 1.5px 5px;">2. Certificado que asista al programa de crecimiento y desarrollo.</td><td class="yn-col" style="width: 25mm;"><select id="doc_crecimiento" name="doc_crecimiento" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
-        <tr><td style="text-align: left; padding: 1.5px 5px;">3. Registro civil del (la) niño(a) para niños menores de 7 años.</td><td class="yn-col" style="width: 25mm;"><select id="doc_registro" name="doc_registro" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
-        <tr><td style="text-align: left; padding: 1.5px 5px;">4. Fotocopia de la tarjeta de identidad para niños mayores de 7 años.</td><td class="yn-col" style="width: 25mm;"><select id="doc_tarjeta" name="doc_tarjeta" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
-        <tr><td style="text-align: left; padding: 1.5px 5px;">5. Carné de vacunas actualizado.</td><td class="yn-col" style="width: 25mm;"><select id="doc_vacunas" name="doc_vacunas" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
-        <tr><td style="text-align: left; padding: 1.5px 5px;">6. Examen de audiometría y optometría.</td><td class="yn-col" style="width: 25mm;"><select id="doc_audio" name="doc_audio" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
-        <tr><td style="text-align: left; padding: 1.5px 5px;">7. Examen odontológico vigente.</td><td class="yn-col" style="width: 25mm;"><select id="doc_odont" name="doc_odont" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
-        <tr><td style="text-align: left; padding: 1.5px 5px;">8. Certificado médico general.</td><td class="yn-col" style="width: 25mm;"><select id="doc_medico" name="doc_medico" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
-        <tr><td style="text-align: left; padding: 1.5px 5px;">9. Fotocopia del carné de la EPS o medicina prepagada.</td><td class="yn-col" style="width: 25mm;"><select id="doc_eps" name="doc_eps" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
-        <tr><td style="text-align: left; padding: 1.5px 5px;">10. Cuatro (4) fotos de 3×4 cm en fondo blanco o azul.</td><td class="yn-col" style="width: 25mm;"><select id="doc_fotos" name="doc_fotos" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
-        <tr><td style="text-align: left; padding: 1.5px 5px;">11. Fotocopia de la cédula de ciudadanía de los padres.</td><td class="yn-col" style="width: 25mm;"><select id="doc_cedulas" name="doc_cedulas" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
-        <tr><td style="text-align: left; padding: 1.5px 5px;">12. Una foto familiar de 9×13 cm.</td><td class="yn-col" style="width: 25mm;"><select id="doc_foto9x13" name="doc_foto9x13" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
-      </tbody>
-    </table>
+    <div class="tabla-contenedor">
+      <table class="requirements-table" style="border: 1px solid var(--borde);">
+        <tbody>
+          <tr><td style="text-align: left; padding: 1.5px 5px;">1. Curva de crecimiento, talla y peso.</td><td class="yn-col" style="width: 25mm;"><select id="doc_curva" name="doc_curva" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+          <tr><td style="text-align: left; padding: 1.5px 5px;">2. Certificado que asista al programa de crecimiento y desarrollo.</td><td class="yn-col" style="width: 25mm;"><select id="doc_crecimiento" name="doc_crecimiento" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+          <tr><td style="text-align: left; padding: 1.5px 5px;">3. Registro civil del (la) niño(a) para niños menores de 7 años.</td><td class="yn-col" style="width: 25mm;"><select id="doc_registro" name="doc_registro" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+          <tr><td style="text-align: left; padding: 1.5px 5px;">4. Fotocopia de la tarjeta de identidad para niños mayores de 7 años.</td><td class="yn-col" style="width: 25mm;"><select id="doc_tarjeta" name="doc_tarjeta" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+          <tr><td style="text-align: left; padding: 1.5px 5px;">5. Carné de vacunas actualizado.</td><td class="yn-col" style="width: 25mm;"><select id="doc_vacunas" name="doc_vacunas" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+          <tr><td style="text-align: left; padding: 1.5px 5px;">6. Examen de audiometría y optometría.</td><td class="yn-col" style="width: 25mm;"><select id="doc_audio" name="doc_audio" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+          <tr><td style="text-align: left; padding: 1.5px 5px;">7. Examen odontológico vigente.</td><td class="yn-col" style="width: 25mm;"><select id="doc_odont" name="doc_odont" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+          <tr><td style="text-align: left; padding: 1.5px 5px;">8. Certificado médico general.</td><td class="yn-col" style="width: 25mm;"><select id="doc_medico" name="doc_medico" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+          <tr><td style="text-align: left; padding: 1.5px 5px;">9. Fotocopia del carné de la EPS o medicina prepagada.</td><td class="yn-col" style="width: 25mm;"><select id="doc_eps" name="doc_eps" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+          <tr><td style="text-align: left; padding: 1.5px 5px;">10. Cuatro (4) fotos de 3×4 cm en fondo blanco o azul.</td><td class="yn-col" style="width: 25mm;"><select id="doc_fotos" name="doc_fotos" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+          <tr><td style="text-align: left; padding: 1.5px 5px;">11. Fotocopia de la cédula de ciudadanía de los padres.</td><td class="yn-col" style="width: 25mm;"><select id="doc_cedulas" name="doc_cedulas" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+          <tr><td style="text-align: left; padding: 1.5px 5px;">12. Una foto familiar de 9×13 cm.</td><td class="yn-col" style="width: 25mm;"><select id="doc_foto9x13" name="doc_foto9x13" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+        </tbody>
+      </table>
+    </div>
 
     <!-- DECLARACIONES LEGALES -->
     <p class="legal-text" style="margin-top: 2.5mm; font-size: 7.8pt; line-height: 1.2; text-align: justify; color: #333;">
@@ -2795,7 +2890,7 @@ function resetFormWithConfirm() {
 // ==================== INICIALIZACIÓN ====================
 
 // ==================== CONTROL DE ZOOM INTERACTIVO ====================
-let currentZoom = parseFloat(localStorage.getItem('mlas_inscripcion_zoom')) || 1.15;
+let currentZoom = parseFloat(localStorage.getItem('mlas_inscripcion_zoom')) || (window.innerWidth <= 768 ? 1.0 : 1.15);
 
 window.cambiarZoom = function(delta) {
   currentZoom = Math.min(1.5, Math.max(0.85, Math.round((currentZoom + delta) * 100) / 100));

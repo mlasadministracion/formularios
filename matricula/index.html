@@ -783,12 +783,18 @@
 
   /* ==================== VISTA MÓVIL Y TABLET ==================== */
   @media screen and (max-width: 768px) {
-    body { padding: 10px 8px; }
+    body {
+      padding: 10px 8px;
+      overflow-x: hidden;
+    }
     .hoja {
-      padding: 16px 14px 20px;
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 16px 12px 20px;
       margin: 8px auto;
-      max-width: 100%;
       border-radius: 8px;
+      box-sizing: border-box !important;
+      overflow-x: hidden;
     }
     .cabecera {
       flex-direction: column;
@@ -797,16 +803,24 @@
       gap: 10px;
     }
     .logo img { width: 80px; }
-    h1.titulo { font-size: 20px; }
-    .folio { width: 100%; text-align: center; }
+    h1.titulo { font-size: clamp(13px, 4.2vw, 17px) !important; letter-spacing: normal !important; line-height: 1.2; text-align: center; }
+    .folio {
+      width: 100%;
+      text-align: center;
+      box-sizing: border-box;
+    }
 
     .tabla-contenedor {
+      width: 100%;
+      max-width: 100%;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       margin-bottom: 2px;
+      box-sizing: border-box;
     }
     .fam { min-width: 580px; }
     .tabla-sec { min-width: 580px; }
+    .tabla-escolaridad { min-width: 500px; }
     .firma-fila { flex-direction: column; gap: 15px; }
   }
 </style>
@@ -864,96 +878,98 @@
 
   <!-- DATOS DEL ESTUDIANTE -->
   <div class="barra barra--azul">DATOS DEL ESTUDIANTE</div>
-  <table class="tabla-sec">
-    <tr>
-      <td colspan="10">
-        <label for="estudiante_apellidos">APELLIDOS</label>
-        <input type="text" id="estudiante_apellidos" name="estudiante_apellidos" class="in" placeholder="Apellidos completos del estudiante" autocomplete="family-name" title="Primer y segundo apellido del estudiante">
-      </td>
-      <td colspan="10">
-        <label for="estudiante_nombres">NOMBRES</label>
-        <input type="text" id="estudiante_nombres" name="estudiante_nombres" class="in" placeholder="Nombres completos del estudiante" autocomplete="given-name" title="Nombres completos del estudiante">
-      </td>
-    </tr>
-    <tr>
-      <td colspan="10">
-        <label for="estudiante_doc_tipo">DOCUMENTO DE IDENTIDAD</label>
-        <div class="val-doc">
-          <span>Tipo:</span>
-          <select id="estudiante_doc_tipo" name="estudiante_doc_tipo" class="in-inline in-doc-tipo select-as-help" title="Tipo de documento de identificación del estudiante (RC, TI, CC, etc.)">
+  <div class="tabla-contenedor">
+    <table class="tabla-sec">
+      <tr>
+        <td colspan="10">
+          <label for="estudiante_apellidos">APELLIDOS</label>
+          <input type="text" id="estudiante_apellidos" name="estudiante_apellidos" class="in" placeholder="Apellidos completos del estudiante" autocomplete="family-name" title="Primer y segundo apellido del estudiante">
+        </td>
+        <td colspan="10">
+          <label for="estudiante_nombres">NOMBRES</label>
+          <input type="text" id="estudiante_nombres" name="estudiante_nombres" class="in" placeholder="Nombres completos del estudiante" autocomplete="given-name" title="Nombres completos del estudiante">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="10">
+          <label for="estudiante_doc_tipo">DOCUMENTO DE IDENTIDAD</label>
+          <div class="val-doc">
+            <span>Tipo:</span>
+            <select id="estudiante_doc_tipo" name="estudiante_doc_tipo" class="in-inline in-doc-tipo select-as-help" title="Tipo de documento de identificación del estudiante (RC, TI, CC, etc.)">
+              <option value="" selected>Seleccione...</option>
+              <option value="RC">RC - Registro Civil</option>
+              <option value="TI">TI - Tarjeta de Identidad</option>
+              <option value="CC">CC - Cédula de Ciudadanía</option>
+              <option value="CE">CE - Cédula de Extranjería</option>
+              <option value="PA">PA - Pasaporte</option>
+              <option value="PPT">PPT - Permiso Protección Temporal</option>
+              <option value="PEP">PEP - Permiso Especial de Permanencia</option>
+              <option value="VISA">VISA - Visa</option>
+              <option value="NUIP">NUIP - No. Único Identificación</option>
+              <option value="NES">NES - Número Establecido Secretaría</option>
+            </select>
+            <span class="doc-tipo-print" id="doc_tipo_print">&nbsp;</span>
+            <label for="estudiante_doc_numero">Nº:</label>
+            <input type="text" id="estudiante_doc_numero" name="estudiante_doc_numero" class="in-inline in-doc-num" placeholder="Número de doc." title="Número de documento de identificación del estudiante">
+          </div>
+        </td>
+        <td colspan="5">
+          <label for="estudiante_eps">EPS</label>
+          <input type="text" id="estudiante_eps" name="estudiante_eps" class="in" placeholder="Nombre de EPS o aseguradora" title="Entidad Promotora de Salud a la que está afiliado el estudiante">
+        </td>
+        <td colspan="5">
+          <label for="estudiante_rh">RH</label>
+          <input type="text" id="estudiante_rh" name="estudiante_rh" class="in" placeholder="Ej. O+" list="lista-rh" maxlength="4" autocomplete="off" title="Grupo sanguíneo y factor RH del estudiante (Ej. O+, A+, B+, etc.)">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="10">
+          <label for="estudiante_lugar_nacimiento">LUGAR DE NACIMIENTO</label>
+          <input type="text" id="estudiante_lugar_nacimiento" name="estudiante_lugar_nacimiento" class="in" placeholder="Ciudad, departamento, país" autocomplete="address-level2" title="Ciudad y país de nacimiento del estudiante">
+        </td>
+        <td colspan="5">
+          <label for="estudiante_fecha_nacimiento">DIA / MES / AÑO</label>
+          <div class="campo-fecha">
+            <input type="text" id="estudiante_fecha_nacimiento" name="estudiante_fecha_nacimiento" class="in in-fecha" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="bday" title="Fecha de nacimiento en formato DD/MM/AAAA (o clic en calendario 📅)">
+            <button type="button" class="btn-cal" tabindex="-1" title="Seleccionar fecha en calendario">📅</button>
+          </div>
+        </td>
+        <td colspan="5">
+          <label for="estudiante_edad">EDAD</label>
+          <input type="text" id="estudiante_edad" name="estudiante_edad" class="in" placeholder="Años" title="Edad actual del estudiante en años cumplidos (se calcula automáticamente)">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="20">
+          <label for="estudiante_direccion">DIRECCIÓN</label>
+          <input type="text" id="estudiante_direccion" name="estudiante_direccion" class="in" placeholder="Calle / carrera, número, interior, apto" autocomplete="street-address" title="Dirección completa de residencia del estudiante">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5">
+          <label for="estudiante_ciudad">CIUDAD</label>
+          <input type="text" id="estudiante_ciudad" name="estudiante_ciudad" class="in" placeholder="Ciudad de residencia" autocomplete="address-level2" title="Municipio o ciudad donde reside el estudiante">
+        </td>
+        <td colspan="5">
+          <label for="estudiante_barrio">BARRIO</label>
+          <input type="text" id="estudiante_barrio" name="estudiante_barrio" class="in" placeholder="Barrio o sector" title="Barrio o sector de residencia del estudiante">
+        </td>
+        <td colspan="5">
+          <label for="estudiante_telefono">TELÉFONO</label>
+          <input type="tel" id="estudiante_telefono" name="estudiante_telefono" class="in" placeholder="Teléfono fijo o celular" autocomplete="tel" title="Número telefónico de contacto del estudiante o residencia">
+        </td>
+        <td colspan="5">
+          <label for="estudiante_genero">GÉNERO</label>
+          <select id="estudiante_genero" name="estudiante_genero" class="in in-genero select-as-help" title="Seleccione el género o sexo del estudiante">
             <option value="" selected>Seleccione...</option>
-            <option value="RC">RC - Registro Civil</option>
-            <option value="TI">TI - Tarjeta de Identidad</option>
-            <option value="CC">CC - Cédula de Ciudadanía</option>
-            <option value="CE">CE - Cédula de Extranjería</option>
-            <option value="PA">PA - Pasaporte</option>
-            <option value="PPT">PPT - Permiso Protección Temporal</option>
-            <option value="PEP">PEP - Permiso Especial de Permanencia</option>
-            <option value="VISA">VISA - Visa</option>
-            <option value="NUIP">NUIP - No. Único Identificación</option>
-            <option value="NES">NES - Número Establecido Secretaría</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
           </select>
-          <span class="doc-tipo-print" id="doc_tipo_print">&nbsp;</span>
-          <label for="estudiante_doc_numero">Nº:</label>
-          <input type="text" id="estudiante_doc_numero" name="estudiante_doc_numero" class="in-inline in-doc-num" placeholder="Número de doc." title="Número de documento de identificación del estudiante">
-        </div>
-      </td>
-      <td colspan="5">
-        <label for="estudiante_eps">EPS</label>
-        <input type="text" id="estudiante_eps" name="estudiante_eps" class="in" placeholder="Nombre de EPS o aseguradora" title="Entidad Promotora de Salud a la que está afiliado el estudiante">
-      </td>
-      <td colspan="5">
-        <label for="estudiante_rh">RH</label>
-        <input type="text" id="estudiante_rh" name="estudiante_rh" class="in" placeholder="Ej. O+" list="lista-rh" maxlength="4" autocomplete="off" title="Grupo sanguíneo y factor RH del estudiante (Ej. O+, A+, B+, etc.)">
-      </td>
-    </tr>
-    <tr>
-      <td colspan="10">
-        <label for="estudiante_lugar_nacimiento">LUGAR DE NACIMIENTO</label>
-        <input type="text" id="estudiante_lugar_nacimiento" name="estudiante_lugar_nacimiento" class="in" placeholder="Ciudad, departamento, país" autocomplete="address-level2" title="Ciudad y país de nacimiento del estudiante">
-      </td>
-      <td colspan="5">
-        <label for="estudiante_fecha_nacimiento">DIA / MES / AÑO</label>
-        <div class="campo-fecha">
-          <input type="text" id="estudiante_fecha_nacimiento" name="estudiante_fecha_nacimiento" class="in in-fecha" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="bday" title="Fecha de nacimiento en formato DD/MM/AAAA (o clic en calendario 📅)">
-          <button type="button" class="btn-cal" tabindex="-1" title="Seleccionar fecha en calendario">📅</button>
-        </div>
-      </td>
-      <td colspan="5">
-        <label for="estudiante_edad">EDAD</label>
-        <input type="text" id="estudiante_edad" name="estudiante_edad" class="in" placeholder="Años" title="Edad actual del estudiante en años cumplidos (se calcula automáticamente)">
-      </td>
-    </tr>
-    <tr>
-      <td colspan="20">
-        <label for="estudiante_direccion">DIRECCIÓN</label>
-        <input type="text" id="estudiante_direccion" name="estudiante_direccion" class="in" placeholder="Calle / carrera, número, interior, apto" autocomplete="street-address" title="Dirección completa de residencia del estudiante">
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5">
-        <label for="estudiante_ciudad">CIUDAD</label>
-        <input type="text" id="estudiante_ciudad" name="estudiante_ciudad" class="in" placeholder="Ciudad de residencia" autocomplete="address-level2" title="Municipio o ciudad donde reside el estudiante">
-      </td>
-      <td colspan="5">
-        <label for="estudiante_barrio">BARRIO</label>
-        <input type="text" id="estudiante_barrio" name="estudiante_barrio" class="in" placeholder="Barrio o sector" title="Barrio o sector de residencia del estudiante">
-      </td>
-      <td colspan="5">
-        <label for="estudiante_telefono">TELÉFONO</label>
-        <input type="tel" id="estudiante_telefono" name="estudiante_telefono" class="in" placeholder="Teléfono fijo o celular" autocomplete="tel" title="Número telefónico de contacto del estudiante o residencia">
-      </td>
-      <td colspan="5">
-        <label for="estudiante_genero">GÉNERO</label>
-        <select id="estudiante_genero" name="estudiante_genero" class="in in-genero select-as-help" title="Seleccione el género o sexo del estudiante">
-          <option value="" selected>Seleccione...</option>
-          <option value="Masculino">Masculino</option>
-          <option value="Femenino">Femenino</option>
-        </select>
-        <span class="genero-print" id="estudiante_genero_print">&nbsp;</span>
-      </td>
-    </tr>
-  </table>
+          <span class="genero-print" id="estudiante_genero_print">&nbsp;</span>
+        </td>
+      </tr>
+    </table>
+  </div>
 
   <!-- DATOS FAMILIARES -->
   <div class="barra barra--naranja">DATOS FAMILIARES</div>
@@ -1981,7 +1997,7 @@
   // ==================== INICIALIZACIÓN ====================
   
   // ==================== CONTROL DE ZOOM INTERACTIVO ====================
-  let currentZoom = parseFloat(localStorage.getItem('mlas_matricula_zoom')) || 1.15;
+  let currentZoom = parseFloat(localStorage.getItem('mlas_matricula_zoom')) || (window.innerWidth <= 768 ? 1.0 : 1.15);
 
   window.cambiarZoom = function(delta) {
     currentZoom = Math.min(1.5, Math.max(0.85, Math.round((currentZoom + delta) * 100) / 100));
