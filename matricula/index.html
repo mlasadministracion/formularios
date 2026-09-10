@@ -1,0 +1,2124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hoja de Matrícula 2026 - My Little Artists School</title>
+<style>
+  :root {
+    --azul: #0f2b5f;
+    --azul-light: #163a72;
+    --azul-soft: #eef4fc;
+    --naranja: #db662c;
+    --verde: #366430;
+    --borde: #b9c4d0;
+    --borde-light: #dbe4ee;
+    --texto: #1c2833;
+    --texto-muted: #566573;
+    --fondo-body: #e9edf0;
+    --blanco: #ffffff;
+    --escala-pantalla: 1.15;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--fondo-body);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--texto);
+    font-size: 8.5pt;
+    line-height: 1.25;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* ==================== BARRA DE HERRAMIENTAS (PANTALLA) ==================== */
+  .toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--blanco);
+    border-bottom: 1.5px solid #ccd5e0;
+    padding: 10px 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+
+  .btn {
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 9pt;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease-in-out;
+    user-select: none;
+  }
+  .btn:active { transform: scale(0.97); }
+
+  .btn-primary {
+    background: var(--azul);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(15, 43, 95, 0.25);
+  }
+  .btn-primary:hover { background: var(--azul-light); }
+
+  .btn-secondary {
+    background: #506175;
+    color: #fff;
+  }
+  .btn-secondary:hover { background: #3d4a59; }
+
+  .btn-demo {
+    display: none; /* Oculto por defecto para usuarios finales */
+    background: #eaf2fd;
+    color: var(--azul);
+    border: 1px solid #bed3ee;
+  }
+  .btn-demo:hover { background: #d7e6fc; }
+
+  .btn-danger {
+    background: #fff0f0;
+    color: #c02626;
+    border: 1px solid #fecaca;
+  }
+  .btn-danger:hover { background: #fee2e2; }
+
+  .toolbar-meta {
+    margin-left: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 8.5pt;
+    color: var(--texto-muted);
+    font-weight: 600;
+  }
+
+  .progress-pill {
+    background: #e2e8f0;
+    border-radius: 12px;
+    padding: 3px 9px;
+    color: var(--azul);
+    font-size: 8pt;
+    font-weight: 700;
+  }
+
+  /* ==================== CONTENEDOR HOJA ÚNICA ==================== */
+  .hoja {
+    width: 215.9mm;
+    max-width: 820px;
+    margin: 18px auto;
+    background: var(--blanco);
+    padding: 8mm 10mm;
+    border: 1px solid #ccd6e0;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    position: relative;
+  }
+
+  /* ==================== CABECERA ==================== */
+  .cabecera {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .logo {
+    flex: 0 0 auto;
+  }
+  .logo img {
+    width: 90px;
+    height: auto;
+    display: block;
+  }
+
+  h1.titulo {
+    flex: 1;
+    text-align: center;
+    color: var(--azul);
+    font-size: 24px;
+    letter-spacing: 0.8px;
+    margin: 4px 0 0;
+    font-weight: 800;
+  }
+
+  .folio {
+    border: 1.5px solid var(--azul);
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-size: 11px;
+    font-weight: bold;
+    min-width: 170px;
+    line-height: 1.9;
+    background: #fafcff;
+  }
+  .folio label {
+    color: var(--azul);
+    font-weight: 800;
+  }
+
+  input.in-folio {
+    border: none;
+    border-bottom: 1px dotted #333;
+    width: 85px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #000;
+    background: transparent;
+    padding: 0 2px;
+    outline: none;
+  }
+  input.in-folio:focus-visible {
+    background: var(--azul-soft);
+    border-bottom-color: var(--azul);
+  }
+
+  .separador {
+    border: none;
+    border-top: 2px dotted var(--naranja);
+    margin: 8px 0 10px;
+  }
+
+  /* ==================== BARRAS DE SECCIÓN ==================== */
+  .barra {
+    color: #fff;
+    text-align: center;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    padding: 3.5px 6px;
+    font-size: 12px;
+    margin-top: 7px;
+    border-radius: 2px 2px 0 0;
+  }
+  .barra--azul { background: var(--azul); }
+  .barra--naranja { background: var(--naranja); }
+  .barra--verde { background: var(--verde); }
+
+  /* ==================== TABLAS ==================== */
+  .tabla-contenedor {
+    width: 100%;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10px;
+    table-layout: fixed;
+  }
+
+  td {
+    border: 1px solid var(--borde);
+    height: 38px;
+    vertical-align: top;
+    padding: 2.5px 5px;
+    font-weight: bold;
+    color: var(--azul);
+    font-size: 9px;
+  }
+
+  td label {
+    display: block;
+    cursor: pointer;
+    user-select: none;
+    line-height: 1.1;
+  }
+
+  /* Inputs dentro de celdas */
+  input.in, select.in, input.in-cell {
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    color: #000;
+    outline: none;
+    padding: 0 2px;
+    width: 100%;
+    font-size: 10.5px;
+    font-weight: normal;
+  }
+
+  input.in, select.in {
+    display: block;
+    height: 20px;
+  }
+
+  input.in-cell {
+    display: block;
+    height: 30px;
+  }
+
+  input.in-inline, select.in-inline {
+    border: none;
+    border-bottom: 1px solid #444;
+    background: transparent;
+    font-family: inherit;
+    font-size: 10.5px;
+    font-weight: normal;
+    color: #000;
+    outline: none;
+    padding: 0 2px;
+  }
+
+  input:focus-visible, select:focus-visible {
+    background: var(--azul-soft) !important;
+    border-bottom: 1.5px solid var(--azul) !important;
+  }
+
+  input::placeholder {
+    color: #9aa4ad;
+    font-style: italic;
+    font-weight: normal;
+  }
+
+  .val-doc {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 3px;
+    font-size: 9px;
+    color: #333;
+    font-weight: bold;
+  }
+
+  .in-doc-tipo { width: 145px; }
+  .in-doc-num { width: 100px; }
+  .doc-tipo-print, .genero-print, .doc-fam-print { display: none; }
+
+  /* Documentos familiares */
+  .campo-doc-fam {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    width: 100%;
+    height: 30px;
+  }
+  .in-doc-tipo-fam {
+    border: none;
+    border-bottom: 1px solid #888;
+    background: transparent;
+    font-family: inherit;
+    font-size: 10px;
+    color: #000;
+    outline: none;
+    cursor: pointer;
+    height: 20px;
+    width: 50px;
+    flex: 0 0 50px;
+    padding: 0 2px;
+  }
+  .in-doc-num-fam {
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 10px;
+    color: #000;
+    outline: none;
+    height: 20px;
+    flex: 1;
+    min-width: 0;
+    padding: 0 2px;
+  }
+
+  /* Familiares */
+  .fam thead td {
+    text-align: center;
+    height: 24px;
+    background: #f1f5fa;
+    color: var(--azul);
+    font-weight: 800;
+    vertical-align: middle;
+  }
+  .fam .sub {
+    font-weight: normal;
+    font-style: italic;
+    font-size: 8px;
+    color: #555;
+    display: block;
+  }
+  .fam td.rot {
+    width: 140px;
+    color: var(--azul);
+    vertical-align: middle;
+    font-size: 8.5px;
+  }
+
+  td.acu, td.resp {
+    vertical-align: middle;
+    font-weight: bold;
+    font-size: 9.5px;
+    height: 30px;
+    color: var(--azul);
+  }
+  .in-resp { width: 65%; }
+  .in-acu { width: 60%; }
+
+  /* Escolaridad */
+  td.grado {
+    text-align: center;
+    font-weight: 800;
+    font-size: 10.5px;
+    height: 26px;
+    vertical-align: middle;
+    color: var(--verde);
+  }
+  .in-grado { width: 260px; }
+
+  
+  /* ==================== ESTILOS PARA SELECT COMO AYUDA ==================== */
+  .select-as-help {
+    color: #7a8a9c;
+    font-style: italic;
+    font-weight: 400;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.15s ease-in-out;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%237a8a9c' d='M0 0l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 4px center;
+    background-size: 8px 5px;
+  }
+  .select-as-help:hover {
+    background-color: #f1f5fa;
+  }
+  .select-as-help:focus,
+  select.select-as-help:focus-visible {
+    background-color: #eef5fc !important;
+  }
+  .select-as-help.has-value,
+  select.select-as-help:has(option:not([value=""]):checked) {
+    color: var(--azul) !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%230f2b5f' d='M0 0l5 5 5-5z'/%3E%3C/svg%3E");
+  }
+  .select-as-help option {
+    color: var(--texto);
+    font-style: normal;
+    font-weight: 600;
+    background: #fff;
+  }
+  .select-as-help option[value=""] {
+    color: #7a8a9c;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+/* ==================== CAMPOS DE FECHA Y DATEPICKER ==================== */
+  .campo-fecha {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+  .campo-fecha input.in, .campo-fecha input.in-cell {
+    flex: 1;
+    padding-right: 20px;
+  }
+  .btn-cal {
+    position: absolute;
+    right: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 1;
+    padding: 2px;
+    opacity: 0.65;
+    transition: opacity 0.15s, transform 0.1s;
+    user-select: none;
+  }
+  .btn-cal:hover {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.15);
+  }
+  .campo-fecha input.fecha-invalida {
+    border-bottom: 2px solid #e2231a !important;
+    background: #fff2f2 !important;
+    color: #c01810 !important;
+  }
+  .campo-fecha input.fecha-valida {
+    border-bottom: 1.5px solid var(--verde) !important;
+  }
+
+  /* Popover calendario */
+  .datepicker-popover {
+    position: absolute;
+    z-index: 9999;
+    background: #ffffff;
+    border: 1.5px solid var(--azul);
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(15, 43, 95, 0.25);
+    width: 260px;
+    padding: 10px 12px 12px;
+    font-family: inherit;
+    font-size: 11px;
+    color: var(--texto);
+    display: none !important;
+    box-sizing: border-box;
+  }
+  .datepicker-popover.activo { display: block !important; }
+  .dp-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+  .dp-nav {
+    background: #f0f4f8;
+    border: 1px solid var(--borde);
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 13px;
+    color: var(--azul);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .15s, color .15s;
+    user-select: none;
+  }
+  .dp-nav:hover { background: var(--azul); color: #fff; }
+  .dp-selectores { display: flex; gap: 4px; flex: 1; justify-content: center; }
+  .dp-select {
+    font-size: 11px;
+    font-family: inherit;
+    border: 1px solid var(--borde);
+    border-radius: 4px;
+    padding: 2px 4px;
+    background: #fff;
+    color: var(--azul);
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+  }
+  .dp-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: bold;
+    font-size: 9.5px;
+    color: #666;
+    margin-bottom: 4px;
+  }
+  .dp-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+  }
+  .dp-day {
+    text-align: center;
+    height: 24px;
+    line-height: 24px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 11px;
+    transition: background .12s, color .12s;
+    user-select: none;
+  }
+  .dp-day:hover { background: #e2ecf8; color: var(--azul); font-weight: bold; }
+  .dp-day.otro-mes { color: #ccc; }
+  .dp-day.seleccionado { background: var(--azul) !important; color: #ffffff !important; font-weight: bold; }
+  .dp-day.hoy { border: 1.5px solid var(--naranja); font-weight: bold; }
+  .dp-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1px solid #eef2f5;
+  }
+  .dp-btn-aux {
+    background: none;
+    border: none;
+    color: var(--azul);
+    font-size: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+  .dp-btn-aux:hover { background: #eef4ff; text-decoration: underline; }
+  .dp-btn-aux.limpiar { color: #c01810; }
+
+  /* ==================== TEXTO LEGAL ==================== */
+  .legal {
+    font-size: 7.8pt;
+    text-align: justify;
+    line-height: 1.25;
+    margin-top: 8px;
+    color: #333;
+  }
+  .legal p { margin: 0 0 4px; }
+  .legal b { color: #000; }
+
+  /* ==================== FIRMAS DIGITALES Y FÍSICAS ==================== */
+  .firmas {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 6px;
+    text-align: center;
+    font-size: 8pt;
+  }
+  .firma-fila {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+  }
+  .firma {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+  .firma canvas {
+    width: 100%;
+    height: 16mm;
+    border-bottom: 1.2px solid #000;
+    cursor: crosshair;
+    display: block;
+    background: rgba(240, 244, 250, 0.35);
+    touch-action: none;
+    border-radius: 2px 2px 0 0;
+  }
+  .firma canvas:hover {
+    background: rgba(224, 235, 248, 0.6);
+  }
+  .sign-actions {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2px;
+  }
+  .btn-sign-upload, .btn-sign-clear {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    border-radius: 3px;
+    font-size: 6.8pt;
+    font-weight: 700;
+    padding: 1px 6px;
+    cursor: pointer;
+    line-height: 1.25;
+    border: 1px solid #b9c4d0;
+    box-sizing: border-box;
+    transition: all 0.15s ease;
+    user-select: none;
+  }
+  .btn-sign-upload {
+    background: #eef4fc;
+    color: var(--azul);
+    border-color: #b9c4d0;
+  }
+  .btn-sign-upload:hover {
+    background: #dbe8fa;
+    border-color: var(--azul);
+  }
+  .btn-sign-clear {
+    background: #f1f5f9;
+    color: #566573;
+    border-color: #cbd5e1;
+  }
+  .btn-sign-clear:hover {
+    background: #fee2e2;
+    color: #b91c1c;
+    border-color: #fca5a5;
+  }
+  .clear-sign { display: none; }
+  .firma .rol {
+    font-weight: 800;
+    margin-top: 2px;
+    font-size: 8pt;
+    color: var(--azul);
+  }
+  .firma .nombre-input {
+    font-weight: 700;
+    font-size: 7.5pt;
+    margin-top: 1px;
+    color: #444;
+    text-align: center;
+    border: none;
+    background: transparent;
+    width: 100%;
+  }
+
+  /* ==================== REGLAS DE IMPRESIÓN (1 HOJA ESTRICTA) ==================== */
+  .no-print { display: block; }
+
+  @media print {
+    @page {
+      size: letter portrait;
+      margin: 6mm 7mm;
+    }
+    html, body {
+      background: #fff;
+      padding: 0;
+      margin: 0;
+      color: #000;
+      font-size: 8.5pt !important;
+    }
+    .toolbar { display: none !important; }
+    .no-print { display: none !important; }
+    input::placeholder, textarea::placeholder { color: transparent !important; -webkit-text-fill-color: transparent !important; }
+
+    .hoja {
+      box-shadow: none !important;
+      border: none !important;
+      margin: 0 auto !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 0 !important;
+      zoom: 1 !important;
+      page-break-after: avoid !important;
+      break-after: avoid !important;
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+    }
+
+    .cabecera { margin-bottom: 2px !important; }
+    .separador { margin: 4px 0 6px !important; }
+    .barra { margin-top: 5px !important; padding: 2.5px 4px !important; font-size: 11px !important; }
+    table { font-size: 10px !important; }
+    td { height: 32px !important; padding: 1.5px 3px !important; font-size: 8.5px !important; }
+    input.in, select.in { height: 18px !important; font-size: 9.5px !important; }
+    input.in-cell { height: 26px !important; font-size: 9.5px !important; }
+    td.acu, td.resp { height: 26px !important; font-size: 9px !important; }
+    .fam thead td { height: 20px !important; }
+    .legal { margin-top: 5px !important; font-size: 7.2pt !important; line-height: 1.2 !important; }
+    .legal p { margin-bottom: 2.5px !important; }
+
+    .firmas { margin-top: 4px !important; gap: 4px !important; }
+    .firma canvas {
+      height: 14mm !important;
+      background: transparent !important;
+      border-bottom: 1px solid #000 !important;
+    }
+    .clear-sign, .sign-actions { display: none !important; }
+
+    select.in-doc-tipo, select.in-doc-tipo-fam, select.in-genero {
+      display: none !important;
+    }
+    .doc-tipo-print, .doc-fam-print, .genero-print {
+      display: inline-block !important;
+      border-bottom: 1px solid #333 !important;
+      color: #000 !important;
+      font-size: 9.5px !important;
+      font-weight: bold;
+      vertical-align: baseline;
+    }
+    .doc-tipo-print { min-width: 45px; text-align: center; }
+    .doc-fam-print { min-width: 28px; text-align: center; }
+    .genero-print { min-width: 60px; line-height: 18px; }
+
+    .btn-cal, .datepicker-popover { display: none !important; }
+    .campo-fecha input.in, .campo-fecha input.in-cell { padding-right: 0 !important; }
+    .campo-fecha input.fecha-invalida, .campo-fecha input.fecha-valida {
+      border-bottom: 1px solid #333 !important;
+      background: transparent !important;
+      color: #000 !important;
+    }
+  }
+
+  /* ==================== VISTA EN PANTALLA (AMPLIADA Y CÓMODA) ==================== */
+  @media screen {
+    body {
+      font-size: calc(8.8pt * var(--escala-pantalla, 1.15));
+    }
+    .hoja {
+      width: calc(215.9mm * var(--escala-pantalla, 1.15));
+      max-width: 960px;
+      margin: 20px auto 45px;
+      padding: calc(8mm * var(--escala-pantalla, 1.15)) calc(10mm * var(--escala-pantalla, 1.15));
+    }
+    table {
+      font-size: calc(9.2pt * var(--escala-pantalla, 1.15));
+    }
+    td {
+      height: calc(38px * var(--escala-pantalla, 1.15));
+      padding: 3.5px 6px;
+      font-size: calc(8.6pt * var(--escala-pantalla, 1.15));
+    }
+    input.in, select.in {
+      height: calc(20px * var(--escala-pantalla, 1.15));
+      font-size: calc(10.5px * var(--escala-pantalla, 1.15));
+    }
+    input.in-cell {
+      height: calc(30px * var(--escala-pantalla, 1.15));
+      font-size: calc(10.5px * var(--escala-pantalla, 1.15));
+    }
+    .barra {
+      font-size: calc(12px * var(--escala-pantalla, 1.15));
+      padding: 4.5px 8px;
+    }
+    .legal {
+      font-size: calc(7.8pt * var(--escala-pantalla, 1.15));
+      line-height: 1.35;
+    }
+    .firma canvas {
+      height: calc(16mm * var(--escala-pantalla, 1.15));
+    }
+  }
+
+  /* ==================== VISTA MÓVIL Y TABLET ==================== */
+  @media screen and (max-width: 768px) {
+    body { padding: 10px 8px; }
+    .hoja {
+      padding: 16px 14px 20px;
+      margin: 8px auto;
+      max-width: 100%;
+      border-radius: 8px;
+    }
+    .cabecera {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 10px;
+    }
+    .logo img { width: 80px; }
+    h1.titulo { font-size: 20px; }
+    .folio { width: 100%; text-align: center; }
+
+    .tabla-contenedor {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 2px;
+    }
+    .fam { min-width: 580px; }
+    .tabla-sec { min-width: 580px; }
+    .firma-fila { flex-direction: column; gap: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- BARRA DE ACCIONES SUPERIOR -->
+<header class="toolbar no-print">
+  <button type="button" class="btn btn-primary" onclick="imprimirConValidacion()">
+    🖨️ Imprimir / Guardar como PDF
+  </button>
+  <button type="button" class="btn btn-demo" id="btn-demo" onclick="fillDemoData()" style="display: none;" title="Modo pruebas: Rellenar datos de prueba">
+    📝 Rellenar datos de prueba
+  </button>
+  <button type="button" class="btn btn-secondary" id="btn-save" onclick="saveDraft()" title="Guardar borrador local en este navegador">
+    💾 Guardar borrador
+  </button>
+  <button type="button" class="btn btn-secondary" id="btn-load" onclick="loadDraft()" title="Cargar borrador guardado en este navegador">
+    📂 Cargar borrador
+  </button>
+  <button type="button" class="btn btn-danger" onclick="resetFormWithConfirm()">
+    🗑️ Limpiar formulario
+  </button>
+  <div class="toolbar-meta" style="display:inline-flex;align-items:center;gap:12px;">
+    <div style="display:inline-flex;align-items:center;gap:4px;background:#f0f4f9;padding:3px 8px;border-radius:6px;border:1.5px solid #cbd5e1;">
+      <span style="font-size:8.5pt;font-weight:700;color:var(--texto-muted)">Vista:</span>
+      <button type="button" onclick="window.cambiarZoom(-0.1)" title="Reducir tamaño en pantalla" style="border:none;background:#e2e8f0;border-radius:4px;cursor:pointer;font-weight:900;font-size:13px;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;color:var(--azul);">➖</button>
+      <span id="zoomLevel" style="font-size:8.5pt;font-weight:800;color:var(--azul);min-width:40px;text-align:center;cursor:pointer;" onclick="window.resetZoom()" title="Clic para restablecer al 100%">115%</span>
+      <button type="button" onclick="window.cambiarZoom(0.1)" title="Aumentar tamaño en pantalla" style="border:none;background:#e2e8f0;border-radius:4px;cursor:pointer;font-weight:900;font-size:13px;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;color:var(--azul);">➕</button>
+    </div>
+    <div>
+      <span>Progreso:</span>
+      <span id="progressIndicator" class="progress-pill">0%</span>
+    </div>
+  </div>
+</header>
+
+<div class="hoja">
+  <form id="form-matricula" method="POST" action="" onsubmit="return false">
+
+  <!-- CABECERA -->
+  <div class="cabecera">
+    <div class="logo">
+      <img src="logo.png" alt="My Little Artists School">
+    </div>
+    <h1 class="titulo">HOJA DE MATRÍCULA 2026</h1>
+    <div class="folio">
+      <label for="folio">Folio:</label>
+      <input type="text" id="folio" name="folio" class="in-folio" placeholder="Ej. 001" title="Número de folio asignado a la matrícula"><br>
+      <label for="matricula_numero">Matrícula Nº:</label>
+      <input type="text" id="matricula_numero" name="matricula_numero" class="in-folio" placeholder="Ej. 2026-001" title="Número oficial del libro de matrícula">
+    </div>
+  </div>
+  <hr class="separador">
+
+  <!-- DATOS DEL ESTUDIANTE -->
+  <div class="barra barra--azul">DATOS DEL ESTUDIANTE</div>
+  <table class="tabla-sec">
+    <tr>
+      <td colspan="10">
+        <label for="estudiante_apellidos">APELLIDOS</label>
+        <input type="text" id="estudiante_apellidos" name="estudiante_apellidos" class="in" placeholder="Apellidos completos del estudiante" autocomplete="family-name" title="Primer y segundo apellido del estudiante">
+      </td>
+      <td colspan="10">
+        <label for="estudiante_nombres">NOMBRES</label>
+        <input type="text" id="estudiante_nombres" name="estudiante_nombres" class="in" placeholder="Nombres completos del estudiante" autocomplete="given-name" title="Nombres completos del estudiante">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="10">
+        <label for="estudiante_doc_tipo">DOCUMENTO DE IDENTIDAD</label>
+        <div class="val-doc">
+          <span>Tipo:</span>
+          <select id="estudiante_doc_tipo" name="estudiante_doc_tipo" class="in-inline in-doc-tipo select-as-help" title="Tipo de documento de identificación del estudiante (RC, TI, CC, etc.)">
+            <option value="" selected>Seleccione...</option>
+            <option value="RC">RC - Registro Civil</option>
+            <option value="TI">TI - Tarjeta de Identidad</option>
+            <option value="CC">CC - Cédula de Ciudadanía</option>
+            <option value="CE">CE - Cédula de Extranjería</option>
+            <option value="PA">PA - Pasaporte</option>
+            <option value="PPT">PPT - Permiso Protección Temporal</option>
+            <option value="PEP">PEP - Permiso Especial de Permanencia</option>
+            <option value="VISA">VISA - Visa</option>
+            <option value="NUIP">NUIP - No. Único Identificación</option>
+            <option value="NES">NES - Número Establecido Secretaría</option>
+          </select>
+          <span class="doc-tipo-print" id="doc_tipo_print">&nbsp;</span>
+          <label for="estudiante_doc_numero">Nº:</label>
+          <input type="text" id="estudiante_doc_numero" name="estudiante_doc_numero" class="in-inline in-doc-num" placeholder="Número de doc." title="Número de documento de identificación del estudiante">
+        </div>
+      </td>
+      <td colspan="5">
+        <label for="estudiante_eps">EPS</label>
+        <input type="text" id="estudiante_eps" name="estudiante_eps" class="in" placeholder="Nombre de EPS o aseguradora" title="Entidad Promotora de Salud a la que está afiliado el estudiante">
+      </td>
+      <td colspan="5">
+        <label for="estudiante_rh">RH</label>
+        <input type="text" id="estudiante_rh" name="estudiante_rh" class="in" placeholder="Ej. O+" list="lista-rh" maxlength="4" autocomplete="off" title="Grupo sanguíneo y factor RH del estudiante (Ej. O+, A+, B+, etc.)">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="10">
+        <label for="estudiante_lugar_nacimiento">LUGAR DE NACIMIENTO</label>
+        <input type="text" id="estudiante_lugar_nacimiento" name="estudiante_lugar_nacimiento" class="in" placeholder="Ciudad, departamento, país" autocomplete="address-level2" title="Ciudad y país de nacimiento del estudiante">
+      </td>
+      <td colspan="5">
+        <label for="estudiante_fecha_nacimiento">DIA / MES / AÑO</label>
+        <div class="campo-fecha">
+          <input type="text" id="estudiante_fecha_nacimiento" name="estudiante_fecha_nacimiento" class="in in-fecha" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="bday" title="Fecha de nacimiento en formato DD/MM/AAAA (o clic en calendario 📅)">
+          <button type="button" class="btn-cal" tabindex="-1" title="Seleccionar fecha en calendario">📅</button>
+        </div>
+      </td>
+      <td colspan="5">
+        <label for="estudiante_edad">EDAD</label>
+        <input type="text" id="estudiante_edad" name="estudiante_edad" class="in" placeholder="Años" title="Edad actual del estudiante en años cumplidos (se calcula automáticamente)">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="20">
+        <label for="estudiante_direccion">DIRECCIÓN</label>
+        <input type="text" id="estudiante_direccion" name="estudiante_direccion" class="in" placeholder="Calle / carrera, número, interior, apto" autocomplete="street-address" title="Dirección completa de residencia del estudiante">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5">
+        <label for="estudiante_ciudad">CIUDAD</label>
+        <input type="text" id="estudiante_ciudad" name="estudiante_ciudad" class="in" placeholder="Ciudad de residencia" autocomplete="address-level2" title="Municipio o ciudad donde reside el estudiante">
+      </td>
+      <td colspan="5">
+        <label for="estudiante_barrio">BARRIO</label>
+        <input type="text" id="estudiante_barrio" name="estudiante_barrio" class="in" placeholder="Barrio o sector" title="Barrio o sector de residencia del estudiante">
+      </td>
+      <td colspan="5">
+        <label for="estudiante_telefono">TELÉFONO</label>
+        <input type="tel" id="estudiante_telefono" name="estudiante_telefono" class="in" placeholder="Teléfono fijo o celular" autocomplete="tel" title="Número telefónico de contacto del estudiante o residencia">
+      </td>
+      <td colspan="5">
+        <label for="estudiante_genero">GÉNERO</label>
+        <select id="estudiante_genero" name="estudiante_genero" class="in in-genero select-as-help" title="Seleccione el género o sexo del estudiante">
+          <option value="" selected>Seleccione...</option>
+          <option value="Masculino">Masculino</option>
+          <option value="Femenino">Femenino</option>
+        </select>
+        <span class="genero-print" id="estudiante_genero_print">&nbsp;</span>
+      </td>
+    </tr>
+  </table>
+
+  <!-- DATOS FAMILIARES -->
+  <div class="barra barra--naranja">DATOS FAMILIARES</div>
+  <div class="tabla-contenedor">
+    <table class="fam">
+      <thead>
+        <tr>
+          <td class="rot">INFORMACIÓN</td>
+          <td>PADRE</td>
+          <td>MADRE</td>
+          <td>ACUDIENTE <span class="sub">(DIFERENTE A PADRE O MADRE)</span></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="rot">NOMBRES / APELLIDOS</td>
+          <td><input type="text" id="padre_nombres" name="padre_nombres" class="in-cell" placeholder="Nombres y apellidos" autocomplete="name" title="Nombres y apellidos completos del padre de familia"></td>
+          <td><input type="text" id="madre_nombres" name="madre_nombres" class="in-cell" placeholder="Nombres y apellidos" autocomplete="name" title="Nombres y apellidos completos de la madre de familia"></td>
+          <td><input type="text" id="acudiente_nombres" name="acudiente_nombres" class="in-cell" placeholder="Nombres y apellidos" autocomplete="name" title="Nombres y apellidos completos del acudiente autorizado"></td>
+        </tr>
+        <tr>
+          <td class="rot">TIPO Y NÚMERO DOC.</td>
+          <td>
+            <div class="campo-doc-fam">
+              <select id="padre_doc_tipo" name="padre_doc_tipo" class="in-doc-tipo-fam select-as-help" title="Tipo de documento de identidad del padre (CC, CE, PA, etc.)">
+                <option value="" selected>Tipo</option>
+                <option value="CC">CC</option><option value="CE">CE</option>
+                <option value="PA">PA</option><option value="PPT">PPT</option>
+                <option value="PEP">PEP</option><option value="TI">TI</option>
+                <option value="VISA">VISA</option><option value="RC">RC</option>
+              </select>
+              <span class="doc-fam-print" id="padre_doc_tipo_print">&nbsp;</span>
+              <input type="text" id="padre_doc_numero" name="padre_doc_numero" class="in-doc-num-fam" placeholder="Número de doc." title="Número de documento de identificación del padre">
+            </div>
+          </td>
+          <td>
+            <div class="campo-doc-fam">
+              <select id="madre_doc_tipo" name="madre_doc_tipo" class="in-doc-tipo-fam select-as-help" title="Tipo de documento de identidad de la madre (CC, CE, PA, etc.)">
+                <option value="" selected>Tipo</option>
+                <option value="CC">CC</option><option value="CE">CE</option>
+                <option value="PA">PA</option><option value="PPT">PPT</option>
+                <option value="PEP">PEP</option><option value="TI">TI</option>
+                <option value="VISA">VISA</option><option value="RC">RC</option>
+              </select>
+              <span class="doc-fam-print" id="madre_doc_tipo_print">&nbsp;</span>
+              <input type="text" id="madre_doc_numero" name="madre_doc_numero" class="in-doc-num-fam" placeholder="Número de doc." title="Número de documento de identificación de la madre">
+            </div>
+          </td>
+          <td>
+            <div class="campo-doc-fam">
+              <select id="acudiente_doc_tipo" name="acudiente_doc_tipo" class="in-doc-tipo-fam select-as-help" title="Tipo de documento de identidad del acudiente (CC, CE, PA, etc.)">
+                <option value="" selected>Tipo</option>
+                <option value="CC">CC</option><option value="CE">CE</option>
+                <option value="PA">PA</option><option value="PPT">PPT</option>
+                <option value="PEP">PEP</option><option value="TI">TI</option>
+                <option value="VISA">VISA</option><option value="RC">RC</option>
+              </select>
+              <span class="doc-fam-print" id="acudiente_doc_tipo_print">&nbsp;</span>
+              <input type="text" id="acudiente_doc_numero" name="acudiente_doc_numero" class="in-doc-num-fam" placeholder="Número de doc." title="Número de documento de identificación del acudiente">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="rot">EXPEDIDA EN</td>
+          <td><input type="text" id="padre_doc_expedicion" name="padre_doc_expedicion" class="in-cell" placeholder="Lugar de expedición" title="Ciudad o municipio donde fue expedido el documento del padre"></td>
+          <td><input type="text" id="madre_doc_expedicion" name="madre_doc_expedicion" class="in-cell" placeholder="Lugar de expedición" title="Ciudad o municipio donde fue expedido el documento de la madre"></td>
+          <td><input type="text" id="acudiente_doc_expedicion" name="acudiente_doc_expedicion" class="in-cell" placeholder="Lugar de expedición" title="Ciudad o municipio donde fue expedido el documento del acudiente"></td>
+        </tr>
+        <tr>
+          <td class="rot">FECHA NACIMIENTO</td>
+          <td>
+            <div class="campo-fecha">
+              <input type="text" id="padre_fecha_nacimiento" name="padre_fecha_nacimiento" class="in-cell in-fecha" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off" title="Fecha de nacimiento del padre en formato DD/MM/AAAA (o clic en calendario 📅)">
+              <button type="button" class="btn-cal" tabindex="-1" title="Calendario">📅</button>
+            </div>
+          </td>
+          <td>
+            <div class="campo-fecha">
+              <input type="text" id="madre_fecha_nacimiento" name="madre_fecha_nacimiento" class="in-cell in-fecha" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off" title="Fecha de nacimiento de la madre en formato DD/MM/AAAA (o clic en calendario 📅)">
+              <button type="button" class="btn-cal" tabindex="-1" title="Calendario">📅</button>
+            </div>
+          </td>
+          <td>
+            <div class="campo-fecha">
+              <input type="text" id="acudiente_fecha_nacimiento" name="acudiente_fecha_nacimiento" class="in-cell in-fecha" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off" title="Fecha de nacimiento del acudiente en formato DD/MM/AAAA (o clic en calendario 📅)">
+              <button type="button" class="btn-cal" tabindex="-1" title="Calendario">📅</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="rot">CORREO ELECTRÓNICO</td>
+          <td><input type="email" id="padre_correo" name="padre_correo" class="in-cell" placeholder="correo@ejemplo.com" autocomplete="email" title="Correo electrónico personal o laboral del padre"></td>
+          <td><input type="email" id="madre_correo" name="madre_correo" class="in-cell" placeholder="correo@ejemplo.com" autocomplete="email" title="Correo electrónico personal o laboral de la madre"></td>
+          <td><input type="email" id="acudiente_correo" name="acudiente_correo" class="in-cell" placeholder="correo@ejemplo.com" autocomplete="email" title="Correo electrónico personal o laboral del acudiente"></td>
+        </tr>
+        <tr>
+          <td class="rot">TELÉFONO CELULAR</td>
+          <td><input type="tel" id="padre_celular" name="padre_celular" class="in-cell" placeholder="Número celular" autocomplete="tel" title="Número de teléfono celular de contacto del padre"></td>
+          <td><input type="tel" id="madre_celular" name="madre_celular" class="in-cell" placeholder="Número celular" autocomplete="tel" title="Número de teléfono celular de contacto de la madre"></td>
+          <td><input type="tel" id="acudiente_celular" name="acudiente_celular" class="in-cell" placeholder="Número celular" autocomplete="tel" title="Número de teléfono celular de contacto del acudiente"></td>
+        </tr>
+        <tr>
+          <td colspan="3" class="resp">
+            <label for="responsable_economico" style="display:inline">Responsable económico:</label>
+            <input type="text" id="responsable_economico" name="responsable_economico" class="in-inline in-resp" placeholder="Nombre del responsable" title="Persona o personas que asumen los costos de pensión y matrícula">
+          </td>
+          <td colspan="1" class="acu">
+            <label for="acudiente_parentesco" style="display:inline">Parentesco acudiente:</label>
+            <input type="text" id="acudiente_parentesco" name="acudiente_parentesco" class="in-inline in-acu" placeholder="Ej. Madre, Padre, Tío, Abuela" title="Grado de parentesco del acudiente con el estudiante">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ESCOLARIDAD -->
+  <div class="barra barra--verde">ESCOLARIDAD</div>
+  <div class="tabla-contenedor">
+    <table class="tabla-escolaridad">
+      <tr>
+        <td colspan="3" class="grado">
+          <label for="grado_matricula" style="display:inline">SE MATRICULA PARA EL GRADO:</label>
+          <input type="text" id="grado_matricula" name="grado_matricula" class="in-inline in-grado" placeholder="Ej. Primero, Transición" title="Grado académico al cual se matricula el estudiante" list="lista-grados">
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align:center;height:24px;"><label for="institucion_procedencia">INSTITUCIÓN DE PROCEDENCIA</label></td>
+        <td style="text-align:center;"><label for="ultimo_grado">ÚLTIMO GRADO CURSADO</label></td>
+        <td style="text-align:center;"><label for="ano_escolaridad">AÑO</label></td>
+      </tr>
+      <tr>
+        <td><input type="text" id="institucion_procedencia" name="institucion_procedencia" class="in-cell" placeholder="Nombre del colegio anterior" title="Nombre del colegio, jardín o institución educativa de procedencia"></td>
+        <td><input type="text" id="ultimo_grado" name="ultimo_grado" class="in-cell" placeholder="Ej. Transición" title="Último grado académico cursado y aprobado por el estudiante" list="lista-grados"></td>
+        <td><input type="text" id="ano_escolaridad" name="ano_escolaridad" class="in-cell" placeholder="AAAA" title="Año lectivo en que cursó el último grado (Ej. 2025)"></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- TEXTO LEGAL -->
+  <div class="legal">
+    <p>De acuerdo con el artículo 87 de la Ley General de Educación, los establecimientos educativos deberán contar con un manual de convivencia en el que se definan los derechos y obligaciones de los estudiantes, así como de los padres o tutores. Al firmar la matrícula correspondiente en representación de sus hijos, el padre o acudiente estará aceptando dicho manual.</p>
+    <p>En cumplimiento de la Ley 1581 de 2012 y el Decreto Reglamentario 1377 de 2013, sobre protección de datos personales, autorizo de manera libre, expresa, voluntaria e informada a <b>My Little Artists School</b> para recolectar, almacenar, usar, circular y dar tratamiento a los datos e imágenes suministrados para fines académicos e institucionales, de conformidad con la política de tratamiento de datos del plantel.</p>
+  </div>
+
+  <!-- FIRMAS (DIGITALES O FÍSICAS EN PAPEL) -->
+  <div class="firmas">
+    <!-- Fila 1: Padres / Acudientes -->
+    <div class="firma-fila">
+      <div class="firma">
+        <canvas id="sigMadre" title="Firma de la madre con mouse o dedo"></canvas>
+        <div class="sign-actions no-print">
+          <label class="btn-sign-upload" title="Subir foto o archivo de la firma (PNG, JPG)">
+            📁 Subir
+            <input type="file" id="upload_sigMadre" accept="image/*" onchange="uploadSignature(event, 'sigMadre')" style="display:none;" title="Cargar archivo de firma digital de la Madre (PNG, JPG)">
+          </label>
+          <button type="button" class="btn-sign-clear" onclick="clearSignature('sigMadre')" title="Borrar firma">✕ Borrar</button>
+        </div>
+        <div class="rol">Firma de la Madre</div>
+      </div>
+      <div class="firma">
+        <canvas id="sigPadre" title="Firma padre / acudiente con mouse o dedo"></canvas>
+        <div class="sign-actions no-print">
+          <label class="btn-sign-upload" title="Subir foto o archivo de la firma (PNG, JPG)">
+            📁 Subir
+            <input type="file" id="upload_sigPadre" accept="image/*" onchange="uploadSignature(event, 'sigPadre')" style="display:none;" title="Cargar archivo de firma digital del Padre (PNG, JPG)">
+          </label>
+          <button type="button" class="btn-sign-clear" onclick="clearSignature('sigPadre')" title="Borrar firma">✕ Borrar</button>
+        </div>
+        <div class="rol">Firma Padre / Acudiente</div>
+      </div>
+    </div>
+
+    <!-- Fila 2: Directivas del Colegio -->
+    <div class="firma-fila">
+      <div class="firma">
+        <canvas id="sigDirectora" title="Firma o sello de la Directora"></canvas>
+        <div class="sign-actions no-print">
+          <label class="btn-sign-upload" title="Subir firma o sello de la Directora (PNG, JPG)">
+            📁 Subir
+            <input type="file" id="upload_sigDirectora" accept="image/*" onchange="uploadSignature(event, 'sigDirectora')" style="display:none;" title="Cargar archivo de firma digital de la Directora (PNG, JPG)">
+          </label>
+          <button type="button" class="btn-sign-clear" onclick="clearSignature('sigDirectora')" title="Borrar firma">✕ Borrar</button>
+        </div>
+        <input type="text" id="directora_nombre" name="directora_nombre" class="nombre-input" value="Gloria Amparo Gonzalez Castiblanco" placeholder="Nombre oficial de la Directora" title="Nombre oficial de la Directora del colegio">
+        <div class="rol">Directora</div>
+      </div>
+      <div class="firma">
+        <canvas id="sigCoordinadora" title="Firma o sello de la Coordinación"></canvas>
+        <div class="sign-actions no-print">
+          <label class="btn-sign-upload" title="Subir firma o sello de la Coordinación (PNG, JPG)">
+            📁 Subir
+            <input type="file" id="upload_sigCoordinadora" accept="image/*" onchange="uploadSignature(event, 'sigCoordinadora')" style="display:none;" title="Cargar archivo de firma digital de la Coordinadora (PNG, JPG)">
+          </label>
+          <button type="button" class="btn-sign-clear" onclick="clearSignature('sigCoordinadora')" title="Borrar firma">✕ Borrar</button>
+        </div>
+        <input type="text" id="coordinadora_nombre" name="coordinadora_nombre" class="nombre-input" value="Katherin Gabriela Acevedo González" placeholder="Nombre oficial de la Coordinadora" title="Nombre oficial de la Coordinadora académica o de admisiones">
+        <div class="rol">Coordinadora académica</div>
+      </div>
+    </div>
+  </div>
+
+  
+    <!-- Datalists para ayudas automáticas y sugerencias -->
+    <datalist id="lista-rh">
+      <option value="O+"></option>
+      <option value="O-"></option>
+      <option value="A+"></option>
+      <option value="A-"></option>
+      <option value="B+"></option>
+      <option value="B-"></option>
+      <option value="AB+"></option>
+      <option value="AB-"></option>
+    </datalist>
+
+    <datalist id="lista-grados">
+      <option value="Párvulos"></option>
+      <option value="Prejardín"></option>
+      <option value="Jardín"></option>
+      <option value="Transición"></option>
+      <option value="Primero"></option>
+      <option value="Segundo"></option>
+      <option value="Tercero"></option>
+      <option value="Cuarto"></option>
+      <option value="Quinto"></option>
+    </datalist>
+
+  </form>
+</div>
+
+<script>
+(function() {
+  // ==================== CALENDARIO POPUP ====================
+  const MESES = [
+    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+  ];
+  const DIAS_SEMANA = ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá', 'Do'];
+
+  const popover = document.createElement('div');
+  popover.id = 'datepicker-popover';
+  popover.className = 'datepicker-popover';
+  popover.innerHTML = `
+    <div class="dp-header">
+      <button type="button" class="dp-nav" id="dp-prev" title="Mes anterior">&lt;</button>
+      <div class="dp-selectores">
+        <select class="dp-select" id="dp-mes"></select>
+        <select class="dp-select" id="dp-anio"></select>
+      </div>
+      <button type="button" class="dp-nav" id="dp-next" title="Mes siguiente">&gt;</button>
+    </div>
+    <div class="dp-weekdays">
+      ${DIAS_SEMANA.map(d => `<span>${d}</span>`).join('')}
+    </div>
+    <div class="dp-days" id="dp-days"></div>
+    <div class="dp-footer">
+      <button type="button" class="dp-btn-aux" id="dp-hoy">Hoy</button>
+      <button type="button" class="dp-btn-aux limpiar" id="dp-limpiar">Borrar</button>
+      <button type="button" class="dp-btn-aux" id="dp-cerrar">Cerrar</button>
+    </div>
+  `;
+  document.body.appendChild(popover);
+
+  const selectMes = popover.querySelector('#dp-mes');
+  const selectAnio = popover.querySelector('#dp-anio');
+  const daysContainer = popover.querySelector('#dp-days');
+  const btnPrev = popover.querySelector('#dp-prev');
+  const btnNext = popover.querySelector('#dp-next');
+  const btnHoy = popover.querySelector('#dp-hoy');
+  const btnLimpiar = popover.querySelector('#dp-limpiar');
+  const btnCerrar = popover.querySelector('#dp-cerrar');
+
+  MESES.forEach((m, idx) => {
+    const opt = document.createElement('option');
+    opt.value = idx;
+    opt.textContent = m;
+    selectMes.appendChild(opt);
+  });
+
+  const anioActual = new Date().getFullYear();
+  for (let a = anioActual; a >= 1930; a--) {
+    const opt = document.createElement('option');
+    opt.value = a;
+    opt.textContent = a;
+    selectAnio.appendChild(opt);
+  }
+
+  let inputActivo = null;
+  let fechaVista = new Date();
+
+  function esBisiesto(anio) {
+    return (anio % 4 === 0 && (anio % 100 !== 0 || anio % 400 === 0));
+  }
+
+  function diasEnMes(mes, anio) {
+    return [31, esBisiesto(anio) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][mes];
+  }
+
+  window.validarFecha = function(input) {
+    const val = input.value.trim();
+    if (!val) {
+      input.classList.remove('fecha-invalida', 'fecha-valida');
+      input.setCustomValidity('');
+      input.title = '';
+      return true;
+    }
+
+    const match = val.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    let error = '';
+
+    if (!match) {
+      error = 'Formato incompleto o inválido. Use DD/MM/AAAA.';
+    } else {
+      const dia = parseInt(match[1], 10);
+      const mes = parseInt(match[2], 10);
+      const anio = parseInt(match[3], 10);
+      const hoy = new Date();
+
+      if (mes < 1 || mes > 12) {
+        error = 'El mes debe estar entre 01 y 12.';
+      } else if (anio < 1920 || anio > anioActual) {
+        error = `El año debe estar entre 1920 y ${anioActual}.`;
+      } else {
+        const maxDias = diasEnMes(mes - 1, anio);
+        if (dia < 1 || dia > maxDias) {
+          error = `El mes ${MESES[mes - 1]} de ${anio} solo tiene ${maxDias} días.`;
+        } else {
+          const fechaDada = new Date(anio, mes - 1, dia);
+          if (fechaDada > hoy) {
+            error = 'La fecha no puede ser futura.';
+          }
+        }
+      }
+    }
+
+    if (error) {
+      input.classList.remove('fecha-valida');
+      input.classList.add('fecha-invalida');
+      input.setCustomValidity(error);
+      input.title = error;
+      return false;
+    } else {
+      input.classList.remove('fecha-invalida');
+      input.classList.add('fecha-valida');
+      input.setCustomValidity('');
+      input.title = 'Fecha válida';
+
+      if (input.id === 'estudiante_fecha_nacimiento') {
+        const dia = parseInt(match[1], 10);
+        const mes = parseInt(match[2], 10);
+        const anio = parseInt(match[3], 10);
+        const hoy = new Date();
+        let edad = hoy.getFullYear() - anio;
+        const m = (hoy.getMonth() + 1) - mes;
+        if (m < 0 || (m === 0 && hoy.getDate() < dia)) {
+          edad--;
+        }
+        const edadInput = document.getElementById('estudiante_edad');
+        if (edadInput && edad >= 0 && edad <= 30) {
+          edadInput.value = edad + (edad === 1 ? ' año' : ' años');
+        }
+      }
+      return true;
+    }
+  };
+
+  function parsearFecha(str) {
+    const match = str.trim().match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    if (!match) return null;
+    return new Date(parseInt(match[3], 10), parseInt(match[2], 10) - 1, parseInt(match[1], 10));
+  }
+
+  function renderizarCalendario() {
+    const mes = fechaVista.getMonth();
+    const anio = fechaVista.getFullYear();
+
+    selectMes.value = mes;
+    selectAnio.value = anio;
+    daysContainer.innerHTML = '';
+
+    const fechaInput = inputActivo ? parsearFecha(inputActivo.value) : null;
+    const hoy = new Date();
+
+    const primerDiaObj = new Date(anio, mes, 1);
+    let primerDiaSemana = primerDiaObj.getDay() - 1;
+    if (primerDiaSemana === -1) primerDiaSemana = 6;
+
+    const totalDias = diasEnMes(mes, anio);
+    const mesAnt = mes === 0 ? 11 : mes - 1;
+    const anioAnt = mes === 0 ? anio - 1 : anio;
+    const totalDiasAnt = diasEnMes(mesAnt, anioAnt);
+
+    for (let i = primerDiaSemana - 1; i >= 0; i--) {
+      const diaNum = totalDiasAnt - i;
+      const cell = document.createElement('div');
+      cell.className = 'dp-day otro-mes';
+      cell.textContent = diaNum;
+      cell.addEventListener('click', () => {
+        fechaVista = new Date(anioAnt, mesAnt, diaNum);
+        renderizarCalendario();
+      });
+      daysContainer.appendChild(cell);
+    }
+
+    for (let d = 1; d <= totalDias; d++) {
+      const cell = document.createElement('div');
+      cell.className = 'dp-day';
+      cell.textContent = d;
+
+      if (hoy.getDate() === d && hoy.getMonth() === mes && hoy.getFullYear() === anio) {
+        cell.classList.add('hoy');
+      }
+
+      if (fechaInput && fechaInput.getDate() === d && fechaInput.getMonth() === mes && fechaInput.getFullYear() === anio) {
+        cell.classList.add('seleccionado');
+      }
+
+      cell.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (inputActivo) {
+          const dStr = String(d).padStart(2, '0');
+          const mStr = String(mes + 1).padStart(2, '0');
+          inputActivo.value = `${dStr}/${mStr}/${anio}`;
+          window.validarFecha(inputActivo);
+          if (inputActivo.id === 'estudiante_fecha_nacimiento') {
+            calcularEdadEstudiante(inputActivo.value);
+          }
+          inputActivo.dispatchEvent(new Event('input', { bubbles: true }));
+          inputActivo.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+        cerrarCalendario();
+      });
+
+      daysContainer.appendChild(cell);
+    }
+
+    const celdasUsadas = primerDiaSemana + totalDias;
+    const celdasRestantes = (celdasUsadas % 7 === 0) ? 0 : 7 - (celdasUsadas % 7);
+    const mesSig = mes === 11 ? 0 : mes + 1;
+    const anioSig = mes === 11 ? anio + 1 : anio;
+
+    for (let s = 1; s <= celdasRestantes; s++) {
+      const cell = document.createElement('div');
+      cell.className = 'dp-day otro-mes';
+      cell.textContent = s;
+      cell.addEventListener('click', () => {
+        fechaVista = new Date(anioSig, mesSig, s);
+        renderizarCalendario();
+      });
+      daysContainer.appendChild(cell);
+    }
+  }
+
+  function posicionarCalendario(input) {
+    const rect = input.getBoundingClientRect();
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+
+    let top = rect.bottom + scrollY + 4;
+    let left = rect.left + scrollX;
+
+    const popoverWidth = 265;
+    const popoverHeight = 280;
+
+    if (left + popoverWidth > window.innerWidth - 12) {
+      left = Math.max(8, window.innerWidth - popoverWidth - 12 + scrollX);
+    }
+
+    if (rect.bottom + popoverHeight > window.innerHeight && rect.top > popoverHeight) {
+      top = rect.top + scrollY - popoverHeight - 4;
+    }
+
+    popover.style.top = `${top}px`;
+    popover.style.left = `${left}px`;
+  }
+
+  function abrirCalendario(input) {
+    inputActivo = input;
+    const fechaParseada = parsearFecha(input.value);
+
+    if (fechaParseada) {
+      fechaVista = new Date(fechaParseada.getFullYear(), fechaParseada.getMonth(), 1);
+    } else {
+      if (input.id === 'estudiante_fecha_nacimiento') {
+        fechaVista = new Date(2020, 0, 1);
+      } else {
+        fechaVista = new Date(1990, 0, 1);
+      }
+    }
+
+    renderizarCalendario();
+    posicionarCalendario(input);
+    popover.style.setProperty('display', 'block', 'important');
+    popover.classList.add('activo');
+  }
+
+  function cerrarCalendario() {
+    if (popover) {
+      popover.classList.remove('activo');
+      popover.style.setProperty('display', 'none', 'important');
+    }
+    inputActivo = null;
+  }
+
+  btnPrev.addEventListener('click', (e) => {
+    e.stopPropagation();
+    fechaVista.setMonth(fechaVista.getMonth() - 1);
+    renderizarCalendario();
+  });
+
+  btnNext.addEventListener('click', (e) => {
+    e.stopPropagation();
+    fechaVista.setMonth(fechaVista.getMonth() + 1);
+    renderizarCalendario();
+  });
+
+  selectMes.addEventListener('change', () => {
+    fechaVista.setMonth(parseInt(selectMes.value, 10));
+    renderizarCalendario();
+  });
+
+  selectAnio.addEventListener('change', () => {
+    fechaVista.setFullYear(parseInt(selectAnio.value, 10));
+    renderizarCalendario();
+  });
+
+  btnHoy.addEventListener('click', () => {
+    if (inputActivo) {
+      const hoy = new Date();
+      inputActivo.value = `${String(hoy.getDate()).padStart(2, '0')}/${String(hoy.getMonth() + 1).padStart(2, '0')}/${hoy.getFullYear()}`;
+      window.validarFecha(inputActivo);
+      inputActivo.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+    cerrarCalendario();
+  });
+
+  btnLimpiar.addEventListener('click', () => {
+    if (inputActivo) {
+      inputActivo.value = '';
+      inputActivo.classList.remove('fecha-invalida', 'fecha-valida');
+      inputActivo.setCustomValidity('');
+      if (inputActivo.id === 'estudiante_fecha_nacimiento') {
+        const edadInput = document.getElementById('estudiante_edad');
+        if (edadInput) edadInput.value = '';
+      }
+      inputActivo.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+    cerrarCalendario();
+  });
+
+  btnCerrar.addEventListener('click', cerrarCalendario);
+
+  document.addEventListener('click', (e) => {
+    if (!popover.contains(e.target) && !e.target.closest('.campo-fecha')) {
+      cerrarCalendario();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') cerrarCalendario();
+  });
+
+  window.addEventListener('resize', () => {
+    if (popover.classList.contains('activo') && inputActivo) {
+      posicionarCalendario(inputActivo);
+    }
+  });
+
+  document.querySelectorAll('.in-fecha').forEach((input) => {
+    const contenedor = input.closest('.campo-fecha');
+    const btn = contenedor ? contenedor.querySelector('.btn-cal') : null;
+
+    if (btn) {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (popover.classList.contains('activo') && inputActivo === input) {
+          cerrarCalendario();
+        } else {
+          abrirCalendario(input);
+        }
+      });
+    }
+
+    input.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (popover && popover.classList.contains('activo') && inputActivo === input) {
+        // ya abierto
+      } else {
+        abrirCalendario(input);
+      }
+    });
+
+    input.addEventListener('input', () => {
+      let v = input.value.replace(/[^\d]/g, '');
+      if (v.length > 8) v = v.slice(0, 8);
+
+      if (v.length >= 5) {
+        input.value = v.slice(0, 2) + '/' + v.slice(2, 4) + '/' + v.slice(4);
+      } else if (v.length >= 3) {
+        input.value = v.slice(0, 2) + '/' + v.slice(2);
+      } else {
+        input.value = v;
+      }
+
+      if (input.value.length === 10) {
+        window.validarFecha(input);
+      } else if (input.value.length === 0) {
+        input.classList.remove('fecha-invalida', 'fecha-valida');
+      }
+    });
+
+    input.addEventListener('blur', () => {
+      window.validarFecha(input);
+    });
+  });
+
+  // ==================== SINCRONIZACIÓN PARA IMPRESIÓN ====================
+  const selectDocTipo = document.getElementById('estudiante_doc_tipo');
+  const printDocTipo = document.getElementById('doc_tipo_print');
+
+  function actualizarDocTipoPrint() {
+    if (selectDocTipo && printDocTipo) {
+      printDocTipo.textContent = selectDocTipo.value ? selectDocTipo.value : '\u00A0\u00A0\u00A0\u00A0';
+    }
+
+    ['padre', 'madre', 'acudiente'].forEach(rol => {
+      const sel = document.getElementById(rol + '_doc_tipo');
+      const span = document.getElementById(rol + '_doc_tipo_print');
+      if (sel && span) {
+        span.textContent = sel.value ? sel.value : '\u00A0\u00A0\u00A0\u00A0';
+      }
+    });
+  }
+
+  const selectGenero = document.getElementById('estudiante_genero');
+  const printGenero = document.getElementById('estudiante_genero_print');
+
+  function actualizarGeneroPrint() {
+    if (selectGenero && printGenero) {
+      printGenero.textContent = selectGenero.value ? selectGenero.value : '\u00A0';
+    }
+  }
+
+  if (selectDocTipo) selectDocTipo.addEventListener('change', actualizarDocTipoPrint);
+  ['padre', 'madre', 'acudiente'].forEach(rol => {
+    const sel = document.getElementById(rol + '_doc_tipo');
+    if (sel) sel.addEventListener('change', actualizarDocTipoPrint);
+  });
+  if (selectGenero) selectGenero.addEventListener('change', actualizarGeneroPrint);
+
+  window.addEventListener('beforeprint', () => {
+    actualizarDocTipoPrint();
+    actualizarGeneroPrint();
+    const nac = document.getElementById('estudiante_fecha_nacimiento'); if (nac) calcularEdadEstudiante(nac.value);
+    updateAllSelectHelp();
+  });
+  actualizarDocTipoPrint();
+  actualizarGeneroPrint();
+
+  // ==================== MOTOR DE FIRMAS UNIFICADO (PointerEvents) ====================
+  const signatureCanvases = {};
+
+  function setupSignature(id) {
+    const canvas = document.getElementById(id);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const ratio = Math.max(window.devicePixelRatio || 1, 1);
+
+    function resizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      if (rect.width === 0) return;
+      canvas.width = rect.width * ratio;
+      canvas.height = rect.height * ratio;
+      ctx.scale(ratio, ratio);
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.strokeStyle = '#0f2b5f';
+    }
+
+    resizeCanvas();
+    signatureCanvases[id] = { canvas, ctx, ratio, hasDrawn: false };
+
+    let isDrawing = false;
+
+    function getCoords(e) {
+      const rect = canvas.getBoundingClientRect();
+      if (typeof e.offsetX === 'number' && e.target === canvas) {
+        return { x: e.offsetX, y: e.offsetY };
+      }
+      return {
+        x: (e.clientX - rect.left) / (currentZoom || 1),
+        y: (e.clientY - rect.top) / (currentZoom || 1)
+      };
+    }
+
+    canvas.addEventListener('pointerdown', e => {
+      isDrawing = true;
+      canvas.setPointerCapture(e.pointerId);
+      const p = getCoords(e);
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+    });
+
+    canvas.addEventListener('pointermove', e => {
+      if (!isDrawing) return;
+      const p = getCoords(e);
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+      signatureCanvases[id].hasDrawn = true;
+    });
+
+    const stopDrawing = e => {
+      if (isDrawing) {
+        isDrawing = false;
+        try { canvas.releasePointerCapture(e.pointerId); } catch (_) {}
+        updateProgress();
+      }
+    };
+
+    canvas.addEventListener('pointerup', stopDrawing);
+    canvas.addEventListener('pointercancel', stopDrawing);
+    canvas.addEventListener('pointerleave', stopDrawing);
+  }
+
+  window.loadSignatureFromDataUrl = function(id, dataUrl, callback) {
+    const canvas = document.getElementById(id);
+    if (!canvas || !dataUrl) return;
+    const ctx = canvas.getContext('2d');
+    const sigInfo = signatureCanvases[id];
+    const ratio = (sigInfo && sigInfo.ratio) || Math.max(window.devicePixelRatio || 1, 1);
+    const logicalW = canvas.width / ratio;
+    const logicalH = canvas.height / ratio;
+    if (logicalW <= 0 || logicalH <= 0) return;
+
+    const img = new Image();
+    img.onload = function() {
+      ctx.save();
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.restore();
+
+      const padX = 8;
+      const padY = 3;
+      const availW = Math.max(logicalW - padX * 2, 10);
+      const availH = Math.max(logicalH - padY * 2, 10);
+      const scale = Math.min(availW / img.width, availH / img.height);
+      const drawW = img.width * scale;
+      const drawH = img.height * scale;
+      const offsetX = (logicalW - drawW) / 2;
+      const offsetY = (logicalH - drawH) / 2;
+
+      ctx.drawImage(img, offsetX, offsetY, drawW, drawH);
+      if (sigInfo) sigInfo.hasDrawn = true;
+      updateProgress();
+      if (typeof callback === 'function') callback();
+    };
+    img.src = dataUrl;
+  };
+
+  window.uploadSignature = function(event, id) {
+    const input = event.target;
+    const file = input.files && input.files[0];
+    if (!file) return;
+    if (!file.type.match(/^image\//i)) {
+      alert('Por favor seleccione un archivo de imagen válido (PNG, JPG, etc.).');
+      input.value = '';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      window.loadSignatureFromDataUrl(id, e.target.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  window.clearSignature = function(id) {
+    const canvas = document.getElementById(id);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.restore();
+    if (signatureCanvases[id]) signatureCanvases[id].hasDrawn = false;
+    const fileInput = document.getElementById('upload_' + id);
+    if (fileInput) fileInput.value = '';
+    updateProgress();
+  };
+
+  window.clearAllSignatures = function() {
+    ['sigMadre', 'sigPadre', 'sigDirectora', 'sigCoordinadora'].forEach(window.clearSignature);
+  };
+
+  
+  // ==================== SELECT COMO AYUDA ====================
+  function syncSelectHelp(sel) {
+    if (!sel) return;
+    if (sel.value && sel.value.trim() !== '') {
+      sel.classList.add('has-value');
+    } else {
+      sel.classList.remove('has-value');
+    }
+  }
+
+  function updateAllSelectHelp() {
+    document.querySelectorAll('select.select-as-help').forEach(sel => {
+      syncSelectHelp(sel);
+    });
+  }
+
+  // ==================== CÁLCULO AUTOMÁTICO DE EDAD ====================
+  function calcularEdadEstudiante(fechaStr) {
+    if (!fechaStr) return;
+    const partes = fechaStr.split('/');
+    if (partes.length !== 3) return;
+    const d = parseInt(partes[0], 10);
+    const m = parseInt(partes[1], 10) - 1;
+    const y = parseInt(partes[2], 10);
+    const fechaNac = new Date(y, m, d);
+    if (isNaN(fechaNac.getTime())) return;
+    const hoy = new Date();
+    let edad = hoy.getFullYear() - fechaNac.getFullYear();
+    const mDiff = hoy.getMonth() - fechaNac.getMonth();
+    if (mDiff < 0 || (mDiff === 0 && hoy.getDate() < fechaNac.getDate())) {
+      edad--;
+    }
+    const edadInput = document.getElementById('estudiante_edad');
+    if (edadInput && edad >= 0 && edad < 100) {
+      edadInput.value = `${edad} años`;
+    }
+  }
+
+  window.rellenarDatosPrueba = function() {
+    if (typeof window.fillDemoData === 'function') {
+      window.fillDemoData();
+    }
+  };
+
+// ==================== CÁLCULO DE PROGRESO ====================
+  window.updateProgress = function() {
+    const form = document.getElementById('form-matricula');
+    if (!form) return;
+
+    const textInputs = Array.from(form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]'));
+    const selects = Array.from(form.querySelectorAll('select'));
+
+    let totalFields = textInputs.length + selects.length;
+    let filledFields = 0;
+
+    textInputs.forEach(i => {
+      if (i.value.trim() !== '') filledFields++;
+    });
+    selects.forEach(s => {
+      if (s.value !== '') filledFields++;
+    });
+
+    if (signatureCanvases['sigMadre'] && signatureCanvases['sigMadre'].hasDrawn) filledFields++;
+    if (signatureCanvases['sigPadre'] && signatureCanvases['sigPadre'].hasDrawn) filledFields++;
+
+    const pct = Math.min(100, Math.round((filledFields / totalFields) * 100));
+    const el = document.getElementById('progressIndicator');
+    if (el) {
+      el.textContent = `${pct}%`;
+      el.style.background = pct > 75 ? '#d4edda' : (pct > 35 ? '#fff3cd' : '#e2e8f0');
+      el.style.color = pct > 75 ? '#155724' : (pct > 35 ? '#856404' : '#0f2b5f');
+    }
+  };
+
+  // ==================== DATOS DE PRUEBA ====================
+  window.fillDemoData = function() {
+    const form = document.getElementById('form-matricula');
+    if (!form) return;
+
+    const data = {
+      'folio': '084',
+      'matricula_numero': '2026-084',
+      'estudiante_apellidos': 'Gómez Restrepo',
+      'estudiante_nombres': 'Valeria',
+      'estudiante_doc_tipo': 'RC',
+      'estudiante_doc_numero': '1.024.895.412',
+      'estudiante_eps': 'Sanitas',
+      'estudiante_rh': 'O+',
+      'estudiante_lugar_nacimiento': 'Bogotá D.C.',
+      'estudiante_fecha_nacimiento': '15/04/2021',
+      'estudiante_direccion': 'Calle 127 # 45-12 Apto 402',
+      'estudiante_ciudad': 'Bogotá',
+      'estudiante_barrio': 'Alhambra',
+      'estudiante_telefono': '6017845120',
+      'estudiante_genero': 'Femenino',
+      'padre_nombres': 'Carlos Gómez Herrera',
+      'padre_doc_tipo': 'CC',
+      'padre_doc_numero': '79.845.210',
+      'padre_doc_expedicion': 'Bogotá',
+      'padre_fecha_nacimiento': '22/08/1988',
+      'padre_correo': 'carlos.gomez@gmail.com',
+      'padre_celular': '3104589632',
+      'madre_nombres': 'Lucía Restrepo Peña',
+      'madre_doc_tipo': 'CC',
+      'madre_doc_numero': '52.984.632',
+      'madre_doc_expedicion': 'Medellín',
+      'madre_fecha_nacimiento': '10/11/1990',
+      'madre_correo': 'lucia.restrepo@gmail.com',
+      'madre_celular': '3157896541',
+      'acudiente_nombres': 'Carlos Gómez Herrera',
+      'acudiente_doc_tipo': 'CC',
+      'acudiente_doc_numero': '79.845.210',
+      'acudiente_doc_expedicion': 'Bogotá',
+      'acudiente_fecha_nacimiento': '22/08/1988',
+      'acudiente_correo': 'carlos.gomez@gmail.com',
+      'acudiente_celular': '3104589632',
+      'responsable_economico': 'Carlos Gómez Herrera y Lucía Restrepo Peña',
+      'acudiente_parentesco': 'Padres de familia',
+      'grado_matricula': 'Transición',
+      'institucion_procedencia': 'My Little Artists School',
+      'ultimo_grado': 'Jardín',
+      'ano_escolaridad': '2025'
+    };
+
+    Object.entries(data).forEach(([id, val]) => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.value = val;
+        if (el.classList.contains('in-fecha')) {
+          window.validarFecha(el);
+        }
+      }
+    });
+
+    actualizarDocTipoPrint();
+    actualizarGeneroPrint();
+    const nac = document.getElementById('estudiante_fecha_nacimiento'); if (nac) calcularEdadEstudiante(nac.value);
+    updateAllSelectHelp();
+    updateProgress();
+  };
+
+  // ==================== PERSISTENCIA LOCALSTORAGE ====================
+  window.saveDraft = function() {
+    const form = document.getElementById('form-matricula');
+    const data = {};
+
+    Array.from(form.elements).forEach(el => {
+      if (!el.name) return;
+      data[el.name] = el.value;
+    });
+
+    ['sigMadre', 'sigPadre', 'sigDirectora', 'sigCoordinadora'].forEach(id => {
+      if (signatureCanvases[id] && signatureCanvases[id].hasDrawn) {
+        const c = document.getElementById(id);
+        if (c) data['__sig_' + id + '__'] = c.toDataURL('image/png');
+      }
+    });
+
+    localStorage.setItem('mlas_matricula_borrador', JSON.stringify(data));
+    alert('✅ Borrador de matrícula guardado localmente en su navegador.');
+  };
+
+  window.loadDraft = function() {
+    const raw = localStorage.getItem('mlas_matricula_borrador');
+    if (!raw) {
+      alert('ℹ️ No hay ningún borrador de matrícula guardado en este navegador.');
+      return;
+    }
+    try {
+      const data = JSON.parse(raw);
+      const form = document.getElementById('form-matricula');
+
+      Object.entries(data).forEach(([key, val]) => {
+        if (key.startsWith('__sig_') && key.endsWith('__')) {
+          const sigId = key.substring(6, key.length - 2);
+          if (val) window.loadSignatureFromDataUrl(sigId, val);
+          return;
+        }
+
+        const el = form.elements[key];
+        if (el) {
+          el.value = val;
+          if (el.classList.contains('in-fecha')) {
+            window.validarFecha(el);
+          }
+        }
+      });
+
+      actualizarDocTipoPrint();
+      actualizarGeneroPrint();
+      updateProgress();
+      alert('✅ Borrador de matrícula cargado con éxito.');
+    } catch (err) {
+      alert('⚠️ Error al cargar el borrador.');
+    }
+  };
+
+  window.resetFormWithConfirm = function() {
+    if (confirm('¿Está seguro de que desea limpiar todos los campos de la matrícula?')) {
+      document.getElementById('form-matricula').reset();
+      window.clearAllSignatures();
+      actualizarDocTipoPrint();
+      actualizarGeneroPrint();
+      updateProgress();
+    }
+  };
+
+  // ==================== IMPRESIÓN CON VALIDACIÓN ====================
+  window.imprimirConValidacion = function() {
+    actualizarDocTipoPrint();
+    actualizarGeneroPrint();
+    const nac = document.getElementById('estudiante_fecha_nacimiento'); if (nac) calcularEdadEstudiante(nac.value);
+    updateAllSelectHelp();
+    const fechas = document.querySelectorAll('.in-fecha');
+    let hayError = false;
+
+    fechas.forEach(f => {
+      if (f.value.trim() && !window.validarFecha(f)) {
+        hayError = true;
+      }
+    });
+
+    if (hayError) {
+      if (!confirm('Una o más fechas tienen un formato o valor inválido (deben ser DD/MM/AAAA).\n\n¿Desea imprimir el formulario de todas formas?')) {
+        return;
+      }
+    }
+    window.print();
+  };
+
+  // ==================== INICIALIZACIÓN ====================
+  
+  // ==================== CONTROL DE ZOOM INTERACTIVO ====================
+  let currentZoom = parseFloat(localStorage.getItem('mlas_matricula_zoom')) || 1.15;
+
+  window.cambiarZoom = function(delta) {
+    currentZoom = Math.min(1.5, Math.max(0.85, Math.round((currentZoom + delta) * 100) / 100));
+    window.aplicarZoom();
+  };
+
+  window.resetZoom = function() {
+    currentZoom = 1.0;
+    window.aplicarZoom();
+  };
+
+  window.aplicarZoom = function() {
+    document.documentElement.style.setProperty('--escala-pantalla', currentZoom);
+    const hoja = document.querySelector('.hoja');
+    if (hoja) {
+      hoja.style.zoom = currentZoom;
+    }
+    const el = document.getElementById('zoomLevel');
+    if (el) el.textContent = `${Math.round(currentZoom * 100)}%`;
+    localStorage.setItem('mlas_matricula_zoom', currentZoom);
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 60);
+  };
+
+  window.addEventListener('beforeprint', () => {
+    const hoja = document.querySelector('.hoja');
+    if (hoja) hoja.style.zoom = '1';
+  });
+
+  window.addEventListener('afterprint', () => {
+    const hoja = document.querySelector('.hoja');
+    if (hoja) hoja.style.zoom = currentZoom;
+  });
+
+  // ==================== MODO DE PRUEBAS / QA ====================
+function verificarModoPrueba() {
+  // Limpiar cualquier residuo previo en localStorage para que nunca persista al recargar sin parámetros
+  try {
+    localStorage.removeItem('mlas_modo_prueba');
+  } catch (e) {}
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const hash = (window.location.hash || '').toLowerCase();
+
+  const testVal = urlParams.get('test');
+  const demoVal = urlParams.get('demo');
+  const pruebaVal = urlParams.get('prueba');
+  const modoVal = (urlParams.get('modo') || '').toLowerCase();
+
+  const esPrueba = (urlParams.has('test') && testVal !== '0' && testVal !== 'false') ||
+                   (urlParams.has('demo') && demoVal !== '0' && demoVal !== 'false') ||
+                   (urlParams.has('prueba') && pruebaVal !== '0' && pruebaVal !== 'false') ||
+                   (modoVal === 'prueba' || modoVal === 'test' || modoVal === 'demo') ||
+                   (hash === '#test' || hash === '#demo' || hash === '#prueba');
+
+  const btnDemo = document.getElementById('btn-demo') || document.querySelector('.btn-demo');
+  if (btnDemo) {
+    btnDemo.style.display = esPrueba ? 'inline-flex' : 'none';
+  }
+}
+
+window.activarModoPrueba = function() {
+  const btnDemo = document.getElementById('btn-demo') || document.querySelector('.btn-demo');
+  if (btnDemo) btnDemo.style.display = 'inline-flex';
+  alert('🛠️ Modo de pruebas activado en esta vista.');
+};
+
+window.desactivarModoPrueba = function() {
+  const btnDemo = document.getElementById('btn-demo') || document.querySelector('.btn-demo');
+  if (btnDemo) btnDemo.style.display = 'none';
+  alert('🔒 Modo de pruebas desactivado: botón oculto.');
+};
+
+// Atajo secreto de teclado: Ctrl + Shift + D
+window.addEventListener('keydown', (e) => {
+  if (e.ctrlKey && e.shiftKey && (e.key === 'D' || e.key === 'd')) {
+    e.preventDefault();
+    const btnDemo = document.getElementById('btn-demo') || document.querySelector('.btn-demo');
+    if (btnDemo) {
+      const visible = window.getComputedStyle(btnDemo).display !== 'none';
+      btnDemo.style.display = visible ? 'none' : 'inline-flex';
+    }
+  }
+});
+window.addEventListener('hashchange', verificarModoPrueba);
+window.addEventListener('popstate', verificarModoPrueba);
+
+  window.addEventListener('load', () => {
+    verificarModoPrueba();
+    window.aplicarZoom();
+    // Sincronizar ayudas de select
+    document.querySelectorAll('select.select-as-help').forEach(sel => {
+      syncSelectHelp(sel);
+      sel.addEventListener('change', () => syncSelectHelp(sel));
+      sel.addEventListener('input', () => syncSelectHelp(sel));
+    });
+
+    const nacInput = document.getElementById('estudiante_fecha_nacimiento');
+    if (nacInput) {
+      nacInput.addEventListener('change', () => calcularEdadEstudiante(nacInput.value));
+      nacInput.addEventListener('blur', () => calcularEdadEstudiante(nacInput.value));
+    }
+
+    ['sigMadre', 'sigPadre', 'sigDirectora', 'sigCoordinadora'].forEach(setupSignature);
+
+    const form = document.getElementById('form-matricula');
+    form.addEventListener('input', updateProgress);
+    form.addEventListener('change', updateProgress);
+
+    window.addEventListener('resize', () => {
+      ['sigMadre', 'sigPadre', 'sigDirectora', 'sigCoordinadora'].forEach(id => {
+        const canvas = document.getElementById(id);
+        if (!canvas) return;
+        const hasDrawn = signatureCanvases[id] && signatureCanvases[id].hasDrawn;
+        const prevData = hasDrawn ? canvas.toDataURL() : null;
+        const rect = canvas.getBoundingClientRect();
+        if (rect.width === 0) return;
+        const ratio = Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = rect.width * ratio;
+        canvas.height = rect.height * ratio;
+        const ctx = canvas.getContext('2d');
+        ctx.scale(ratio, ratio);
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.strokeStyle = '#0f2b5f';
+        if (prevData) {
+          window.loadSignatureFromDataUrl(id, prevData);
+        }
+      });
+    });
+
+    updateProgress();
+  });
+
+})();
+</script>
+</body>
+</html>
