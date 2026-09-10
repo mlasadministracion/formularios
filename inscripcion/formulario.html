@@ -1530,8 +1530,8 @@
           </div>
         </td>
         <td colspan="3">
-          <label for="sexo">SEXO</label>
-          <select id="sexo" name="sexo" class="in select-as-help" title="Sexo biológico del estudiante">
+          <label for="genero">GÉNERO</label>
+          <select id="genero" name="genero" class="in select-as-help" title="Seleccione el género del estudiante">
             <option value="" selected>Seleccione...</option>
             <option value="Femenino">Femenino</option>
             <option value="Masculino">Masculino</option>
@@ -2626,6 +2626,7 @@ function fillDemoData() {
     'nombres_nino': 'Valeria Gómez Restrepo',
     'fecha_nacimiento': '15/04/2021',
     'nacimiento_lugar': 'Bogotá D.C.',
+    'genero': 'Femenino',
     'sexo': 'Femenino',
     'hermanos': '1 hermano, ocupa el segundo lugar',
     'eps': 'Sanitas',
@@ -2757,7 +2758,7 @@ function loadDraft() {
         return;
       }
 
-      const els = form.elements[key];
+      const els = form.elements[key] || (key === 'sexo' ? form.elements['genero'] : null);
       if (!els) return;
 
       if (els instanceof RadioNodeList || els.length) {
@@ -2938,7 +2939,7 @@ window.addEventListener('load', () => {
     });
   });
 
-  // Configurar selectores de ayuda (placeholder interactivo para sexo, RH, etc.)
+  // Configurar selectores de ayuda (placeholder interactivo para género, RH, etc.)
   document.querySelectorAll('select.select-as-help').forEach(sel => {
     syncSelectHelp(sel);
     sel.addEventListener('change', () => syncSelectHelp(sel));
