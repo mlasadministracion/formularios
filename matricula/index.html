@@ -802,41 +802,18 @@
 
   /* ==================== VISTA EN PANTALLA (AMPLIADA Y CÓMODA) ==================== */
   @media screen {
-    body {
-      font-size: calc(8.8pt * var(--escala-pantalla, 1.15));
+    .document {
+      width: 215.9mm;
+      max-width: none;
+      margin: 20px auto 45px;
     }
     .hoja {
-      width: calc(215.9mm * var(--escala-pantalla, 1.15));
-      max-width: 960px;
+      width: 215.9mm;
+      min-height: 279.4mm;
+      max-width: none;
       margin: 20px auto 45px;
-      padding: calc(8mm * var(--escala-pantalla, 1.15)) calc(10mm * var(--escala-pantalla, 1.15));
-    }
-    table {
-      font-size: calc(9.2pt * var(--escala-pantalla, 1.15));
-    }
-    td {
-      height: calc(38px * var(--escala-pantalla, 1.15));
-      padding: 3.5px 6px;
-      font-size: calc(8.6pt * var(--escala-pantalla, 1.15));
-    }
-    input.in, select.in {
-      height: calc(20px * var(--escala-pantalla, 1.15));
-      font-size: calc(10.5px * var(--escala-pantalla, 1.15));
-    }
-    input.in-cell {
-      height: calc(30px * var(--escala-pantalla, 1.15));
-      font-size: calc(10.5px * var(--escala-pantalla, 1.15));
-    }
-    .barra {
-      font-size: calc(12px * var(--escala-pantalla, 1.15));
-      padding: 4.5px 8px;
-    }
-    .legal {
-      font-size: calc(7.8pt * var(--escala-pantalla, 1.15));
-      line-height: 1.35;
-    }
-    .firma canvas {
-      height: calc(16mm * var(--escala-pantalla, 1.15));
+      padding: 8mm 10mm;
+      box-sizing: border-box;
     }
   }
 
@@ -846,9 +823,16 @@
       padding: 10px 6px;
       overflow-x: hidden;
     }
+    .document {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      zoom: 1 !important;
+    }
     .hoja {
       width: 100% !important;
       max-width: 100% !important;
+      min-height: auto !important;
       box-sizing: border-box !important;
       padding: 16px 10px 20px !important;
       margin: 8px auto !important;
@@ -920,8 +904,10 @@
   </div>
 </header>
 
+<form id="form-matricula" class="document" method="POST" action="" onsubmit="return false">
+
+<!-- ===================== PÁGINA 1: DATOS DEL ESTUDIANTE Y FAMILIARES ===================== -->
 <div class="hoja" id="page1">
-  <form id="form-matricula" method="POST" action="" onsubmit="return false">
 
   <!-- CABECERA -->
   <div class="cabecera">
@@ -2159,9 +2145,13 @@
 
   window.aplicarZoom = function() {
     document.documentElement.style.setProperty('--escala-pantalla', currentZoom);
-    const hoja = document.querySelector('.hoja');
-    if (hoja) {
-      hoja.style.zoom = currentZoom;
+    const doc = document.getElementById('form-matricula') || document.querySelector('.document');
+    if (doc) {
+      doc.style.zoom = currentZoom;
+    } else {
+      document.querySelectorAll('.hoja').forEach(hoja => {
+        hoja.style.zoom = currentZoom;
+      });
     }
     const el = document.getElementById('zoomLevel');
     if (el) el.textContent = `${Math.round(currentZoom * 100)}%`;
@@ -2172,13 +2162,13 @@
   };
 
   window.addEventListener('beforeprint', () => {
-    const hoja = document.querySelector('.hoja');
-    if (hoja) hoja.style.zoom = '1';
+    const doc = document.getElementById('form-matricula') || document.querySelector('.document');
+    if (doc) doc.style.zoom = '1';
+    document.querySelectorAll('.hoja').forEach(hoja => { hoja.style.zoom = '1'; });
   });
 
   window.addEventListener('afterprint', () => {
-    const hoja = document.querySelector('.hoja');
-    if (hoja) hoja.style.zoom = currentZoom;
+    window.aplicarZoom();
   });
 
   // ==================== MODO DE PRUEBAS / QA ====================
