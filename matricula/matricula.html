@@ -112,19 +112,74 @@
     font-weight: 700;
   }
 
-  /* ==================== CONTENEDOR HOJA ÚNICA ==================== */
+  /* ==================== CONTENEDOR HOJAS MULTIPÁGINA ==================== */
   .hoja {
-    width: 215.9mm;
-    max-width: 820px;
-    margin: 18px auto;
+    width: 210mm;
+    min-height: 297mm;
+    max-height: 297mm;
+    height: 297mm;
+    margin: 20px auto 40px;
     background: var(--blanco);
-    padding: 8mm 10mm;
+    padding: 7.5mm 8mm 12mm;
     border: 1px solid #ccd6e0;
     box-shadow: 0 4px 18px rgba(0,0,0,0.12);
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
     position: relative;
+    overflow: hidden;
+  }
+
+  /* Cabecera compacta para Página 2 */
+  .cabecera-p2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1.5px solid var(--azul);
+    padding-bottom: 3px;
+    margin-bottom: 3px;
+  }
+  .logo-small img {
+    height: 24px;
+    width: auto;
+    display: block;
+  }
+  .titulo-p2 {
+    font-size: 10.5px;
+    font-weight: 800;
+    color: var(--azul);
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+  .titulo-p2 span {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--naranja);
+  }
+  .folio-p2 {
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--azul);
+  }
+
+  /* Pie de página */
+  .footer {
+    position: absolute;
+    bottom: 3.5mm;
+    left: 8mm;
+    right: 8mm;
+    text-align: center;
+    font-size: 8pt;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--azul);
+    border-top: 1px solid var(--borde-light);
+    padding-top: 1.8mm;
+  }
+  .footer .stars {
+    color: var(--naranja);
+    letter-spacing: 3px;
+    margin-left: 5px;
   }
 
   /* ==================== CABECERA ==================== */
@@ -373,6 +428,41 @@
     color: var(--verde);
   }
   .in-grado { width: 260px; }
+
+  /* Tabla de Crecimiento y Desarrollo */
+  .growth {
+    border: 1px solid var(--borde);
+    margin-bottom: 2px;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .growth th {
+    background: #f1f5fa;
+    color: var(--azul);
+    font-size: 8pt;
+    font-weight: 800;
+    border: 1px solid var(--borde);
+  }
+  .growth td {
+    border: 1px solid var(--borde);
+    padding: 2px 4px;
+  }
+  .growth td input {
+    width: 100%;
+    text-align: center;
+    border: 0;
+    font-size: 8.5pt;
+    background: transparent;
+  }
+  textarea#conducta_vacunas {
+    height: 15mm;
+    width: 100%;
+    border: none;
+    resize: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 9px;
+  }
 
   
   /* ==================== ESTILOS PARA SELECT COMO AYUDA ==================== */
@@ -664,13 +754,13 @@
     width: 100%;
   }
 
-  /* ==================== REGLAS DE IMPRESIÓN (1 HOJA ESTRICTA) ==================== */
+  /* ==================== REGLAS DE IMPRESIÓN (2 PÁGINAS A4) ==================== */
   .no-print { display: block; }
 
   @media print {
     @page {
-      size: letter portrait;
-      margin: 6mm 7mm;
+      size: A4 portrait;
+      margin: 0;
     }
     html, body {
       background: #fff;
@@ -683,38 +773,69 @@
     .no-print { display: none !important; }
     input::placeholder, textarea::placeholder { color: transparent !important; -webkit-text-fill-color: transparent !important; }
 
+    #form-matricula {
+      width: 210mm !important;
+      max-width: 210mm !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      zoom: 1 !important;
+    }
+
     .hoja {
       box-shadow: none !important;
       border: none !important;
       margin: 0 auto !important;
-      width: 100% !important;
-      max-width: 100% !important;
-      padding: 0 !important;
+      width: 210mm !important;
+      max-width: 210mm !important;
+      height: 297mm !important;
+      max-height: 297mm !important;
+      padding: 7.5mm 8mm 12mm !important;
       zoom: 1 !important;
-      page-break-after: avoid !important;
-      break-after: avoid !important;
+      page-break-after: always !important;
+      break-after: page !important;
       page-break-inside: avoid !important;
       break-inside: avoid !important;
+      overflow: hidden !important;
+      position: relative !important;
+      box-sizing: border-box !important;
+    }
+    .hoja:last-of-type, #page2 {
+      page-break-after: auto !important;
+      break-after: auto !important;
     }
 
-    .cabecera { margin-bottom: 2px !important; }
-    .separador { margin: 4px 0 6px !important; }
-    .barra { margin-top: 5px !important; padding: 2.5px 4px !important; font-size: 11px !important; }
-    table { font-size: 10px !important; }
-    td { height: 32px !important; padding: 1.5px 3px !important; font-size: 8.5px !important; }
-    input.in, select.in { height: 18px !important; font-size: 9.5px !important; }
-    input.in-cell { height: 26px !important; font-size: 9.5px !important; }
-    td.acu, td.resp { height: 26px !important; font-size: 9px !important; }
-    .fam thead td { height: 20px !important; }
-    .legal { margin-top: 5px !important; font-size: 7.2pt !important; line-height: 1.2 !important; }
-    .legal p { margin-bottom: 2.5px !important; }
-
-    .firmas { margin-top: 4px !important; gap: 4px !important; }
-    .firma canvas {
-      height: 14mm !important;
-      background: transparent !important;
-      border-bottom: 1px solid #000 !important;
+    .footer {
+      position: absolute !important;
+      left: 3.5mm !important;
+      right: 3.5mm !important;
+      bottom: 3.5mm !important;
+      margin-top: 0 !important;
     }
+
+    /* Ajustes específicos de impresión para Página 1 */
+    #page1 .cabecera { margin-bottom: 2mm !important; }
+    #page1 .separador { margin: 3.5mm 0 5mm !important; }
+    #page1 .barra { margin-top: 4.5mm !important; padding: 3px 5px !important; font-size: 11px !important; }
+    #page1 table.tabla-sec td { height: 38px !important; padding: 2.5px 4px !important; }
+    #page1 table.fam thead td { height: 24px !important; }
+    #page1 table.fam tbody td { height: 33px !important; }
+    #page1 .tabla-escolaridad td { height: 34px !important; }
+
+    /* Ajustes específicos de impresión para Página 2 */
+    #page2 .cabecera-p2 { border-bottom: 1px solid var(--azul) !important; padding-bottom: 1mm !important; margin-bottom: 1.5mm !important; }
+    #page2 .barra { margin-top: 2.2mm !important; padding: 2px 4px !important; font-size: 10px !important; }
+    #page2 .barra:first-of-type { margin-top: 0.5mm !important; }
+    #page2 table.tabla-sec td { height: 26px !important; padding: 1.5px 3.5px !important; }
+    #page2 table.tabla-sec td label { font-size: 7.8px !important; margin-bottom: 1px !important; }
+    #page2 table.tabla-sec input.in, #page2 table.tabla-sec select.in { height: 16px !important; font-size: 9px !important; }
+    #page2 .growth th, #page2 .growth td { padding: 1.2mm 2.5px !important; font-size: 8.2px !important; }
+    #page2 .growth td input { height: 16px !important; font-size: 8.2px !important; }
+    #page2 textarea#conducta_vacunas { height: 12mm !important; font-size: 8.2px !important; }
+    #page2 .legal { margin-top: 2.5mm !important; font-size: 6.8pt !important; line-height: 1.2 !important; }
+    #page2 .legal p { margin-bottom: 2px !important; }
+    #page2 .firmas { margin-top: 2.5mm !important; gap: 3px !important; }
+    #page2 .firma canvas { height: 13mm !important; background: transparent !important; border-bottom: 1px solid #000 !important; }
+
     .clear-sign, .sign-actions { display: none !important; }
 
     select.in-doc-tipo, select.in-doc-tipo-fam, select.in-genero {
@@ -743,42 +864,49 @@
 
   /* ==================== VISTA EN PANTALLA (AMPLIADA Y CÓMODA) ==================== */
   @media screen {
-    body {
-      font-size: calc(8.8pt * var(--escala-pantalla, 1.15));
+    #form-matricula {
+      width: 210mm;
+      max-width: none;
+      margin: 20px auto 50px;
     }
     .hoja {
-      width: calc(215.9mm * var(--escala-pantalla, 1.15));
-      max-width: 960px;
-      margin: 20px auto 45px;
-      padding: calc(8mm * var(--escala-pantalla, 1.15)) calc(10mm * var(--escala-pantalla, 1.15));
+      width: 210mm;
+      height: 297mm;
+      min-height: 297mm;
+      max-height: 297mm;
+      padding: 7.5mm 8mm 12mm;
+      margin-bottom: 30px;
+      box-sizing: border-box;
+      position: relative;
+      overflow: hidden;
     }
-    table {
-      font-size: calc(9.2pt * var(--escala-pantalla, 1.15));
-    }
-    td {
-      height: calc(38px * var(--escala-pantalla, 1.15));
-      padding: 3.5px 6px;
-      font-size: calc(8.6pt * var(--escala-pantalla, 1.15));
-    }
-    input.in, select.in {
-      height: calc(20px * var(--escala-pantalla, 1.15));
-      font-size: calc(10.5px * var(--escala-pantalla, 1.15));
-    }
-    input.in-cell {
-      height: calc(30px * var(--escala-pantalla, 1.15));
-      font-size: calc(10.5px * var(--escala-pantalla, 1.15));
-    }
-    .barra {
-      font-size: calc(12px * var(--escala-pantalla, 1.15));
-      padding: 4.5px 8px;
-    }
-    .legal {
-      font-size: calc(7.8pt * var(--escala-pantalla, 1.15));
-      line-height: 1.35;
-    }
-    .firma canvas {
-      height: calc(16mm * var(--escala-pantalla, 1.15));
-    }
+
+    /* Distribución equilibrada Página 1 */
+    #page1 .cabecera { margin-bottom: 2.5mm; }
+    #page1 .separador { margin: 4mm 0 6mm; }
+    #page1 .barra { margin-top: 5mm; padding: 3.5px 6px; font-size: 11.5px; letter-spacing: 1.3px; }
+    #page1 table.tabla-sec td { height: 40px; padding: 3px 5px; }
+    #page1 table.fam thead td { height: 26px; }
+    #page1 table.fam tbody td { height: 35px; padding: 2.5px 5px; }
+    #page1 table.fam td.rot { font-size: 8.8px; }
+    #page1 .tabla-escolaridad td { height: 36px; }
+
+    /* Distribución equilibrada Página 2 */
+    #page2 .barra { margin-top: 1.8mm; padding: 1.8px 4px; font-size: 9.8px; letter-spacing: 1px; }
+    #page2 .barra:first-of-type { margin-top: 0.5mm !important; }
+    #page2 table.tabla-sec { margin-bottom: 1.5px; }
+    #page2 table.tabla-sec td { height: 26px; padding: 1.5px 4px; }
+    #page2 table.tabla-sec td label { font-size: 7.6px; margin-bottom: 1px; }
+    #page2 table.tabla-sec input.in, #page2 table.tabla-sec select.in { height: 16px; font-size: 9px; }
+    #page2 .growth th, #page2 .growth td { padding: 1.2mm 2.5px; font-size: 8px; }
+    #page2 .growth td input { height: 16px; font-size: 8px; }
+    #page2 textarea#conducta_vacunas { height: 10mm !important; line-height: 4mm; font-size: 8.2px; }
+    #page2 .legal { margin-top: 1.5mm; font-size: 6.8pt; line-height: 1.18; }
+    #page2 .legal p { margin-bottom: 1.5px; }
+    #page2 .firmas { margin-top: 1.5mm; gap: 3px; }
+    #page2 .firma canvas { height: 12mm; }
+    #page2 .firma .rol { font-size: 7.5pt; margin-top: 1px; }
+    #page2 .firma .nombre-input { font-size: 7pt; margin-top: 0; }
   }
 
   /* ==================== VISTA MÓVIL Y TABLET ==================== */
@@ -787,14 +915,25 @@
       padding: 10px 8px;
       overflow-x: hidden;
     }
+    #form-matricula {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 auto;
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
     .hoja {
       width: 100% !important;
       max-width: 100% !important;
-      padding: 16px 12px 20px;
-      margin: 8px auto;
+      height: auto !important;
+      min-height: auto !important;
+      max-height: none !important;
+      padding: 16px 12px 35px;
+      margin: 8px auto 25px;
       border-radius: 8px;
       box-sizing: border-box !important;
-      overflow-x: hidden;
+      overflow-x: hidden !important;
+      overflow-y: visible !important;
     }
     .cabecera {
       flex-direction: column;
@@ -821,7 +960,16 @@
     .fam { min-width: 580px; }
     .tabla-sec { min-width: 580px; }
     .tabla-escolaridad { min-width: 500px; }
+    .growth { min-width: 480px; }
     .firma-fila { flex-direction: column; gap: 15px; }
+
+    .footer {
+      position: relative !important;
+      left: auto !important;
+      right: auto !important;
+      bottom: auto !important;
+      margin-top: 20px !important;
+    }
   }
 </style>
 </head>
@@ -858,8 +1006,9 @@
   </div>
 </header>
 
-<div class="hoja">
-  <form id="form-matricula" method="POST" action="" onsubmit="return false">
+<form id="form-matricula" method="POST" action="" onsubmit="return false">
+<!-- ===================== PÁGINA 1 ===================== -->
+<div class="hoja" id="page1">
 
   <!-- CABECERA -->
   <div class="cabecera">
@@ -1108,6 +1257,268 @@
     </table>
   </div>
 
+  <footer class="footer">PÁGINA 1 DE 2 <span class="stars">★ ★ ★</span></footer>
+</div>
+
+<!-- ===================== PÁGINA 2: INFORMACIÓN MÉDICA Y COMPROMISO ===================== -->
+<div class="hoja" id="page2">
+  <!-- Cabecera compacta Página 2 -->
+  <div class="cabecera-p2">
+    <div class="logo-small"><img src="logo.png" alt="My Little Artists School"></div>
+    <div class="titulo-p2">HOJA DE MATRÍCULA 2026 <span>• INFORMACIÓN MÉDICA Y COMPROMISO</span></div>
+    <div class="folio-p2">
+      <span>Folio: <strong id="folio_p2_display">---</strong></span> &nbsp;|&nbsp; 
+      <span>Matrícula: <strong id="mat_p2_display">---</strong></span>
+    </div>
+  </div>
+
+  <!-- SECCIÓN: ANTECEDENTES DE EMBARAZO Y PARTO -->
+  <div class="barra barra--verde">ANTECEDENTES DE EMBARAZO Y PARTO</div>
+  <div class="tabla-contenedor">
+    <table class="tabla-sec">
+      <tr>
+        <td colspan="3">
+          <label for="parto">PARTO</label>
+          <select id="parto" name="parto" class="in select-as-help" title="Tipo de parto">
+            <option value="">Seleccione...</option>
+            <option value="normal">Normal</option>
+            <option value="cesarea">Cesárea</option>
+          </select>
+        </td>
+        <td colspan="3">
+          <label for="gestacion">GESTACIÓN</label>
+          <select id="gestacion" name="gestacion" class="in select-as-help" title="Tiempo de gestación">
+            <option value="">Seleccione...</option>
+            <option value="termino">A término</option>
+            <option value="pretermi">Pretérmino (&lt; 38 sem)</option>
+            <option value="postermi">Postérmino (&gt; 42 sem)</option>
+          </select>
+        </td>
+        <td colspan="6">
+          <label for="bebe_nacer">BEBÉ AL NACER</label>
+          <input type="text" id="bebe_nacer" name="bebe_nacer" class="in" placeholder="Estado (ej. Vigoroso y saludable)" title="Estado del bebé al momento del nacimiento">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <label for="talla_nacer">TALLA AL NACER (cm)</label>
+          <input type="text" id="talla_nacer" name="talla_nacer" class="in" placeholder="cm (ej. 50)" title="Talla en centímetros al nacer">
+        </td>
+        <td colspan="3">
+          <label for="peso_nacer">PESO AL NACER (g)</label>
+          <input type="text" id="peso_nacer" name="peso_nacer" class="in" placeholder="gramos (ej. 3200)" title="Peso en gramos al nacer">
+        </td>
+        <td colspan="3">
+          <label for="lactancia">¿LACTANCIA MATERNA?</label>
+          <select id="lactancia" name="lactancia" class="in select-as-help" title="¿Tuvo lactancia materna?">
+            <option value="">Seleccione...</option>
+            <option value="si">Sí</option>
+            <option value="no">No</option>
+          </select>
+        </td>
+        <td colspan="3">
+          <label for="lactancia_hasta">¿HASTA QUÉ MES LACTÓ?</label>
+          <input type="text" id="lactancia_hasta" name="lactancia_hasta" class="in" placeholder="Ej. 6 meses" title="Meses durante los cuales recibió lactancia">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <label for="tetero">¿UTILIZA O UTILIZÓ TETERO?</label>
+          <select id="tetero" name="tetero" class="in select-as-help" title="¿Utiliza o utilizó tetero?">
+            <option value="">Seleccione...</option>
+            <option value="si">Sí</option>
+            <option value="no">No</option>
+          </select>
+        </td>
+        <td colspan="6">
+          <label for="tetero_hasta">¿HASTA QUÉ EDAD UTILIZÓ?</label>
+          <input type="text" id="tetero_hasta" name="tetero_hasta" class="in" placeholder="Ej. 2 años" title="Edad hasta la que utilizó tetero">
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- SECCIÓN: HOSPITALARIOS -->
+  <div class="barra barra--verde">HOSPITALARIOS</div>
+  <div class="tabla-contenedor">
+    <table class="tabla-sec">
+      <tr>
+        <td colspan="4">
+          <label for="hospitalizado">¿HA ESTADO HOSPITALIZADO?</label>
+          <select id="hospitalizado" name="hospitalizado" class="in select-as-help" title="¿El niño(a) ha estado hospitalizado?">
+            <option value="">Seleccione...</option>
+            <option value="si">Sí</option>
+            <option value="no">No</option>
+          </select>
+        </td>
+        <td colspan="8">
+          <label for="hospital_causa">CAUSA O MOTIVO</label>
+          <input type="text" id="hospital_causa" name="hospital_causa" class="in" placeholder="Diagnóstico o motivo de hospitalización" title="Motivo de la hospitalización">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <label for="hospital_fecha">¿EN QUÉ FECHA?</label>
+          <div class="campo-fecha">
+            <input type="text" id="hospital_fecha" name="hospital_fecha" class="in in-fecha" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off" title="Fecha de la hospitalización">
+            <button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button>
+          </div>
+        </td>
+        <td colspan="8">
+          <label for="hospital_clinica">CLÍNICA / HOSPITAL</label>
+          <input type="text" id="hospital_clinica" name="hospital_clinica" class="in" placeholder="Nombre de la institución o centro asistencial" title="Nombre del hospital o clínica">
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- SECCIÓN: MEDICAMENTOS Y ALERGIAS -->
+  <div class="barra barra--verde">MEDICAMENTOS Y ALERGIAS</div>
+  <div class="tabla-contenedor">
+    <table class="tabla-sec">
+      <tr>
+        <td colspan="6">
+          <label for="med_actual">ACTUALMENTE SE LE SUMINISTRA</label>
+          <input type="text" id="med_actual" name="med_actual" class="in" placeholder="Medicamento, dosis y horarios (o 'Ninguno')" title="Medicamentos administrados en la actualidad">
+        </td>
+        <td colspan="6">
+          <label for="enfermedad_tratamiento">ENFERMEDAD EN TRATAMIENTO</label>
+          <input type="text" id="enfermedad_tratamiento" name="enfermedad_tratamiento" class="in" placeholder="Diagnóstico o condición médica en tratamiento (o 'Ninguna')" title="Enfermedades o diagnósticos actuales">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <label for="alergia_medicamento">ALÉRGICO A CUÁL MEDICAMENTO</label>
+          <input type="text" id="alergia_medicamento" name="alergia_medicamento" class="in" placeholder="Medicamentos que le causan alergia (o 'Ninguno')" title="Alergias farmacológicas conocidas">
+        </td>
+        <td colspan="6">
+          <label for="alimentos_no">ALIMENTOS QUE NO PUEDE CONSUMIR</label>
+          <input type="text" id="alimentos_no" name="alimentos_no" class="in" placeholder="Alimentos restringidos o intolerancias (o 'Ninguno')" title="Intolerancias alimentarias o alimentos prohibidos">
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- SECCIÓN: CONTROL DE CRECIMIENTO Y DESARROLLO -->
+  <div class="barra barra--verde">CONTROL DE CRECIMIENTO Y DESARROLLO</div>
+  <div class="tabla-contenedor">
+    <table class="growth">
+      <thead>
+        <tr>
+          <th style="width:36mm;text-align:left;padding-left:3mm">Control</th>
+          <th>Fecha de último control</th>
+          <th>Peso actual</th>
+          <th>Talla actual</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th style="text-align:left;padding-left:3mm">Primer semestre</th>
+          <td><div class="campo-fecha"><input type="text" id="crecimiento1_fecha" name="crecimiento1_fecha" class="in-fecha in" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off"><button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button></div></td>
+          <td><input type="text" id="crecimiento1_peso" name="crecimiento1_peso" class="in" placeholder="kg (ej. 14.2)"></td>
+          <td><input type="text" id="crecimiento1_talla" name="crecimiento1_talla" class="in" placeholder="cm (ej. 92)"></td>
+        </tr>
+        <tr>
+          <th style="text-align:left;padding-left:3mm">Segundo semestre</th>
+          <td><div class="campo-fecha"><input type="text" id="crecimiento2_fecha" name="crecimiento2_fecha" class="in-fecha in" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off"><button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button></div></td>
+          <td><input type="text" id="crecimiento2_peso" name="crecimiento2_peso" class="in" placeholder="kg (ej. 15.6)"></td>
+          <td><input type="text" id="crecimiento2_talla" name="crecimiento2_talla" class="in" placeholder="cm (ej. 98)"></td>
+        </tr>
+        <tr>
+          <th style="text-align:left;padding-left:3mm">Tercer semestre</th>
+          <td><div class="campo-fecha"><input type="text" id="crecimiento3_fecha" name="crecimiento3_fecha" class="in-fecha in" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off"><button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button></div></td>
+          <td><input type="text" id="crecimiento3_peso" name="crecimiento3_peso" class="in" placeholder="kg (ej. 17.0)"></td>
+          <td><input type="text" id="crecimiento3_talla" name="crecimiento3_talla" class="in" placeholder="cm (ej. 103)"></td>
+        </tr>
+        <tr>
+          <th style="text-align:left;padding-left:3mm">Cuarto semestre</th>
+          <td><div class="campo-fecha"><input type="text" id="crecimiento4_fecha" name="crecimiento4_fecha" class="in-fecha in" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off"><button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button></div></td>
+          <td><input type="text" id="crecimiento4_peso" name="crecimiento4_peso" class="in" placeholder="kg (ej. 18.5)"></td>
+          <td><input type="text" id="crecimiento4_talla" name="crecimiento4_talla" class="in" placeholder="cm (ej. 108)"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECCIÓN: SEGUIMIENTO ODONTOLÓGICO -->
+  <div class="barra barra--verde">SEGUIMIENTO ODONTOLÓGICO</div>
+  <div class="tabla-contenedor">
+    <table class="tabla-sec">
+      <tr>
+        <td colspan="4">
+          <label for="edad_lavado">¿DESDE QUÉ EDAD SE LAVA LOS DIENTES?</label>
+          <input type="text" id="edad_lavado" name="edad_lavado" class="in" placeholder="Ej. 2 años" title="Edad de inicio del hábito del cepillado">
+        </td>
+        <td colspan="4">
+          <label for="frecuencia_cepillado">FRECUENCIA DE CEPILLADO</label>
+          <select id="frecuencia_cepillado" name="frecuencia_cepillado" class="in select-as-help" title="Frecuencia diaria de higiene oral">
+            <option value="">Seleccione...</option>
+            <option value="1">1 vez al día</option>
+            <option value="2">2 veces al día</option>
+            <option value="3">3 veces al día</option>
+            <option value="mas">&gt; 3 veces al día</option>
+          </select>
+        </td>
+        <td colspan="4">
+          <label for="no_le_gusta">¿LE AGRADA EL CEPILLADO?</label>
+          <select id="no_le_gusta" name="no_le_gusta" class="in select-as-help" title="¿Tiene agrado por la higiene oral?">
+            <option value="">Seleccione...</option>
+            <option value="si">Sí le gusta</option>
+            <option value="no">No le gusta</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <label for="caries">¿TIENE CARIES?</label>
+          <select id="caries" name="caries" class="in select-as-help" title="¿Presenta caries actualmente?">
+            <option value="">Seleccione...</option>
+            <option value="si">Sí</option>
+            <option value="no">No</option>
+          </select>
+        </td>
+        <td colspan="4">
+          <label for="odonto_control">¿ASISTE A CONTROL ODONTOLÓGICO?</label>
+          <select id="odonto_control" name="odonto_control" class="in select-as-help" title="¿Acude a controles periódicos?">
+            <option value="">Seleccione...</option>
+            <option value="si">Sí</option>
+            <option value="no">No</option>
+          </select>
+        </td>
+        <td colspan="4">
+          <label for="ultima_visita_odonto">ÚLTIMA VISITA ODONTOLÓGICA</label>
+          <div class="campo-fecha">
+            <input type="text" id="ultima_visita_odonto" name="ultima_visita_odonto" class="in in-fecha" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off" title="Fecha de última visita">
+            <button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- SECCIÓN: CARNÉ DE VACUNAS -->
+  <div class="barra barra--verde">CARNÉ DE VACUNAS</div>
+  <div class="tabla-contenedor">
+    <table class="tabla-sec">
+      <tr>
+        <td colspan="12">
+          <label for="vacunas_esquema">¿POSEE EL CARNÉ DE VACUNAS CON ESQUEMA COMPLETO SEGÚN SU EDAD?</label>
+          <select id="vacunas_esquema" name="vacunas_esquema" class="in select-as-help" title="Esquema completo según PAI">
+            <option value="">Seleccione...</option>
+            <option value="si">Sí cuenta con esquema completo</option>
+            <option value="no">No cuenta con esquema completo</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="12" style="height: auto; padding: 3px 5px;">
+          <label for="conducta_vacunas">CONDUCTA A SEGUIR / OBSERVACIONES MÉDICAS</label>
+          <textarea id="conducta_vacunas" name="conducta_vacunas" class="in" placeholder="Escriba aquí la conducta a seguir si el esquema no está completo..."></textarea>
+        </td>
+      </tr>
+    </table>
+  </div>
+
   <!-- TEXTO LEGAL -->
   <div class="legal">
     <p>De acuerdo con el artículo 87 de la Ley General de Educación, los establecimientos educativos deberán contar con un manual de convivencia en el que se definan los derechos y obligaciones de los estudiantes, así como de los padres o tutores. Al firmar la matrícula correspondiente en representación de sus hijos, el padre o acudiente estará aceptando dicho manual.</p>
@@ -1196,8 +1607,9 @@
       <option value="Quinto"></option>
     </datalist>
 
-  </form>
+  <footer class="footer">PÁGINA 2 DE 2 <span class="stars">★ ★ ★</span></footer>
 </div>
+</form>
 
 <script>
 (function() {
@@ -1454,6 +1866,8 @@
     } else {
       if (input.id === 'estudiante_fecha_nacimiento') {
         fechaVista = new Date(2020, 0, 1);
+      } else if (input.name && (input.name.startsWith('crecimiento') || input.name === 'ultima_visita_odonto' || input.name === 'hospital_fecha')) {
+        fechaVista = new Date();
       } else {
         fechaVista = new Date(1990, 0, 1);
       }
@@ -1586,6 +2000,19 @@
   });
 
   // ==================== SINCRONIZACIÓN PARA IMPRESIÓN ====================
+  function sincronizarFolioP2() {
+    const fol = document.getElementById('folio');
+    const mat = document.getElementById('matricula_numero');
+    const folP2 = document.getElementById('folio_p2_display');
+    const matP2 = document.getElementById('mat_p2_display');
+    if (fol && folP2) folP2.textContent = fol.value.trim() || '---';
+    if (mat && matP2) matP2.textContent = mat.value.trim() || '---';
+  }
+  const folInput = document.getElementById('folio');
+  const matInput = document.getElementById('matricula_numero');
+  if (folInput) folInput.addEventListener('input', sincronizarFolioP2);
+  if (matInput) matInput.addEventListener('input', sincronizarFolioP2);
+
   const selectDocTipo = document.getElementById('estudiante_doc_tipo');
   const printDocTipo = document.getElementById('doc_tipo_print');
 
@@ -1620,6 +2047,7 @@
   if (selectGenero) selectGenero.addEventListener('change', actualizarGeneroPrint);
 
   window.addEventListener('beforeprint', () => {
+    sincronizarFolioP2();
     actualizarDocTipoPrint();
     actualizarGeneroPrint();
     const nac = document.getElementById('estudiante_fecha_nacimiento'); if (nac) calcularEdadEstudiante(nac.value);
@@ -1813,7 +2241,7 @@
     const form = document.getElementById('form-matricula');
     if (!form) return;
 
-    const textInputs = Array.from(form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]'));
+    const textInputs = Array.from(form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea'));
     const selects = Array.from(form.querySelectorAll('select'));
 
     let totalFields = textInputs.length + selects.length;
@@ -1885,7 +2313,44 @@
       'grado_matricula': 'Transición',
       'institucion_procedencia': 'My Little Artists School',
       'ultimo_grado': 'Jardín',
-      'ano_escolaridad': '2025'
+      'ano_escolaridad': '2025',
+      'parto': 'normal',
+      'gestacion': 'termino',
+      'bebe_nacer': 'Vigoroso y saludable',
+      'talla_nacer': '50',
+      'peso_nacer': '3200',
+      'lactancia': 'si',
+      'lactancia_hasta': '18 meses',
+      'tetero': 'si',
+      'tetero_hasta': '2 años',
+      'hospitalizado': 'no',
+      'hospital_causa': '',
+      'hospital_fecha': '',
+      'hospital_clinica': '',
+      'med_actual': 'Ninguno',
+      'enfermedad_tratamiento': 'Ninguna',
+      'alergia_medicamento': 'Ninguna',
+      'alimentos_no': 'Ninguno conocido',
+      'crecimiento1_fecha': '15/05/2024',
+      'crecimiento1_peso': '14.2',
+      'crecimiento1_talla': '92',
+      'crecimiento2_fecha': '18/11/2024',
+      'crecimiento2_peso': '15.6',
+      'crecimiento2_talla': '98',
+      'crecimiento3_fecha': '10/05/2025',
+      'crecimiento3_peso': '17.0',
+      'crecimiento3_talla': '103',
+      'crecimiento4_fecha': '20/11/2025',
+      'crecimiento4_peso': '18.5',
+      'crecimiento4_talla': '108',
+      'edad_lavado': '2 años',
+      'frecuencia_cepillado': '3',
+      'no_le_gusta': 'si',
+      'caries': 'no',
+      'odonto_control': 'si',
+      'ultima_visita_odonto': '15/10/2025',
+      'vacunas_esquema': 'si',
+      'conducta_vacunas': 'Esquema de vacunación al día según el PAI.'
     };
 
     Object.entries(data).forEach(([id, val]) => {
@@ -1902,6 +2367,7 @@
     actualizarGeneroPrint();
     const nac = document.getElementById('estudiante_fecha_nacimiento'); if (nac) calcularEdadEstudiante(nac.value);
     updateAllSelectHelp();
+    sincronizarFolioP2();
     updateProgress();
   };
 
@@ -2011,9 +2477,9 @@
 
   window.aplicarZoom = function() {
     document.documentElement.style.setProperty('--escala-pantalla', currentZoom);
-    const hoja = document.querySelector('.hoja');
-    if (hoja) {
-      hoja.style.zoom = currentZoom;
+    const form = document.getElementById('form-matricula');
+    if (form) {
+      form.style.zoom = currentZoom;
     }
     const el = document.getElementById('zoomLevel');
     if (el) el.textContent = `${Math.round(currentZoom * 100)}%`;
@@ -2024,13 +2490,13 @@
   };
 
   window.addEventListener('beforeprint', () => {
-    const hoja = document.querySelector('.hoja');
-    if (hoja) hoja.style.zoom = '1';
+    const form = document.getElementById('form-matricula');
+    if (form) form.style.zoom = '1';
   });
 
   window.addEventListener('afterprint', () => {
-    const hoja = document.querySelector('.hoja');
-    if (hoja) hoja.style.zoom = currentZoom;
+    const form = document.getElementById('form-matricula');
+    if (form) form.style.zoom = currentZoom;
   });
 
   // ==================== MODO DE PRUEBAS / QA ====================
@@ -2131,6 +2597,7 @@ window.addEventListener('popstate', verificarModoPrueba);
       });
     });
 
+    sincronizarFolioP2();
     updateProgress();
   });
 

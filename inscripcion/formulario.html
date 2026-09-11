@@ -1214,12 +1214,14 @@
     #page1 table.fam tbody td { height: 36px !important; padding: 2px 4px !important; }
     #page1 table.fam input.in-cell { height: 24px !important; font-size: 9.8px !important; }
 
-    #page2 .barra { margin-top: 2.5mm !important; padding: 2.5px 5px !important; font-size: 10.5px !important; }
-    #page2 .barra:first-child, #page2 .barra[style*="margin-top"] { margin-top: 0.8mm !important; }
-    #page2 table.tabla-sec td { height: 33px !important; padding: 2px 4px !important; }
-    #page2 table.tabla-sec input.in, #page2 table.tabla-sec select.in { height: 18px !important; }
-    #page2 .growth th, #page2 .growth td { padding: 1.7mm 3px !important; }
-    #page2 textarea#conducta_vacunas { height: 21mm !important; }
+    #page2 .barra { margin-top: 3.5mm !important; padding: 2.5px 5px !important; font-size: 11px !important; }
+    #page2 .barra:first-child, #page2 .barra[style*="margin-top"] { margin-top: 1mm !important; }
+    #page2 table.tabla-sec td { height: 35px !important; padding: 2px 5px !important; }
+    #page2 table.tabla-sec input.in, #page2 table.tabla-sec select.in { height: 19px !important; }
+    #page2 .requirements-table td { font-size: 8.2pt !important; padding: 1.2mm 2mm !important; }
+    #page2 .legal-text { font-size: 7.8pt !important; line-height: 1.22 !important; }
+    #page2 .signature-box canvas { height: 18mm !important; }
+
 
   }@media screen {
     .document {
@@ -1408,22 +1410,22 @@
     font-size: 10px;
   }
 
-  /* --- PÁGINA 2: Distribución equilibrada de las 7 secciones con holgura sobre el pie --- */
+  /* --- PÁGINA 2: Distribución equilibrada de las secciones con holgura sobre el pie --- */
   #page2 .barra {
-    margin-top: 2.5mm;
+    margin-top: 3.5mm;
     padding: 3px 6px;
-    font-size: 10.8px;
+    font-size: 11px;
     letter-spacing: 1.1px;
   }
   #page2 .barra:first-child,
   #page2 .barra[style*="margin-top"] {
-    margin-top: 0.8mm !important;
+    margin-top: 1mm !important;
   }
   #page2 table.tabla-sec {
-    margin-bottom: 2px;
+    margin-bottom: 2.5mm;
   }
   #page2 table.tabla-sec td {
-    height: 33px;
+    height: 35px;
     padding: 2.5px 5px;
   }
   #page2 table.tabla-sec td label {
@@ -1435,18 +1437,16 @@
     height: 19px;
     font-size: 9.5px;
   }
-  #page2 .growth th,
-  #page2 .growth td {
-    padding: 1.7mm 3px;
+  #page2 .requirements-table td {
+    font-size: 8.2pt;
+    padding: 1.2mm 2mm;
   }
-  #page2 .growth td input {
-    height: 19px;
-    font-size: 8.8pt;
+  #page2 .legal-text {
+    font-size: 7.8pt;
+    line-height: 1.22;
   }
-  #page2 textarea#conducta_vacunas {
-    height: 21mm !important;
-    line-height: 5.5mm;
-    font-size: 8.8pt;
+  #page2 .signature-box canvas {
+    height: 18mm;
   }
 
 </style>
@@ -1748,7 +1748,7 @@
     </table>
   </div>
 </div>
-<footer class="footer">PÁGINA 1 DE 3 <span class="stars">★ ★ ★</span></footer>
+<footer class="footer">PÁGINA 1 DE 2 <span class="stars">★ ★ ★</span></footer>
 </section>
 
 <!-- ===================== PÁGINA 2 ===================== -->
@@ -1825,346 +1825,116 @@
     </table>
   </div>
 
-  <!-- SECCIÓN 5: ANTECEDENTES DE EMBARAZO Y PARTO -->
-  <div class="barra barra--verde">ANTECEDENTES DE EMBARAZO Y PARTO</div>
-  <div class="tabla-contenedor">
-    <table class="tabla-sec">
-      <tr>
-        <td colspan="3">
-          <label for="parto">PARTO</label>
-          <select id="parto" name="parto" class="in select-as-help" title="Tipo de parto">
-            <option value="">Seleccione...</option>
-            <option value="normal">Normal</option>
-            <option value="cesarea">Cesárea</option>
-          </select>
-        </td>
-        <td colspan="3">
-          <label for="gestacion">GESTACIÓN</label>
-          <select id="gestacion" name="gestacion" class="in select-as-help" title="Tiempo de gestación">
-            <option value="">Seleccione...</option>
-            <option value="termino">A término</option>
-            <option value="pretermi">Pretérmino (&lt; 38 sem)</option>
-            <option value="postermi">Postérmino (&gt; 42 sem)</option>
-          </select>
-        </td>
-        <td colspan="6">
-          <label for="bebe_nacer">BEBÉ AL NACER</label>
-          <input type="text" id="bebe_nacer" name="bebe_nacer" class="in" placeholder="Estado (ej. Vigoroso y saludable)" title="Estado del bebé al momento del nacimiento">
-        </td>
-      </tr>
-      <tr>
-        <td colspan="3">
-          <label for="talla_nacer">TALLA AL NACER (cm)</label>
-          <input type="text" id="talla_nacer" name="talla_nacer" class="in" placeholder="cm (ej. 50)" title="Talla en centímetros al nacer">
-        </td>
-        <td colspan="3">
-          <label for="peso_nacer">PESO AL NACER (g)</label>
-          <input type="text" id="peso_nacer" name="peso_nacer" class="in" placeholder="gramos (ej. 3200)" title="Peso en gramos al nacer">
-        </td>
-        <td colspan="3">
-          <label for="lactancia">¿LACTANCIA MATERNA?</label>
-          <select id="lactancia" name="lactancia" class="in select-as-help" title="¿Tuvo lactancia materna?">
-            <option value="">Seleccione...</option>
-            <option value="si">Sí</option>
-            <option value="no">No</option>
-          </select>
-        </td>
-        <td colspan="3">
-          <label for="lactancia_hasta">¿HASTA QUÉ MES LACTÓ?</label>
-          <input type="text" id="lactancia_hasta" name="lactancia_hasta" class="in" placeholder="Ej. 6 meses" title="Meses durante los cuales recibió lactancia">
-        </td>
-      </tr>
-      <tr>
-        <td colspan="6">
-          <label for="tetero">¿UTILIZA O UTILIZÓ TETERO?</label>
-          <select id="tetero" name="tetero" class="in select-as-help" title="¿Utiliza o utilizó tetero?">
-            <option value="">Seleccione...</option>
-            <option value="si">Sí</option>
-            <option value="no">No</option>
-          </select>
-        </td>
-        <td colspan="6">
-          <label for="tetero_hasta">¿HASTA QUÉ EDAD UTILIZÓ?</label>
-          <input type="text" id="tetero_hasta" name="tetero_hasta" class="in" placeholder="Ej. 2 años" title="Edad hasta la que utilizó tetero">
-        </td>
-      </tr>
-    </table>
-  </div>
-
-  <!-- SECCIÓN 6: HOSPITALARIOS -->
-  <div class="barra barra--verde">HOSPITALARIOS</div>
-  <div class="tabla-contenedor">
-    <table class="tabla-sec">
-      <tr>
-        <td colspan="4">
-          <label for="hospitalizado">¿HA ESTADO HOSPITALIZADO?</label>
-          <select id="hospitalizado" name="hospitalizado" class="in select-as-help" title="¿El niño(a) ha estado hospitalizado?">
-            <option value="">Seleccione...</option>
-            <option value="si">Sí</option>
-            <option value="no">No</option>
-          </select>
-        </td>
-        <td colspan="8">
-          <label for="hospital_causa">CAUSA O MOTIVO</label>
-          <input type="text" id="hospital_causa" name="hospital_causa" class="in" placeholder="Diagnóstico o motivo de hospitalización" title="Motivo de la hospitalización">
-        </td>
-      </tr>
-      <tr>
-        <td colspan="4">
-          <label for="hospital_fecha">¿EN QUÉ FECHA?</label>
-          <div class="campo-fecha">
-            <input type="text" id="hospital_fecha" name="hospital_fecha" class="in in-fecha" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off" title="Fecha de la hospitalización">
-            <button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button>
-          </div>
-        </td>
-        <td colspan="8">
-          <label for="hospital_clinica">CLÍNICA / HOSPITAL</label>
-          <input type="text" id="hospital_clinica" name="hospital_clinica" class="in" placeholder="Nombre de la institución o centro asistencial" title="Nombre del hospital o clínica">
-        </td>
-      </tr>
-    </table>
-  </div>
-
-  <!-- SECCIÓN 7: MEDICAMENTOS Y ALERGIAS -->
-  <div class="barra barra--verde">MEDICAMENTOS Y ALERGIAS</div>
-  <div class="tabla-contenedor">
-    <table class="tabla-sec">
-      <tr>
-        <td colspan="6">
-          <label for="med_actual">ACTUALMENTE SE LE SUMINISTRA</label>
-          <input type="text" id="med_actual" name="med_actual" class="in" placeholder="Medicamento, dosis y horarios (o 'Ninguno')" title="Medicamentos administrados en la actualidad">
-        </td>
-        <td colspan="6">
-          <label for="enfermedad_tratamiento">ENFERMEDAD EN TRATAMIENTO</label>
-          <input type="text" id="enfermedad_tratamiento" name="enfermedad_tratamiento" class="in" placeholder="Diagnóstico o condición médica en tratamiento (o 'Ninguna')" title="Enfermedades o diagnósticos actuales">
-        </td>
-      </tr>
-      <tr>
-        <td colspan="6">
-          <label for="alergia_medicamento">ALÉRGICO A CUÁL MEDICAMENTO</label>
-          <input type="text" id="alergia_medicamento" name="alergia_medicamento" class="in" placeholder="Medicamentos que le causan alergia (o 'Ninguno')" title="Alergias farmacológicas conocidas">
-        </td>
-        <td colspan="6">
-          <label for="alimentos_no">ALIMENTOS QUE NO PUEDE CONSUMIR</label>
-          <input type="text" id="alimentos_no" name="alimentos_no" class="in" placeholder="Alimentos restringidos o intolerancias (o 'Ninguno')" title="Intolerancias alimentarias o alimentos prohibidos">
-        </td>
-      </tr>
-    </table>
-  </div>
-
-  <!-- SECCIÓN 8: CONTROL DE CRECIMIENTO Y DESARROLLO -->
-  <div class="barra barra--verde">CONTROL DE CRECIMIENTO Y DESARROLLO</div>
-  <div class="tabla-contenedor">
-    <table class="growth">
-      <thead>
-        <tr>
-          <th style="width:36mm;text-align:left;padding-left:3mm">Control</th>
-          <th>Fecha de último control</th>
-          <th>Peso actual</th>
-          <th>Talla actual</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th style="text-align:left;padding-left:3mm">Primer semestre</th>
-          <td><div class="campo-fecha"><input type="text" name="crecimiento1_fecha" class="in-fecha in" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off"><button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button></div></td>
-          <td><input type="text" name="crecimiento1_peso" class="in" placeholder="kg (ej. 14.2)"></td>
-          <td><input type="text" name="crecimiento1_talla" class="in" placeholder="cm (ej. 92)"></td>
-        </tr>
-        <tr>
-          <th style="text-align:left;padding-left:3mm">Segundo semestre</th>
-          <td><div class="campo-fecha"><input type="text" name="crecimiento2_fecha" class="in-fecha in" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off"><button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button></div></td>
-          <td><input type="text" name="crecimiento2_peso" class="in" placeholder="kg (ej. 15.6)"></td>
-          <td><input type="text" name="crecimiento2_talla" class="in" placeholder="cm (ej. 98)"></td>
-        </tr>
-        <tr>
-          <th style="text-align:left;padding-left:3mm">Tercer semestre</th>
-          <td><div class="campo-fecha"><input type="text" name="crecimiento3_fecha" class="in-fecha in" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off"><button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button></div></td>
-          <td><input type="text" name="crecimiento3_peso" class="in" placeholder="kg (ej. 17.0)"></td>
-          <td><input type="text" name="crecimiento3_talla" class="in" placeholder="cm (ej. 103)"></td>
-        </tr>
-        <tr>
-          <th style="text-align:left;padding-left:3mm">Cuarto semestre</th>
-          <td><div class="campo-fecha"><input type="text" name="crecimiento4_fecha" class="in-fecha in" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off"><button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button></div></td>
-          <td><input type="text" name="crecimiento4_peso" class="in" placeholder="kg (ej. 18.5)"></td>
-          <td><input type="text" name="crecimiento4_talla" class="in" placeholder="cm (ej. 108)"></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- SECCIÓN 9: SEGUIMIENTO ODONTOLÓGICO -->
-  <div class="barra barra--verde">SEGUIMIENTO ODONTOLÓGICO</div>
-  <div class="tabla-contenedor">
-    <table class="tabla-sec">
-      <tr>
-        <td colspan="4">
-          <label for="edad_lavado">¿DESDE QUÉ EDAD SE LAVA LOS DIENTES?</label>
-          <input type="text" id="edad_lavado" name="edad_lavado" class="in" placeholder="Ej. 2 años" title="Edad de inicio del hábito del cepillado">
-        </td>
-        <td colspan="4">
-          <label for="frecuencia_cepillado">FRECUENCIA DE CEPILLADO</label>
-          <select id="frecuencia_cepillado" name="frecuencia_cepillado" class="in select-as-help" title="Frecuencia diaria de higiene oral">
-            <option value="">Seleccione...</option>
-            <option value="1">1 vez al día</option>
-            <option value="2">2 veces al día</option>
-            <option value="3">3 veces al día</option>
-            <option value="mas">&gt; 3 veces al día</option>
-          </select>
-        </td>
-        <td colspan="4">
-          <label for="no_le_gusta">¿LE AGRADA EL CEPILLADO?</label>
-          <select id="no_le_gusta" name="no_le_gusta" class="in select-as-help" title="¿Tiene agrado por la higiene oral?">
-            <option value="">Seleccione...</option>
-            <option value="si">Sí le gusta</option>
-            <option value="no">No le gusta</option>
-          </select>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="4">
-          <label for="caries">¿TIENE CARIES?</label>
-          <select id="caries" name="caries" class="in select-as-help" title="¿Presenta caries actualmente?">
-            <option value="">Seleccione...</option>
-            <option value="si">Sí</option>
-            <option value="no">No</option>
-          </select>
-        </td>
-        <td colspan="4">
-          <label for="odonto_control">¿ASISTE A CONTROL ODONTOLÓGICO?</label>
-          <select id="odonto_control" name="odonto_control" class="in select-as-help" title="¿Acude a controles periódicos?">
-            <option value="">Seleccione...</option>
-            <option value="si">Sí</option>
-            <option value="no">No</option>
-          </select>
-        </td>
-        <td colspan="4">
-          <label for="ultima_visita_odonto">ÚLTIMA VISITA ODONTOLÓGICA</label>
-          <div class="campo-fecha">
-            <input type="text" id="ultima_visita_odonto" name="ultima_visita_odonto" class="in in-fecha" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off" title="Fecha de última visita">
-            <button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button>
-          </div>
-        </td>
-      </tr>
-    </table>
-  </div>
-
-  <!-- SECCIÓN 10: CARNÉ DE VACUNAS -->
-  <div class="barra barra--verde">CARNÉ DE VACUNAS</div>
-  <div class="tabla-contenedor">
-    <table class="tabla-sec">
-      <tr>
-        <td colspan="12">
-          <label for="vacunas_esquema">¿POSEE EL CARNÉ DE VACUNAS CON ESQUEMA COMPLETO SEGÚN SU EDAD?</label>
-          <select id="vacunas_esquema" name="vacunas_esquema" class="in select-as-help" title="Esquema completo según PAI">
-            <option value="">Seleccione...</option>
-            <option value="si">Sí cuenta con esquema completo</option>
-            <option value="no">No cuenta con esquema completo</option>
-          </select>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="12" style="height: auto; padding: 3px 5px;">
-          <label for="conducta_vacunas">CONDUCTA A SEGUIR / OBSERVACIONES MÉDICAS</label>
-          <textarea id="conducta_vacunas" name="conducta_vacunas" class="in" style="height: 18mm; width: 100%; border: none; resize: none; background: transparent; font-family: inherit; font-size: 9px;" placeholder="Escriba aquí la conducta a seguir si el esquema no está completo..."></textarea>
-        </td>
-      </tr>
-    </table>
-  </div>
-
-</div>
-<footer class="footer">PÁGINA 2 DE 3 <span class="stars">★ ★ ★</span></footer>
-</section>
-
-<!-- ===================== PÁGINA 3 ===================== -->
-<section class="page" id="page3">
-<div class="page-inner">
-  <div class="barra barra--azul" style="margin-top: 1.5mm;">PROCEDIMIENTO DE ADMISIONES</div>
-  <div style="border: 1px solid var(--borde); border-top: none; padding: 3mm 4mm 2mm; background: #fff; margin-bottom: 2mm;">
-    <ol style="margin: 0 0 2mm 3mm; padding-left: 3mm; font-size: 8pt; font-weight: 600; line-height: 1.25; text-align: justify;">
-      <li style="margin-bottom: 1.5mm;">Radicar el formulario de admisiones debidamente diligenciado en las instalaciones de la Institución.<br>
+  <!-- PROCEDIMIENTO DE ADMISIONES -->
+  <div class="barra barra--azul" style="margin-top: 2mm;">PROCEDIMIENTO DE ADMISIONES</div>
+  <div style="border: 1px solid var(--borde); border-top: none; padding: 2.5mm 4mm 1.5mm; background: #fff; margin-bottom: 1.5mm;">
+    <ol style="margin: 0 0 1.5mm 3mm; padding-left: 3mm; font-size: 8pt; font-weight: 600; line-height: 1.25; text-align: justify;">
+      <li style="margin-bottom: 1.2mm;">Radicar el formulario de admisiones debidamente diligenciado en las instalaciones de la Institución.<br>
           La inscripción se realiza formalmente mediante la radicación o envío del formulario de admisiones.</li>
-      <li style="margin-bottom: 1.5mm;">Si el niño o la niña ha cursado algún nivel en alguna institución educativa, por favor adjuntar el formulario de admisiones y el paz y salvo respectivo expedido por dicha institución.<br>
+      <li style="margin-bottom: 1.2mm;">Si el niño o la niña ha cursado algún nivel en alguna institución educativa, por favor adjuntar el formulario de admisiones y el paz y salvo respectivo expedido por dicha institución.<br>
           La inscripción <b>NO</b> garantiza un cupo para el (la) niño(a) en la institución. El aporte pagado por la adquisición del formulario de admisiones no es reembolsable ni tampoco será aplicado a concepto alguno en caso de que sea aceptado(a).</li>
-      <li style="margin-bottom: 1.5mm;">De acuerdo a la disponibilidad de cupos, la Institución se pondrá en contacto con usted para efectos de iniciar el proceso de matrícula. El cupo se obtiene por medio de la firma de la ficha (libro) de matrícula, la firma del contrato de prestación de servicios educativos y el pago de los derechos de matrícula.<br>
+      <li style="margin-bottom: 1.2mm;">De acuerdo a la disponibilidad de cupos, la Institución se pondrá en contacto con usted para efectos de iniciar el proceso de matrícula. El cupo se obtiene por medio de la firma de la ficha (libro) de matrícula, la firma del contrato de prestación de servicios educativos y el pago de los derechos de matrícula.<br>
           Sin la firma de estos documentos y/o el pago de derechos de matrícula, el cupo se considerará <b>NO</b> reservado y podrá ser otorgado a otro niño(a).</li>
-      <li style="margin-bottom: 1.5mm;">Los siguientes documentos son requisitos adicionales de la matrícula y deberán adjuntarse a más tardar 30 días después de iniciado el año escolar:</li>
+      <li style="margin-bottom: 1.2mm;">Los siguientes documentos son requisitos adicionales de la matrícula y deberán adjuntarse a más tardar 30 días después de iniciado el año escolar:</li>
     </ol>
 
-    <!-- TABLA DE REQUISITOS DOCUMENTALES -->
+    <!-- TABLA DE REQUISITOS DOCUMENTALES (2 COLUMNAS) -->
     <div class="tabla-contenedor">
-      <table class="requirements-table" style="border: 1px solid var(--borde);">
+      <table class="requirements-table" style="border: 1px solid var(--borde); width: 100%;">
         <tbody>
-          <tr><td style="text-align: left; padding: 1.5px 5px;">1. Curva de crecimiento, talla y peso.</td><td class="yn-col" style="width: 25mm;"><select id="doc_curva" name="doc_curva" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
-          <tr><td style="text-align: left; padding: 1.5px 5px;">2. Certificado que asista al programa de crecimiento y desarrollo.</td><td class="yn-col" style="width: 25mm;"><select id="doc_crecimiento" name="doc_crecimiento" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
-          <tr><td style="text-align: left; padding: 1.5px 5px;">3. Registro civil del (la) niño(a) para niños menores de 7 años.</td><td class="yn-col" style="width: 25mm;"><select id="doc_registro" name="doc_registro" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
-          <tr><td style="text-align: left; padding: 1.5px 5px;">4. Fotocopia de la tarjeta de identidad para niños mayores de 7 años.</td><td class="yn-col" style="width: 25mm;"><select id="doc_tarjeta" name="doc_tarjeta" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
-          <tr><td style="text-align: left; padding: 1.5px 5px;">5. Carné de vacunas actualizado.</td><td class="yn-col" style="width: 25mm;"><select id="doc_vacunas" name="doc_vacunas" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
-          <tr><td style="text-align: left; padding: 1.5px 5px;">6. Examen de audiometría y optometría.</td><td class="yn-col" style="width: 25mm;"><select id="doc_audio" name="doc_audio" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
-          <tr><td style="text-align: left; padding: 1.5px 5px;">7. Examen odontológico vigente.</td><td class="yn-col" style="width: 25mm;"><select id="doc_odont" name="doc_odont" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
-          <tr><td style="text-align: left; padding: 1.5px 5px;">8. Certificado médico general.</td><td class="yn-col" style="width: 25mm;"><select id="doc_medico" name="doc_medico" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
-          <tr><td style="text-align: left; padding: 1.5px 5px;">9. Fotocopia del carné de la EPS o medicina prepagada.</td><td class="yn-col" style="width: 25mm;"><select id="doc_eps" name="doc_eps" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
-          <tr><td style="text-align: left; padding: 1.5px 5px;">10. Cuatro (4) fotos de 3×4 cm en fondo blanco o azul.</td><td class="yn-col" style="width: 25mm;"><select id="doc_fotos" name="doc_fotos" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
-          <tr><td style="text-align: left; padding: 1.5px 5px;">11. Fotocopia de la cédula de ciudadanía de los padres.</td><td class="yn-col" style="width: 25mm;"><select id="doc_cedulas" name="doc_cedulas" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
-          <tr><td style="text-align: left; padding: 1.5px 5px;">12. Una foto familiar de 9×13 cm.</td><td class="yn-col" style="width: 25mm;"><select id="doc_foto9x13" name="doc_foto9x13" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
+          <tr>
+            <td style="text-align: left; padding: 1.2px 4px; font-size: 8pt;">1. Curva de crecimiento, talla y peso.</td>
+            <td class="yn-col" style="width: 22mm;"><select id="doc_curva" name="doc_curva" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td>
+            <td style="text-align: left; padding: 1.2px 4px; font-size: 8pt; border-left: 1.5px solid var(--borde);">7. Examen odontológico vigente.</td>
+            <td class="yn-col" style="width: 22mm;"><select id="doc_odont" name="doc_odont" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td>
+          </tr>
+          <tr>
+            <td style="text-align: left; padding: 1.2px 4px; font-size: 8pt;">2. Certificado que asista al programa de crecimiento y desarrollo.</td>
+            <td class="yn-col" style="width: 22mm;"><select id="doc_crecimiento" name="doc_crecimiento" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td>
+            <td style="text-align: left; padding: 1.2px 4px; font-size: 8pt; border-left: 1.5px solid var(--borde);">8. Certificado médico general.</td>
+            <td class="yn-col" style="width: 22mm;"><select id="doc_medico" name="doc_medico" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td>
+          </tr>
+          <tr>
+            <td style="text-align: left; padding: 1.2px 4px; font-size: 8pt;">3. Registro civil del (la) niño(a) para niños menores de 7 años.</td>
+            <td class="yn-col" style="width: 22mm;"><select id="doc_registro" name="doc_registro" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td>
+            <td style="text-align: left; padding: 1.2px 4px; font-size: 8pt; border-left: 1.5px solid var(--borde);">9. Fotocopia del carné de la EPS o medicina prepagada.</td>
+            <td class="yn-col" style="width: 22mm;"><select id="doc_eps" name="doc_eps" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td>
+          </tr>
+          <tr>
+            <td style="text-align: left; padding: 1.2px 4px; font-size: 8pt;">4. Fotocopia de la tarjeta de identidad para niños mayores de 7 años.</td>
+            <td class="yn-col" style="width: 22mm;"><select id="doc_tarjeta" name="doc_tarjeta" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td>
+            <td style="text-align: left; padding: 1.2px 4px; font-size: 8pt; border-left: 1.5px solid var(--borde);">10. Cuatro (4) fotos de 3×4 cm en fondo blanco o azul.</td>
+            <td class="yn-col" style="width: 22mm;"><select id="doc_fotos" name="doc_fotos" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td>
+          </tr>
+          <tr>
+            <td style="text-align: left; padding: 1.2px 4px; font-size: 8pt;">5. Carné de vacunas actualizado.</td>
+            <td class="yn-col" style="width: 22mm;"><select id="doc_vacunas" name="doc_vacunas" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td>
+            <td style="text-align: left; padding: 1.2px 4px; font-size: 8pt; border-left: 1.5px solid var(--borde);">11. Fotocopia de la cédula de ciudadanía de los padres.</td>
+            <td class="yn-col" style="width: 22mm;"><select id="doc_cedulas" name="doc_cedulas" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td>
+          </tr>
+          <tr>
+            <td style="text-align: left; padding: 1.2px 4px; font-size: 8pt;">6. Examen de audiometría y optometría.</td>
+            <td class="yn-col" style="width: 22mm;"><select id="doc_audio" name="doc_audio" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td>
+            <td style="text-align: left; padding: 1.2px 4px; font-size: 8pt; border-left: 1.5px solid var(--borde);">12. Una foto familiar de 9×13 cm.</td>
+            <td class="yn-col" style="width: 22mm;"><select id="doc_foto9x13" name="doc_foto9x13" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td>
+          </tr>
         </tbody>
       </table>
     </div>
 
     <!-- DECLARACIONES LEGALES -->
-    <p class="legal-text" style="margin-top: 2.5mm; font-size: 7.8pt; line-height: 1.2; text-align: justify; color: #333;">
+    <p class="legal-text" style="margin-top: 1.5mm; font-size: 7.5pt; line-height: 1.18; text-align: justify; color: #333;">
       El proyecto pedagógico del plantel, por convicción propia y dando cumplimiento fiel a lo establecido en la Constitución Política de Colombia, admite a niños y niñas sin discriminación alguna respecto a su raza, color, religión, orientación sexual o nacionalidad.
     </p>
-    <p class="legal-text" style="font-size: 7.8pt; line-height: 1.2; text-align: justify; color: #333;">
+    <p class="legal-text" style="font-size: 7.5pt; line-height: 1.18; text-align: justify; color: #333;">
       Nuestra Institución se obliga a ubicar a los niños y niñas en un ambiente apropiado e idóneo de aprendizaje, seguridad y bienestar; al mismo tiempo se reserva el derecho de conformar los grupos de aprendizaje con un número de niños, edad, sexo, necesidad y compatibilidad con el PEI, siempre dentro del límite estipulado por las autoridades competentes.
     </p>
-    <p class="legal-text" style="font-size: 7.8pt; line-height: 1.2; text-align: justify; color: #333;">
+    <p class="legal-text" style="font-size: 7.5pt; line-height: 1.18; text-align: justify; color: #333;">
       Mediante la firma del presente formulario de admisión, certificamos que toda información contenida en el mismo es correcta, veraz y comprobable. Declaramos expresamente aceptar los planes de estudio, las normas académicas, los talleres de padres y requerimientos económicos de la institución educativa.
     </p>
   </div>
 
-  <!-- BLOQUES DE FIRMAS -->
+  <!-- BLOQUES DE FIRMAS (3 EN LÍNEA) -->
   <div class="barra barra--azul">COMPROMISO Y FIRMAS</div>
-  <div style="border: 1px solid var(--borde); border-top: none; padding: 3mm 4mm; background: #fff;">
-    <div class="signature-area" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; margin-bottom: 2.5mm;">
-      <div class="signature-box" style="border: 1px solid var(--borde); border-radius: 4px; padding: 2mm; background: #fafcff; text-align: center;">
-        <canvas id="sigPapa" title="Firme aquí con el mouse, lápiz táctil o dedo" style="width: 100%; height: 18mm; background: #fff; border-bottom: 1.5px solid var(--azul); display: block;"></canvas>
+  <div style="border: 1px solid var(--borde); border-top: none; padding: 2mm 3mm; background: #fff;">
+    <div class="signature-area" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3.5mm;">
+      <div class="signature-box" style="border: 1px solid var(--borde); border-radius: 4px; padding: 1.5mm; background: #fafcff; text-align: center;">
+        <canvas id="sigPapa" title="Firme aquí con el mouse, lápiz táctil o dedo" style="width: 100%; height: 16mm; background: #fff; border-bottom: 1.5px solid var(--azul); display: block;"></canvas>
         <div class="sign-actions no-print" style="margin: 2px 0;">
           <label class="btn-sign-upload" title="Subir archivo o foto de la firma (PNG, JPG)">
-            📁 Subir firma
+            📁 Subir
             <input type="file" id="upload_sigPapa" accept="image/*" onchange="uploadSignature(event, 'sigPapa')" style="display:none;">
           </label>
-          <button type="button" class="btn-sign-clear" onclick="clearSignature('sigPapa')" title="Borrar firma">✕ Borrar</button>
+          <button type="button" class="btn-sign-clear" onclick="clearSignature('sigPapa')" title="Borrar firma">✕</button>
         </div>
-        <div class="signature-label" style="font-size: 8.5px; font-weight: 800; color: var(--azul); margin-top: 2px;">FIRMA DEL PAPÁ</div>
+        <div class="signature-label" style="font-size: 8.2px; font-weight: 800; color: var(--azul); margin-top: 2px;">FIRMA DEL PAPÁ</div>
       </div>
-      <div class="signature-box" style="border: 1px solid var(--borde); border-radius: 4px; padding: 2mm; background: #fafcff; text-align: center;">
-        <canvas id="sigMama" title="Firme aquí con el mouse, lápiz táctil o dedo" style="width: 100%; height: 18mm; background: #fff; border-bottom: 1.5px solid var(--azul); display: block;"></canvas>
+      <div class="signature-box" style="border: 1px solid var(--borde); border-radius: 4px; padding: 1.5mm; background: #fafcff; text-align: center;">
+        <canvas id="sigMama" title="Firme aquí con el mouse, lápiz táctil o dedo" style="width: 100%; height: 16mm; background: #fff; border-bottom: 1.5px solid var(--azul); display: block;"></canvas>
         <div class="sign-actions no-print" style="margin: 2px 0;">
           <label class="btn-sign-upload" title="Subir archivo o foto de la firma (PNG, JPG)">
-            📁 Subir firma
+            📁 Subir
             <input type="file" id="upload_sigMama" accept="image/*" onchange="uploadSignature(event, 'sigMama')" style="display:none;">
           </label>
-          <button type="button" class="btn-sign-clear" onclick="clearSignature('sigMama')" title="Borrar firma">✕ Borrar</button>
+          <button type="button" class="btn-sign-clear" onclick="clearSignature('sigMama')" title="Borrar firma">✕</button>
         </div>
-        <div class="signature-label" style="font-size: 8.5px; font-weight: 800; color: var(--azul); margin-top: 2px;">FIRMA DE LA MAMÁ</div>
+        <div class="signature-label" style="font-size: 8.2px; font-weight: 800; color: var(--azul); margin-top: 2px;">FIRMA DE LA MAMÁ</div>
       </div>
-    </div>
-
-    <div class="signature-box signature-director" style="max-width: 90mm; margin: 0 auto; border: 1px solid var(--borde); border-radius: 4px; padding: 2mm; background: #fafcff; text-align: center;">
-      <canvas id="sigDirector" title="Firma o sello oficial de la dirección" style="width: 100%; height: 18mm; background: #fff; border-bottom: 1.5px solid var(--azul); display: block;"></canvas>
-      <div class="sign-actions no-print" style="margin: 2px 0;">
-        <label class="btn-sign-upload" title="Subir firma o sello institucional (PNG, JPG)">
-          📁 Subir firma
-          <input type="file" id="upload_sigDirector" accept="image/*" onchange="uploadSignature(event, 'sigDirector')" style="display:none;">
-        </label>
-        <button type="button" class="btn-sign-clear" onclick="clearSignature('sigDirector')" title="Borrar firma">✕ Borrar</button>
+      <div class="signature-box signature-director" style="border: 1px solid var(--borde); border-radius: 4px; padding: 1.5mm; background: #fafcff; text-align: center;">
+        <canvas id="sigDirector" title="Firma o sello oficial de la dirección" style="width: 100%; height: 16mm; background: #fff; border-bottom: 1.5px solid var(--azul); display: block;"></canvas>
+        <div class="sign-actions no-print" style="margin: 2px 0;">
+          <label class="btn-sign-upload" title="Subir firma o sello institucional (PNG, JPG)">
+            📁 Subir
+            <input type="file" id="upload_sigDirector" accept="image/*" onchange="uploadSignature(event, 'sigDirector')" style="display:none;">
+          </label>
+          <button type="button" class="btn-sign-clear" onclick="clearSignature('sigDirector')" title="Borrar firma">✕</button>
+        </div>
+        <div class="signature-label" style="font-size: 8.2px; font-weight: 800; color: var(--azul); margin-top: 2px;">DIRECCIÓN INSTITUCIONAL</div>
       </div>
-      <div class="signature-label" style="font-size: 8.5px; font-weight: 800; color: var(--azul); margin-top: 2px;">FIRMA DIRECCIÓN INSTITUCIONAL</div>
     </div>
   </div>
 </div>
-<footer class="footer">PÁGINA 3 DE 3 <span class="stars">★ ★ ★</span></footer>
+<footer class="footer">PÁGINA 2 DE 2 <span class="stars">★ ★ ★</span></footer>
 </section>
 
 </form>
@@ -2742,17 +2512,7 @@ function fillDemoData() {
     'emergencia1_nombre': 'Marta Elena Herrera', 'emergencia1_relacion': 'Abuela paterna',
     'emergencia1_direccion': 'Calle 127 # 45-12', 'emergencia1_tel': '6012547896', 'emergencia1_cel': '3002589631', 'emergencia1_email': 'marta.herrera@yahoo.com',
     'emergencia2_nombre': 'Jorge Andrés Gómez', 'emergencia2_relacion': 'Tío paterno',
-    'emergencia2_direccion': 'Carrera 15 # 98-40', 'emergencia2_tel': '6016321458', 'emergencia2_cel': '3187452103', 'emergencia2_email': 'jorge.gomez@empresa.com',
-    'bebe_nacer': 'Vigoroso y saludable', 'talla_nacer': '50', 'peso_nacer': '3200',
-    'lactancia_hasta': '18 meses', 'tetero_hasta': '2 años',
-    'hospital_fecha': '12/08/2024', 'hospital_clinica': 'Clínica Infantil Colsubsidio',
-    'alimentos_no': 'Ninguno conocido',
-    'crecimiento1_fecha': '15/05/2024', 'crecimiento1_peso': '14.2', 'crecimiento1_talla': '92',
-    'crecimiento2_fecha': '18/11/2024', 'crecimiento2_peso': '15.6', 'crecimiento2_talla': '98',
-    'crecimiento3_fecha': '10/05/2025', 'crecimiento3_peso': '17.0', 'crecimiento3_talla': '103',
-    'crecimiento4_fecha': '20/11/2025', 'crecimiento4_peso': '18.5', 'crecimiento4_talla': '108',
-    'edad_lavado': '2 años', 'ultima_visita_odonto': '15/10/2025',
-    'conducta_vacunas': 'Esquema de vacunación al día según el PAI.'
+    'emergencia2_direccion': 'Carrera 15 # 98-40', 'emergencia2_tel': '6016321458', 'emergencia2_cel': '3187452103', 'emergencia2_email': 'jorge.gomez@empresa.com'
   };
 
   Object.entries(fieldsVal).forEach(([idOrName, val]) => {
@@ -2768,16 +2528,6 @@ function fillDemoData() {
   // Selectores y opciones de ejemplo
   const demoSelects = {
     'medicina_prepagada': 'si',
-    'parto': 'normal',
-    'gestacion': 'termino',
-    'lactancia': 'si',
-    'tetero': 'si',
-    'hospitalizado': 'no',
-    'frecuencia_cepillado': '3',
-    'no_le_gusta': 'si',
-    'caries': 'no',
-    'odonto_control': 'si',
-    'vacunas_esquema': 'si',
     'doc_curva': 'si', 'doc_crecimiento': 'si', 'doc_registro': 'si',
     'doc_tarjeta': 'no', 'doc_vacunas': 'si', 'doc_audio': 'si',
     'doc_odont': 'si', 'doc_medico': 'si', 'doc_eps': 'si',
