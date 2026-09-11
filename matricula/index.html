@@ -842,12 +842,18 @@
 
   /* ==================== VISTA MÓVIL Y TABLET ==================== */
   @media screen and (max-width: 768px) {
-    body { padding: 10px 8px; }
+    body {
+      padding: 10px 6px;
+      overflow-x: hidden;
+    }
     .hoja {
-      padding: 16px 14px 20px;
-      margin: 8px auto;
-      max-width: 100%;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      padding: 16px 10px 20px !important;
+      margin: 8px auto !important;
       border-radius: 8px;
+      overflow-x: hidden;
     }
     .cabecera {
       flex-direction: column;
@@ -857,15 +863,24 @@
     }
     .logo img { width: 80px; }
     h1.titulo { font-size: 20px; }
-    .folio { width: 100%; text-align: center; }
+    .folio {
+      width: 100% !important;
+      text-align: center;
+      box-sizing: border-box;
+    }
 
     .tabla-contenedor {
+      width: 100%;
+      max-width: 100%;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       margin-bottom: 2px;
+      box-sizing: border-box;
     }
     .fam { min-width: 580px; }
     .tabla-sec { min-width: 580px; }
+    .tabla-escolaridad { min-width: 580px; }
+    .growth { min-width: 580px; }
     .firma-fila { flex-direction: column; gap: 15px; }
   }
 </style>
@@ -925,7 +940,8 @@
 
   <!-- DATOS DEL ESTUDIANTE -->
   <div class="barra barra--azul">DATOS DEL ESTUDIANTE</div>
-  <table class="tabla-sec">
+  <div class="tabla-contenedor">
+    <table class="tabla-sec">
     <tr>
       <td colspan="10">
         <label for="estudiante_apellidos">APELLIDOS</label>
@@ -1015,6 +1031,7 @@
       </td>
     </tr>
   </table>
+  </div>
 
   <!-- DATOS FAMILIARES -->
   <div class="barra barra--naranja">DATOS FAMILIARES</div>

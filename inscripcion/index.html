@@ -1262,22 +1262,8 @@
       position: relative;
       overflow: hidden;
     }
-  }@media screen and (max-width: 960px) {
-    .document { width: 100%; max-width: 100%; margin: 0; }
-    .page {
-      width: 100%;
-      height: auto;
-      min-height: auto;
-      max-height: none;
-      padding: 24px 14px 45px;
-      margin-bottom: 24px;
-    }
-    .page::before { display: none; }
-    .top-grid { grid-template-columns: 1fr 90px; }
-    .section-title { font-size: 9pt; padding: 4px 14px; }
-    .two-col, .parent-grid { grid-template-columns: 1fr; }
-    .footer { position: relative; left: auto; right: auto; bottom: auto; margin-top: 20px; }
   }
+
 
   /* ==================== DISTRIBUCIÓN EQUILIBRADA DE PÁGINAS 1 Y 2 ==================== */
   /* --- PÁGINA 1: Distribución amplia y equilibrada, con holgura sobre el pie de página --- */
@@ -1378,6 +1364,139 @@
     height: 21mm !important;
     line-height: 5.5mm;
     font-size: 8.8pt;
+  }
+
+  /* ==================== VISTA MÓVIL Y TABLET ==================== */
+  @media screen and (max-width: 768px) {
+    body {
+      padding: 10px 6px;
+      overflow-x: hidden;
+    }
+    .toolbar {
+      padding: 8px 10px;
+      gap: 6px;
+    }
+    .toolbar .btn {
+      padding: 6px 10px;
+      font-size: 8.5pt;
+    }
+    .document {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+    }
+    .page {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+      min-height: auto !important;
+      max-height: none !important;
+      padding: 16px 10px 25px !important;
+      margin-bottom: 24px !important;
+      box-sizing: border-box !important;
+      border-radius: 8px;
+      overflow-x: hidden !important;
+      position: relative;
+    }
+    .page::before {
+      display: none;
+    }
+
+    #page1 .cabecera,
+    .cabecera {
+      flex-direction: column !important;
+      align-items: center !important;
+      text-align: center !important;
+      gap: 10px !important;
+      margin-bottom: 10px !important;
+    }
+    .logo {
+      flex: 0 0 auto;
+    }
+    .logo img {
+      width: 80px;
+      height: auto;
+    }
+    .cabecera > div:nth-child(2) {
+      width: 100% !important;
+    }
+    h1.titulo {
+      font-size: 18px !important;
+      text-align: center !important;
+      line-height: 1.25 !important;
+      width: 100% !important;
+      margin: 0 !important;
+    }
+    .subtitulo-cabecera {
+      font-size: 10.5px !important;
+      text-align: center !important;
+      margin-top: 2px !important;
+    }
+    .cabecera-derecha {
+      width: 100% !important;
+      max-width: 100% !important;
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 12px !important;
+    }
+    .folio {
+      width: auto !important;
+      min-width: 230px !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      padding: 6px 12px !important;
+    }
+    .photo {
+      width: 28mm !important;
+      height: 35mm !important;
+      flex-shrink: 0 !important;
+    }
+
+    /* En pantallas estrechas (móviles <= 520px) apilar folio y foto */
+    @media screen and (max-width: 520px) {
+      .cabecera-derecha {
+        flex-direction: column !important;
+        gap: 10px !important;
+      }
+      .folio {
+        width: 100% !important;
+        max-width: 300px !important;
+      }
+    }
+
+    .tabla-contenedor {
+      width: 100% !important;
+      max-width: 100% !important;
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 4px;
+      box-sizing: border-box;
+    }
+    .academic-unified-table,
+    .tabla-sec,
+    .fam,
+    .requirements-table {
+      min-width: 580px;
+    }
+
+    .signature-area {
+      grid-template-columns: 1fr !important;
+      gap: 12px !important;
+    }
+    .signature-director {
+      max-width: 100% !important;
+    }
+
+    .footer {
+      position: relative !important;
+      left: auto !important;
+      right: auto !important;
+      bottom: auto !important;
+      margin-top: 20px !important;
+    }
   }
 
 </style>
@@ -1997,6 +2116,7 @@
     </div>
 
     <!-- TABLA DE AUTORIZACIÓN INTERACTIVA -->
+    <div class="tabla-contenedor">
     <table class="tabla-sec">
       <tr>
         <td colspan="8">
@@ -2015,6 +2135,7 @@
         </td>
       </tr>
     </table>
+    </div>
   </div>
   
 <footer class="footer">PÁGINA 2 DE 3 <span class="stars">★ ★ ★</span></footer>
