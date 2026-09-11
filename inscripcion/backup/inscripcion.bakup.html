@@ -938,30 +938,6 @@
     background: transparent;
   }
 
-  /* Perfil familiar y corresponsabilidad: tabla estándar alineada con el resto del formulario */
-  .subhead-sec {
-    background: #f0f4fa !important;
-    color: var(--azul) !important;
-    font-weight: 800 !important;
-    font-size: 9px !important;
-    letter-spacing: 0.5px !important;
-    padding: 2.5px 6px !important;
-    height: 20px !important;
-    vertical-align: middle !important;
-    border: 1px solid var(--borde) !important;
-    text-align: left !important;
-  }
-  .resaltar-otro {
-    background-color: var(--azul-soft) !important;
-    border-bottom: 1.5px solid var(--azul) !important;
-  }
-  @media print {
-    #page3 .page-inner { justify-content: flex-start; }
-    #page3 .barra { margin-top: .8mm !important; padding: 2.5px 5px !important; font-size: 10.5px !important; }
-    #page2 .subhead-sec { height: 18px !important; font-size: 8.5px !important; padding: 1.5px 4px !important; }
-    #page2 table.tabla-sec td { height: 28px !important; padding: 1.5px 4px !important; }
-  }
-
   /* ==================== PÁGINA 3 - PROCEDIMIENTO Y REQUISITOS ==================== */
   .admissions ol {
     margin: 0 0 3mm 4mm;
@@ -1386,9 +1362,6 @@
 
 <!-- BARRA DE ACCIONES SUPERIOR -->
 <header class="toolbar no-print">
-  <button type="button" class="btn btn-secondary" onclick="document.getElementById('page1').scrollIntoView({behavior:'smooth'})" title="Ir a Página 1">📄 Hoja 1</button>
-  <button type="button" class="btn btn-secondary" onclick="document.getElementById('page2').scrollIntoView({behavior:'smooth'})" title="Ir a Página 2">📄 Hoja 2</button>
-  <button type="button" class="btn btn-secondary" onclick="document.getElementById('page3').scrollIntoView({behavior:'smooth'})" title="Ir a Página 3">📄 Hoja 3</button>
   <button type="button" class="btn btn-primary" onclick="imprimirConValidacion()">
     🖨️ Imprimir / Guardar como PDF
   </button>
@@ -1433,37 +1406,20 @@
     </div>
     <div class="cabecera-derecha">
       <div class="folio">
-        <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 4px;">
-          <label for="fecha_ingreso_mes" style="font-size: 8.5px; font-weight: 800; color: var(--azul);">FECHA INGRESO:</label>
-          <div style="display: flex; gap: 4px; width: 120px;">
-            <select id="fecha_ingreso_mes" name="fecha_ingreso_mes" class="in-folio select-as-help" style="flex: 1.25; font-size: 8.5px; font-weight: 700; height: 18px; padding: 0 1px;" title="Mes de ingreso">
-              <option value="">Mes...</option>
-              <option value="Enero">Enero</option>
-              <option value="Febrero" selected>Febrero</option>
-              <option value="Marzo">Marzo</option>
-              <option value="Abril">Abril</option>
-              <option value="Mayo">Mayo</option>
-              <option value="Junio">Junio</option>
-              <option value="Julio">Julio</option>
-              <option value="Agosto">Agosto</option>
-              <option value="Septiembre">Septiembre</option>
-              <option value="Octubre">Octubre</option>
-              <option value="Noviembre">Noviembre</option>
-              <option value="Diciembre">Diciembre</option>
-            </select>
-            <select id="fecha_ingreso_anio" name="fecha_ingreso_anio" class="in-folio select-as-help" style="flex: 1; font-size: 8.5px; font-weight: 700; height: 18px; padding: 0 1px;" title="Año de ingreso">
-              <option value="2025">2025</option>
-              <option value="2026" selected>2026</option>
-              <option value="2027">2027</option>
-              <option value="2028">2028</option>
-              <option value="2029">2029</option>
-              <option value="2030">2030</option>
-            </select>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 2px;">
+          <label for="fecha_ingreso" style="font-size: 8.5px; font-weight: 800; color: var(--azul);">FECHA INGRESO:</label>
+          <div class="campo-fecha" style="width: 110px;">
+            <input type="text" id="fecha_ingreso" name="fecha_ingreso" class="in-folio in-fecha" style="width: 100%;" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off" title="Fecha de radicación o ingreso">
+            <button type="button" class="btn-cal no-print" tabindex="-1" title="Seleccionar fecha en calendario">📅</button>
           </div>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 2px;">
+          <label for="matricula" style="font-size: 8.5px; font-weight: 800; color: var(--azul);">MATRÍCULA Nº:</label>
+          <input type="text" id="matricula" name="matricula" class="in-folio" style="width: 110px;" placeholder="Ej. 2026-001" title="Número de matrícula">
         </div>
         <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px;">
           <label for="nuip" style="font-size: 8.5px; font-weight: 800; color: var(--azul);">NUIP:</label>
-          <input type="text" id="nuip" name="nuip" class="in-folio" style="width: 120px;" placeholder="Número único" title="Número único de identificación personal">
+          <input type="text" id="nuip" name="nuip" class="in-folio" style="width: 110px;" placeholder="Número único" title="Número único de identificación personal">
         </div>
       </div>
 
@@ -1776,250 +1732,256 @@
     </table>
   </div>
 
-  <!-- SECCIÓN: PERFIL FAMILIAR Y CORRESPONSABILIDAD -->
-  <div class="barra barra--verde" style="margin-top: 3mm;">PERFIL FAMILIAR Y CORRESPONSABILIDAD</div>
+  <!-- SECCIÓN 5: ANTECEDENTES DE EMBARAZO Y PARTO -->
+  <div class="barra barra--verde">ANTECEDENTES DE EMBARAZO Y PARTO</div>
   <div class="tabla-contenedor">
     <table class="tabla-sec">
-      <!-- SUBSECCIÓN A -->
-      <tr class="fila-subhead">
-        <td colspan="12" class="subhead-sec">A. ALINEACIÓN PEDAGÓGICA Y CRIANZA</td>
-      </tr>
       <tr>
-        <td colspan="7">
-          <label for="razon_eleccion">¿CUÁL ES LA PRINCIPAL RAZÓN POR LA QUE ELIGEN EL COLEGIO?</label>
-          <input type="text" id="razon_eleccion" name="razon_eleccion" list="lista_razon_eleccion" class="in" placeholder="Seleccione una opción o escriba aquí..." autocomplete="off" title="Razón principal de elección del colegio">
-          <datalist id="lista_razon_eleccion">
-            <option value="Por el enfoque pedagógico y artístico">Por el enfoque pedagógico y artístico</option>
-            <option value="Por recomendación de otras familias del colegio">Por recomendación de otras familias del colegio</option>
-            <option value="Por la cercanía a nuestro hogar o lugar de trabajo">Por la cercanía a nuestro hogar o lugar de trabajo</option>
-            <option value="Por la infraestructura, seguridad y horarios">Por la infraestructura, seguridad y horarios</option>
-            <option value="Por los valores, formación integral y calidez humana">Por los valores, formación integral y calidez humana</option>
-            <option value="Por el proyecto formativo y metodología">Por el proyecto formativo y metodología</option>
-          </datalist>
-        </td>
-        <td colspan="5">
-          <label for="razon_eleccion_otro">SEGUNDA RAZÓN O ESPECIFICACIÓN</label>
-          <input type="text" id="razon_eleccion_otro" name="razon_eleccion_otro" list="lista_razon_eleccion" class="in" placeholder="Seleccione una opción o escriba aquí..." autocomplete="off" title="Segunda razón o especificación de elección">
-        </td>
-      </tr>
-      <tr>
-        <td colspan="7">
-          <label for="expectativas">¿QUÉ ESPERAN PRINCIPALMENTE QUE SU HIJO(A) LOGRE EN EL JARDÍN?</label>
-          <input type="text" id="expectativas" name="expectativas" list="lista_expectativas" class="in" placeholder="Seleccione una opción o escriba aquí..." autocomplete="off" title="Expectativa principal en el jardín">
-          <datalist id="lista_expectativas">
-            <option value="Desarrollo socioemocional, juego y convivencia sana">Desarrollo socioemocional, juego y convivencia sana</option>
-            <option value="Autonomía, hábitos e independencia en sus rutinas">Autonomía, hábitos e independencia en sus rutinas</option>
-            <option value="Preparación académica temprana (bases lectoescritura/números)">Preparación académica temprana (bases lectoescritura/números)</option>
-            <option value="Desarrollo motor, expresión artística y musical">Desarrollo motor, expresión artística y musical</option>
-            <option value="Afianzar valores, socialización y comunicación asertiva">Afianzar valores, socialización y comunicación asertiva</option>
-          </datalist>
-        </td>
-        <td colspan="5">
-          <label for="expectativas_otro">OTRA EXPECTATIVA / DETALLES</label>
-          <input type="text" id="expectativas_otro" name="expectativas_otro" list="lista_expectativas" class="in" placeholder="Seleccione una opción o escriba aquí..." autocomplete="off" title="Otra expectativa o detalle adicional">
-        </td>
-      </tr>
-      <tr>
-        <td colspan="7">
-          <label for="manejo_emocional">¿CÓMO MANEJAN LOS DESBORDES EMOCIONALES (PATALETAS) EN CASA?</label>
-          <input type="text" id="manejo_emocional" name="manejo_emocional" list="lista_manejo_emocional" class="in" placeholder="Seleccione una opción o escriba aquí..." autocomplete="off" title="Estrategia ante desbordes emocionales">
-          <datalist id="lista_manejo_emocional">
-            <option value="Acompañamiento y validación: contención, calma y diálogo posterior">Acompañamiento y validación: contención, calma y diálogo posterior</option>
-            <option value="Corrección firme y voz de mando: límites inmediatos y directrices claras">Corrección firme y voz de mando: límites inmediatos y directrices claras</option>
-            <option value="Distracción o compensación: cambio de actividad, juego o estímulo positivo">Distracción o compensación: cambio de actividad, juego o estímulo positivo</option>
-            <option value="Espacio de autorregulación: pausa / tiempo fuera reflexivo en lugar seguro">Espacio de autorregulación: pausa / tiempo fuera reflexivo en lugar seguro</option>
-            <option value="Diálogo reflexivo, acuerdos mutuos y escucha activa">Diálogo reflexivo, acuerdos mutuos y escucha activa</option>
-          </datalist>
-        </td>
-        <td colspan="5">
-          <label for="manejo_emocional_otro">OTRO MÉTODO / OBSERVACIÓN</label>
-          <input type="text" id="manejo_emocional_otro" name="manejo_emocional_otro" list="lista_manejo_emocional" class="in" placeholder="Seleccione una opción o escriba aquí..." autocomplete="off" title="Otro método u observación sobre el manejo emocional">
-        </td>
-      </tr>
-      <tr>
-        <td colspan="6">
-          <label for="pantallas">USO DE PANTALLAS (CELULAR, TABLET, TV)</label>
-          <input type="text" id="pantallas" name="pantallas" list="lista_pantallas" class="in" placeholder="Seleccione una opción o escriba aquí..." autocomplete="off" title="Política familiar sobre pantallas">
-          <datalist id="lista_pantallas">
-            <option value="Cero pantallas (sin exposición a pantallas en casa)">Cero pantallas (sin exposición a pantallas en casa)</option>
-            <option value="Uso controlado: menos de 30–60 minutos al día supervisado">Uso controlado: menos de 30–60 minutos al día supervisado</option>
-            <option value="Fines de semana exclusivamente, bajo supervisión">Fines de semana exclusivamente, bajo supervisión</option>
-            <option value="Uso educativo ocasional acompañado por un adulto">Uso educativo ocasional acompañado por un adulto</option>
-            <option value="Uso libre: acceso cuando lo solicita o para entretenimiento">Uso libre: acceso cuando lo solicita o para entretenimiento</option>
-          </datalist>
-        </td>
-        <td colspan="6">
-          <label for="pantallas_otro">DETALLE / HORARIO DE PANTALLAS</label>
-          <input type="text" id="pantallas_otro" name="pantallas_otro" list="lista_pantallas" class="in" placeholder="Seleccione una opción o escriba aquí..." autocomplete="off" title="Detalle u horario de uso de pantallas">
-        </td>
-      </tr>
-      <tr>
-        <td colspan="6">
-          <label for="autonomia_esfinteres">ETAPA DE CONTROL DE ESFÍNTERES</label>
-          <select id="autonomia_esfinteres" name="autonomia_esfinteres" class="in select-as-help" title="Etapa de control de esfínteres">
+        <td colspan="3">
+          <label for="parto">PARTO</label>
+          <select id="parto" name="parto" class="in select-as-help" title="Tipo de parto">
             <option value="">Seleccione...</option>
-            <option value="independiente">Avisa y va al baño de manera independiente</option>
-            <option value="proceso">Está en proceso de dejar el pañal</option>
-            <option value="no_iniciado">No ha iniciado el proceso</option>
+            <option value="normal">Normal</option>
+            <option value="cesarea">Cesárea</option>
+          </select>
+        </td>
+        <td colspan="3">
+          <label for="gestacion">GESTACIÓN</label>
+          <select id="gestacion" name="gestacion" class="in select-as-help" title="Tiempo de gestación">
+            <option value="">Seleccione...</option>
+            <option value="termino">A término</option>
+            <option value="pretermi">Pretérmino (&lt; 38 sem)</option>
+            <option value="postermi">Postérmino (&gt; 42 sem)</option>
           </select>
         </td>
         <td colspan="6">
-          <label for="habitos_autonomia">HÁBITOS DE AUTONOMÍA EN CASA</label>
-          <input type="text" id="habitos_autonomia" name="habitos_autonomia" list="lista_habitos_autonomia" class="in" placeholder="Seleccione una opción o escriba aquí..." autocomplete="off" title="Hábitos de autonomía en casa">
-          <datalist id="lista_habitos_autonomia">
-            <option value="Come solo(a) y recoge sus juguetes con instrucciones sencillas">Come solo(a) y recoge sus juguetes con instrucciones sencillas</option>
-            <option value="Come solo(a) alimentos sólidos de manera independiente">Come solo(a) alimentos sólidos de manera independiente</option>
-            <option value="Recoge y organiza sus juguetes y pertenencias">Recoge y organiza sus juguetes y pertenencias</option>
-            <option value="Se viste / desviste con apoyo o supervisión leve">Se viste / desviste con apoyo o supervisión leve</option>
-            <option value="Hábitos y rutinas básicas en proceso de consolidación">Hábitos y rutinas básicas en proceso de consolidación</option>
-          </datalist>
-        </td>
-      </tr>
-
-      <!-- SUBSECCIÓN B -->
-      <tr class="fila-subhead">
-        <td colspan="12" class="subhead-sec">B. ENTORNO FAMILIAR Y CONVIVENCIA</td>
-      </tr>
-      <tr>
-        <td colspan="12">
-          <label for="cuidador_principal">CUIDADOR PRINCIPAL (ADEMÁS DE PADRES)</label>
-          <input type="text" id="cuidador_principal" name="cuidador_principal" list="lista_cuidador_principal" class="in" placeholder="Seleccione una opción o escriba el nombre / parentesco del cuidador..." autocomplete="off" title="Cuidador principal en el día a día">
-          <datalist id="lista_cuidador_principal">
-            <option value="Únicamente los padres">Únicamente los padres</option>
-            <option value="Abuelos maternos / paternos">Abuelos maternos / paternos</option>
-            <option value="Tíos u otros familiares cercanos">Tíos u otros familiares cercanos</option>
-            <option value="Niñera / empleada de confianza en casa">Niñera / empleada de confianza en casa</option>
-            <option value="Otra institución (jardín o guardería anterior)">Otra institución (jardín o guardería anterior)</option>
-          </datalist>
+          <label for="bebe_nacer">BEBÉ AL NACER</label>
+          <input type="text" id="bebe_nacer" name="bebe_nacer" class="in" placeholder="Estado (ej. Vigoroso y saludable)" title="Estado del bebé al momento del nacimiento">
         </td>
       </tr>
       <tr>
-        <td colspan="7">
-          <label for="valoracion_externa">POSTURA ANTE SUGERENCIA DE VALORACIÓN O APOYO EXTERNO</label>
-          <input type="text" id="valoracion_externa" name="valoracion_externa" list="lista_valoracion_externa" class="in" placeholder="Seleccione una opción o escriba postura..." autocomplete="off" title="Postura de la familia ante valoración externa">
-          <datalist id="lista_valoracion_externa">
-            <option value="Totalmente dispuestos: buscaríamos apoyo externo de inmediato">Totalmente dispuestos: buscaríamos apoyo externo de inmediato</option>
-            <option value="Abiertos a evaluar: revisaríamos el caso en equipo con el jardín">Abiertos a evaluar: revisaríamos el caso en equipo con el jardín</option>
-            <option value="Reservados: preferimos observar la evolución en el entorno escolar">Reservados: preferimos observar la evolución en el entorno escolar</option>
-            <option value="Ya cuenta con acompañamiento / terapia externa activa">Ya cuenta con acompañamiento / terapia externa activa</option>
-          </datalist>
+        <td colspan="3">
+          <label for="talla_nacer">TALLA AL NACER (cm)</label>
+          <input type="text" id="talla_nacer" name="talla_nacer" class="in" placeholder="cm (ej. 50)" title="Talla en centímetros al nacer">
         </td>
-        <td colspan="5">
-          <label for="valoracion_externa_otro">OBSERVACIÓN / DETALLES DE POSTURA</label>
-          <input type="text" id="valoracion_externa_otro" name="valoracion_externa_otro" list="lista_valoracion_externa" class="in" placeholder="Seleccione o detalle observaciones..." autocomplete="off" title="Detalle adicional">
+        <td colspan="3">
+          <label for="peso_nacer">PESO AL NACER (g)</label>
+          <input type="text" id="peso_nacer" name="peso_nacer" class="in" placeholder="gramos (ej. 3200)" title="Peso en gramos al nacer">
         </td>
-      </tr>
-
-      <!-- SUBSECCIÓN C -->
-      <tr class="fila-subhead">
-        <td colspan="12" class="subhead-sec">C. VALIDACIÓN FINANCIERA Y LEGAL</td>
-      </tr>
-      <tr>
-        <td colspan="6">
-          <label for="responsable_costos">RESPONSABLE ECONÓMICO DIRECTO DE COSTOS EDUCATIVOS</label>
-          <input type="text" id="responsable_costos" name="responsable_costos" list="lista_responsable_costos" class="in" placeholder="Seleccione una opción o escriba responsable..." autocomplete="off" title="Responsable económico">
-          <datalist id="lista_responsable_costos">
-            <option value="Ambos padres por igual">Ambos padres por igual</option>
-            <option value="Padre de familia">Padre de familia</option>
-            <option value="Madre de familia">Madre de familia</option>
-            <option value="Un tercero / tutor legal">Un tercero / tutor legal</option>
-            <option value="Empresa / entidad patrocinadora">Empresa / entidad patrocinadora</option>
-          </datalist>
-        </td>
-        <td colspan="6">
-          <label for="responsable_costos_parentesco">PARENTESCO / DETALLES (SI ES TERCERO U OTRO)</label>
-          <input type="text" id="responsable_costos_parentesco" name="responsable_costos_parentesco" list="lista_responsable_costos" class="in" placeholder="Seleccione o especifique parentesco / empresa..." autocomplete="off" title="Parentesco o detalle del responsable">
-        </td>
-      </tr>
-      <tr>
-        <td colspan="6">
-          <label for="paz_salvo">¿CUENTA CON PAZ Y SALVO DE INSTITUCIÓN DE PROCEDENCIA?</label>
-          <input type="text" id="paz_salvo" name="paz_salvo" list="lista_paz_salvo" class="in" placeholder="Seleccione una opción o escriba estado..." autocomplete="off" title="Paz y Salvo de institución anterior">
-          <datalist id="lista_paz_salvo">
-            <option value="Sí cuenta con Paz y Salvo (soporte adjunto al expediente)">Sí cuenta con Paz y Salvo (soporte adjunto al expediente)</option>
-            <option value="No aplica: es el primer jardín infantil al que asiste">No aplica: es el primer jardín infantil al que asiste</option>
-            <option value="Pendiente por entregar (en trámite con institución anterior)">Pendiente por entregar (en trámite con institución anterior)</option>
-            <option value="En revisión administrativa directiva">En revisión administrativa directiva</option>
-          </datalist>
-        </td>
-        <td colspan="6">
-          <label for="paz_salvo_obs">OBSERVACIONES / DETALLES DE PAZ Y SALVO</label>
-          <input type="text" id="paz_salvo_obs" name="paz_salvo_obs" list="lista_paz_salvo" class="in" placeholder="Seleccione o detalle observaciones / fecha..." autocomplete="off" title="Detalle adicional de paz y salvo">
-        </td>
-      </tr>
-      <tr>
-        <td colspan="8">
-          <label>TÉRMINOS DE CONSULTA EN CENTRALES DE RIESGO</label>
-          <div style="font-size: 7.8px; font-weight: 500; color: #333; line-height: 1.22; padding: 2px 0;">
-            Autorizo expresamente a My Little Artists School para consultar antecedentes comerciales, crediticios y financieros en las centrales de riesgo autorizadas, con el fin de evaluar la viabilidad del perfil de pago familiar.
-          </div>
-        </td>
-        <td colspan="4">
-          <label for="autoriza_antecedentes">¿AUTORIZA CONSULTA FINANCIERA?</label>
-          <select id="autoriza_antecedentes" name="autoriza_antecedentes" class="in select-as-help" title="Autorización de consulta de antecedentes comerciales">
+        <td colspan="3">
+          <label for="lactancia">¿LACTANCIA MATERNA?</label>
+          <select id="lactancia" name="lactancia" class="in select-as-help" title="¿Tuvo lactancia materna?">
             <option value="">Seleccione...</option>
-            <option value="si">Sí, autorizo expresamente</option>
-            <option value="no">No autorizo</option>
+            <option value="si">Sí</option>
+            <option value="no">No</option>
           </select>
+        </td>
+        <td colspan="3">
+          <label for="lactancia_hasta">¿HASTA QUÉ MES LACTÓ?</label>
+          <input type="text" id="lactancia_hasta" name="lactancia_hasta" class="in" placeholder="Ej. 6 meses" title="Meses durante los cuales recibió lactancia">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <label for="tetero">¿UTILIZA O UTILIZÓ TETERO?</label>
+          <select id="tetero" name="tetero" class="in select-as-help" title="¿Utiliza o utilizó tetero?">
+            <option value="">Seleccione...</option>
+            <option value="si">Sí</option>
+            <option value="no">No</option>
+          </select>
+        </td>
+        <td colspan="6">
+          <label for="tetero_hasta">¿HASTA QUÉ EDAD UTILIZÓ?</label>
+          <input type="text" id="tetero_hasta" name="tetero_hasta" class="in" placeholder="Ej. 2 años" title="Edad hasta la que utilizó tetero">
         </td>
       </tr>
     </table>
   </div>
 
-  <!-- SECCIÓN 6: ACEPTACIÓN DE TRATAMIENTO DE DATOS PERSONALES -->
-  <div class="barra barra--azul" style="margin-top: 2mm;">ACEPTACIÓN DE TRATAMIENTO DE DATOS PERSONALES (LEY 1581 DE 2012)</div>
-  <div style="border: 1px solid var(--borde); border-top: none; padding: 1.5mm 3mm 1mm; background: #fff; margin-bottom: 1mm;">
-    <div style="font-size: 6.8pt; line-height: 1.2; text-align: justify; color: #222; padding: 1.5mm 2.2mm; background: #fafcff; border: 1px solid #dce5f2; border-radius: 3px; margin-bottom: 1.2mm;">
-      <p style="margin: 0 0 1mm;">
-        <b>Autorización previa, expresa e informada:</b> Autorizo a <b>MY LITTLE ARTISTS SCHOOL</b> (en adelante la “Institución”), a recolectar, almacenar, usar, circular y/o suprimir mis datos personales y los de el menor de edad que represento legalmente (en adelante el “Tratamiento”), de conformidad con las siguientes finalidades:
-      </p>
-      
-      <ol style="margin: 0 0 1mm 2mm; padding-left: 2.2mm;">
-        <li style="margin-bottom: 0.6mm;">
-          <b>Finalidades respecto al representante legal del menor:</b> Envío de comunicaciones y contacto con el fin de brindar información sobre el proceso de admisión, llamado a entrevistas y solicitar información adicional necesaria para evaluar su solicitud; comunicar decisiones sobre el proceso de admisión; hacer seguimiento al proceso de los aspirantes; citación a entrevistas; conocer y verificar aplicaciones presentadas y resultado de las mismas; identificar al personal que acceda a las instalaciones de la Institución; y hacer uso de diversos medios de videovigilancia (“CCTV”) en diferentes lugares de las instalaciones.
-        </li>
-        <li style="margin-bottom: 0.6mm;">
-          <b>Finalidades respecto al menor de edad:</b> Conocer y verificar las aplicaciones presentadas y el resultado de las mismas; analizar la respectiva admisión a la Institución y el seguimiento académico que debe tener en caso de ser admitido; definir si la admisión garantiza un adecuado proceso académico y su bienestar; identificar al personal que acceda a las instalaciones; y hacer uso de diversos medios de videovigilancia en diferentes lugares de las instalaciones.
-        </li>
-      </ol>
-
-      <p style="margin: 0 0 0.8mm;">
-        <b>Videovigilancia y datos sensibles:</b> Declaro que tengo conocimiento de que la Institución hace videovigilancia y que esta información es considerada por la regulación colombiana de protección de datos como datos de naturaleza sensible. La información recolectada a través del CCTV se utilizará para fines de seguridad de las personas, los bienes e instalaciones de la Institución. Esta información puede ser empleada como prueba en cualquier tipo de proceso ante cualquier tipo de autoridad y organización. Así mismo, declaro que la autorización para el tratamiento de los datos sensibles arriba mencionados es facultativa y puede ser revocada en cualquier momento, salvo si existe una obligación legal que le permita a la Institución acceder y conservar la información.
-      </p>
-
-      <p style="margin: 0 0 0.8mm;">
-        <b>Derechos que asisten al titular:</b> Adicionalmente, manifiesto que conozco que me asisten los siguientes derechos: <b>1.</b> Conocer, actualizar y rectificar los datos personales cuando identifique que hay datos parciales, inexactos, incompletos, fraccionados o que induzcan a error. <b>2.</b> Solicitar prueba de la autorización otorgada a la Institución. <b>3.</b> Ser informado del uso que le es dado a sus datos personales. <b>4.</b> Presentar ante la Superintendencia de Industria y Comercio quejas por infracción a las normas de protección de datos establecidas en la Ley 1581 de 2012 y normas complementarias. <b>5.</b> Revocar la autorización otorgada y/o solicitar la supresión de sus datos personales cuando no se respeten los principios, derechos y garantías constitucionales y legales. <b>6.</b> Acceder en forma gratuita a sus datos personales.
-      </p>
-
-      <p style="margin: 0;">
-        <b>Política institucional y canales:</b> Declaro que tengo conocimiento de que la Institución ha implementado la Política de Tratamiento de Datos Personales, y que dicha Política está disponible en sus instalaciones y canales institucionales para su consulta. Manifiesto que leí y entendí las finalidades del Tratamiento y la Política de Privacidad de la Institución, y he sido informado sobre mis derechos a acceder, conocer, actualizar, rectificar y suprimir mis datos personales, los cuales podré ejercer a través de los canales institucionales de contacto y secretaría.
-      </p>
-    </div>
-
-    <!-- TABLA DE AUTORIZACIÓN INTERACTIVA -->
+  <!-- SECCIÓN 6: HOSPITALARIOS -->
+  <div class="barra barra--verde">HOSPITALARIOS</div>
+  <div class="tabla-contenedor">
     <table class="tabla-sec">
       <tr>
+        <td colspan="4">
+          <label for="hospitalizado">¿HA ESTADO HOSPITALIZADO?</label>
+          <select id="hospitalizado" name="hospitalizado" class="in select-as-help" title="¿El niño(a) ha estado hospitalizado?">
+            <option value="">Seleccione...</option>
+            <option value="si">Sí</option>
+            <option value="no">No</option>
+          </select>
+        </td>
         <td colspan="8">
-          <label>DECLARACIÓN DE ACEPTACIÓN Y CONSENTIMIENTO EXPRESO</label>
-          <div style="font-size: 7.8px; font-weight: 500; color: #333; line-height: 1.2; padding: 1px 0;">
-            Manifiesto que leí y entendí las finalidades del Tratamiento y la Política de Protección de Datos de My Little Artists School. Autorizo de manera previa, expresa e informada el tratamiento de mis datos y los del menor que represento.
+          <label for="hospital_causa">CAUSA O MOTIVO</label>
+          <input type="text" id="hospital_causa" name="hospital_causa" class="in" placeholder="Diagnóstico o motivo de hospitalización" title="Motivo de la hospitalización">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <label for="hospital_fecha">¿EN QUÉ FECHA?</label>
+          <div class="campo-fecha">
+            <input type="text" id="hospital_fecha" name="hospital_fecha" class="in in-fecha" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off" title="Fecha de la hospitalización">
+            <button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button>
           </div>
         </td>
-        <td colspan="4">
-          <label for="acepta_tratamiento_datos">¿ACEPTA TRATAMIENTO DE DATOS?</label>
-          <select id="acepta_tratamiento_datos" name="acepta_tratamiento_datos" class="in select-as-help" title="Aceptación de tratamiento de datos personales (Ley 1581 de 2012)" required>
-            <option value="">Seleccione...</option>
-            <option value="si">Sí, autorizo expresamente</option>
-            <option value="no">No autorizo</option>
-          </select>
+        <td colspan="8">
+          <label for="hospital_clinica">CLÍNICA / HOSPITAL</label>
+          <input type="text" id="hospital_clinica" name="hospital_clinica" class="in" placeholder="Nombre de la institución o centro asistencial" title="Nombre del hospital o clínica">
         </td>
       </tr>
     </table>
   </div>
-  
+
+  <!-- SECCIÓN 7: MEDICAMENTOS Y ALERGIAS -->
+  <div class="barra barra--verde">MEDICAMENTOS Y ALERGIAS</div>
+  <div class="tabla-contenedor">
+    <table class="tabla-sec">
+      <tr>
+        <td colspan="6">
+          <label for="med_actual">ACTUALMENTE SE LE SUMINISTRA</label>
+          <input type="text" id="med_actual" name="med_actual" class="in" placeholder="Medicamento, dosis y horarios (o 'Ninguno')" title="Medicamentos administrados en la actualidad">
+        </td>
+        <td colspan="6">
+          <label for="enfermedad_tratamiento">ENFERMEDAD EN TRATAMIENTO</label>
+          <input type="text" id="enfermedad_tratamiento" name="enfermedad_tratamiento" class="in" placeholder="Diagnóstico o condición médica en tratamiento (o 'Ninguna')" title="Enfermedades o diagnósticos actuales">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <label for="alergia_medicamento">ALÉRGICO A CUÁL MEDICAMENTO</label>
+          <input type="text" id="alergia_medicamento" name="alergia_medicamento" class="in" placeholder="Medicamentos que le causan alergia (o 'Ninguno')" title="Alergias farmacológicas conocidas">
+        </td>
+        <td colspan="6">
+          <label for="alimentos_no">ALIMENTOS QUE NO PUEDE CONSUMIR</label>
+          <input type="text" id="alimentos_no" name="alimentos_no" class="in" placeholder="Alimentos restringidos o intolerancias (o 'Ninguno')" title="Intolerancias alimentarias o alimentos prohibidos">
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- SECCIÓN 8: CONTROL DE CRECIMIENTO Y DESARROLLO -->
+  <div class="barra barra--verde">CONTROL DE CRECIMIENTO Y DESARROLLO</div>
+  <div class="tabla-contenedor">
+    <table class="growth">
+      <thead>
+        <tr>
+          <th style="width:36mm;text-align:left;padding-left:3mm">Control</th>
+          <th>Fecha de último control</th>
+          <th>Peso actual</th>
+          <th>Talla actual</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th style="text-align:left;padding-left:3mm">Primer semestre</th>
+          <td><div class="campo-fecha"><input type="text" name="crecimiento1_fecha" class="in-fecha in" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off"><button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button></div></td>
+          <td><input type="text" name="crecimiento1_peso" class="in" placeholder="kg (ej. 14.2)"></td>
+          <td><input type="text" name="crecimiento1_talla" class="in" placeholder="cm (ej. 92)"></td>
+        </tr>
+        <tr>
+          <th style="text-align:left;padding-left:3mm">Segundo semestre</th>
+          <td><div class="campo-fecha"><input type="text" name="crecimiento2_fecha" class="in-fecha in" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off"><button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button></div></td>
+          <td><input type="text" name="crecimiento2_peso" class="in" placeholder="kg (ej. 15.6)"></td>
+          <td><input type="text" name="crecimiento2_talla" class="in" placeholder="cm (ej. 98)"></td>
+        </tr>
+        <tr>
+          <th style="text-align:left;padding-left:3mm">Tercer semestre</th>
+          <td><div class="campo-fecha"><input type="text" name="crecimiento3_fecha" class="in-fecha in" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off"><button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button></div></td>
+          <td><input type="text" name="crecimiento3_peso" class="in" placeholder="kg (ej. 17.0)"></td>
+          <td><input type="text" name="crecimiento3_talla" class="in" placeholder="cm (ej. 103)"></td>
+        </tr>
+        <tr>
+          <th style="text-align:left;padding-left:3mm">Cuarto semestre</th>
+          <td><div class="campo-fecha"><input type="text" name="crecimiento4_fecha" class="in-fecha in" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off"><button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button></div></td>
+          <td><input type="text" name="crecimiento4_peso" class="in" placeholder="kg (ej. 18.5)"></td>
+          <td><input type="text" name="crecimiento4_talla" class="in" placeholder="cm (ej. 108)"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECCIÓN 9: SEGUIMIENTO ODONTOLÓGICO -->
+  <div class="barra barra--verde">SEGUIMIENTO ODONTOLÓGICO</div>
+  <div class="tabla-contenedor">
+    <table class="tabla-sec">
+      <tr>
+        <td colspan="4">
+          <label for="edad_lavado">¿DESDE QUÉ EDAD SE LAVA LOS DIENTES?</label>
+          <input type="text" id="edad_lavado" name="edad_lavado" class="in" placeholder="Ej. 2 años" title="Edad de inicio del hábito del cepillado">
+        </td>
+        <td colspan="4">
+          <label for="frecuencia_cepillado">FRECUENCIA DE CEPILLADO</label>
+          <select id="frecuencia_cepillado" name="frecuencia_cepillado" class="in select-as-help" title="Frecuencia diaria de higiene oral">
+            <option value="">Seleccione...</option>
+            <option value="1">1 vez al día</option>
+            <option value="2">2 veces al día</option>
+            <option value="3">3 veces al día</option>
+            <option value="mas">&gt; 3 veces al día</option>
+          </select>
+        </td>
+        <td colspan="4">
+          <label for="no_le_gusta">¿LE AGRADA EL CEPILLADO?</label>
+          <select id="no_le_gusta" name="no_le_gusta" class="in select-as-help" title="¿Tiene agrado por la higiene oral?">
+            <option value="">Seleccione...</option>
+            <option value="si">Sí le gusta</option>
+            <option value="no">No le gusta</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <label for="caries">¿TIENE CARIES?</label>
+          <select id="caries" name="caries" class="in select-as-help" title="¿Presenta caries actualmente?">
+            <option value="">Seleccione...</option>
+            <option value="si">Sí</option>
+            <option value="no">No</option>
+          </select>
+        </td>
+        <td colspan="4">
+          <label for="odonto_control">¿ASISTE A CONTROL ODONTOLÓGICO?</label>
+          <select id="odonto_control" name="odonto_control" class="in select-as-help" title="¿Acude a controles periódicos?">
+            <option value="">Seleccione...</option>
+            <option value="si">Sí</option>
+            <option value="no">No</option>
+          </select>
+        </td>
+        <td colspan="4">
+          <label for="ultima_visita_odonto">ÚLTIMA VISITA ODONTOLÓGICA</label>
+          <div class="campo-fecha">
+            <input type="text" id="ultima_visita_odonto" name="ultima_visita_odonto" class="in in-fecha" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off" title="Fecha de última visita">
+            <button type="button" class="btn-cal no-print" tabindex="-1" title="Calendario">📅</button>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- SECCIÓN 10: CARNÉ DE VACUNAS -->
+  <div class="barra barra--verde">CARNÉ DE VACUNAS</div>
+  <div class="tabla-contenedor">
+    <table class="tabla-sec">
+      <tr>
+        <td colspan="12">
+          <label for="vacunas_esquema">¿POSEE EL CARNÉ DE VACUNAS CON ESQUEMA COMPLETO SEGÚN SU EDAD?</label>
+          <select id="vacunas_esquema" name="vacunas_esquema" class="in select-as-help" title="Esquema completo según PAI">
+            <option value="">Seleccione...</option>
+            <option value="si">Sí cuenta con esquema completo</option>
+            <option value="no">No cuenta con esquema completo</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="12" style="height: auto; padding: 3px 5px;">
+          <label for="conducta_vacunas">CONDUCTA A SEGUIR / OBSERVACIONES MÉDICAS</label>
+          <textarea id="conducta_vacunas" name="conducta_vacunas" class="in" style="height: 18mm; width: 100%; border: none; resize: none; background: transparent; font-family: inherit; font-size: 9px;" placeholder="Escriba aquí la conducta a seguir si el esquema no está completo..."></textarea>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+</div>
 <footer class="footer">PÁGINA 2 DE 3 <span class="stars">★ ★ ★</span></footer>
 </section>
-
 
 <!-- ===================== PÁGINA 3 ===================== -->
 <section class="page" id="page3">
@@ -2645,11 +2607,16 @@ function fillDemoData() {
   const form = document.getElementById('admissionForm');
   if (!form) return;
 
-  // Fecha de ingreso (mes y año) y NUIP
-  const fechaIngresoMes = document.getElementById('fecha_ingreso_mes');
-  if (fechaIngresoMes) fechaIngresoMes.value = 'Febrero';
-  const fechaIngresoAnio = document.getElementById('fecha_ingreso_anio');
-  if (fechaIngresoAnio) fechaIngresoAnio.value = '2026';
+  // Fechas en formato DD/MM/AAAA y matrícula
+  const ahora = new Date();
+  const hoyDDMM = `${String(ahora.getDate()).padStart(2, '0')}/${String(ahora.getMonth() + 1).padStart(2, '0')}/${ahora.getFullYear()}`;
+  const fechaIngreso = document.getElementById('fecha_ingreso');
+  if (fechaIngreso) {
+    fechaIngreso.value = hoyDDMM;
+    validarFecha(fechaIngreso);
+  }
+  const mat = document.getElementById('matricula');
+  if (mat) mat.value = '2026-084';
   const nuip = document.getElementById('nuip');
   if (nuip) nuip.value = '1.024.895.412';
 
@@ -2690,23 +2657,7 @@ function fillDemoData() {
     'crecimiento3_fecha': '10/05/2025', 'crecimiento3_peso': '17.0', 'crecimiento3_talla': '103',
     'crecimiento4_fecha': '20/11/2025', 'crecimiento4_peso': '18.5', 'crecimiento4_talla': '108',
     'edad_lavado': '2 años', 'ultima_visita_odonto': '15/10/2025',
-    'conducta_vacunas': 'Esquema de vacunación al día según el PAI.',
-    'razon_eleccion': 'Por el enfoque pedagógico y artístico',
-    'razon_eleccion_otro': 'Recomendado por familiares y amigos cercanos.',
-    'expectativas': 'Desarrollo socioemocional, juego y convivencia sana',
-    'expectativas_otro': 'Potenciar su creatividad, empatía y autonomía.',
-    'manejo_emocional': 'Acompañamiento y validación: contención, calma y diálogo posterior',
-    'manejo_emocional_otro': 'Diálogo reflexivo con validación de emociones.',
-    'pantallas': 'Uso controlado: menos de 30–60 minutos al día supervisado',
-    'pantallas_otro': 'Fines de semana, máximo 40 minutos supervisados.',
-    'habitos_autonomia': 'Come solo(a) y recoge sus juguetes con instrucciones sencillas',
-    'cuidador_principal': 'Abuelos maternos en ocasiones especiales',
-    'valoracion_externa': 'Totalmente dispuestos: buscaríamos apoyo externo de inmediato',
-    'valoracion_externa_otro': 'Total apertura a trabajar en equipo con el jardín.',
-    'responsable_costos': 'Ambos padres por igual',
-    'responsable_costos_parentesco': 'Padres de familia (ambos por igual)',
-    'paz_salvo': 'Sí cuenta con Paz y Salvo (soporte adjunto al expediente)',
-    'paz_salvo_obs': 'Paz y salvo vigente adjunto al expediente.'
+    'conducta_vacunas': 'Esquema de vacunación al día según el PAI.'
   };
 
   Object.entries(fieldsVal).forEach(([idOrName, val]) => {
@@ -2722,9 +2673,16 @@ function fillDemoData() {
   // Selectores y opciones de ejemplo
   const demoSelects = {
     'medicina_prepagada': 'si',
-    'autonomia_esfinteres': 'independiente',
-    'autoriza_antecedentes': 'si',
-    'acepta_tratamiento_datos': 'si',
+    'parto': 'normal',
+    'gestacion': 'termino',
+    'lactancia': 'si',
+    'tetero': 'si',
+    'hospitalizado': 'no',
+    'frecuencia_cepillado': '3',
+    'no_le_gusta': 'si',
+    'caries': 'no',
+    'odonto_control': 'si',
+    'vacunas_esquema': 'si',
     'doc_curva': 'si', 'doc_crecimiento': 'si', 'doc_registro': 'si',
     'doc_tarjeta': 'no', 'doc_vacunas': 'si', 'doc_audio': 'si',
     'doc_odont': 'si', 'doc_medico': 'si', 'doc_eps': 'si',
@@ -2740,18 +2698,6 @@ function fillDemoData() {
   updateProgress();
 }
 
-function toggleInputOtro(selectEl, inputId) {
-  const inputEl = document.getElementById(inputId);
-  if (!inputEl) return;
-  if (selectEl.value === 'otro' || selectEl.value === 'tercero') {
-    inputEl.focus();
-    inputEl.classList.add('resaltar-otro');
-  } else {
-    inputEl.classList.remove('resaltar-otro');
-  }
-  if (typeof updateProgress === 'function') updateProgress();
-}
-
 // ==================== PERSISTENCIA (LocalStorage) ====================
 function saveDraft() {
   const form = document.getElementById('admissionForm');
@@ -2760,12 +2706,7 @@ function saveDraft() {
   Array.from(form.elements).forEach(el => {
     if (!el.name) return;
     if (el.type === 'checkbox') {
-      if (form.querySelectorAll(`input[type="checkbox"][name="${el.name}"]`).length > 1) {
-        data[el.name] ||= [];
-        if (el.checked) data[el.name].push(el.value);
-      } else {
-        data[el.name] = el.checked;
-      }
+      data[el.name] = el.checked;
     } else if (el.type === 'radio') {
       if (el.checked) data[el.name] = el.value;
     } else if (el.type !== 'file') {
@@ -2820,11 +2761,7 @@ function loadDraft() {
       const els = form.elements[key] || (key === 'sexo' ? form.elements['genero'] : null);
       if (!els) return;
 
-      if (Array.isArray(val)) {
-        form.querySelectorAll(`input[type="checkbox"][name="${key}"]`).forEach(input => {
-          input.checked = val.includes(input.value);
-        });
-      } else if (els instanceof RadioNodeList || els.length) {
+      if (els instanceof RadioNodeList || els.length) {
         const r = form.querySelector(`input[name="${key}"][value="${val}"]`);
         if (r) r.checked = true;
       } else if (els.type === 'checkbox') {
@@ -2854,19 +2791,6 @@ function resetFormWithConfirm() {
     setTimeout(updateAllSelectHelp, 10);
   }
 }
-
-// Mantiene el límite indicado en las preguntas de selección múltiple.
-document.querySelectorAll('input[data-max-group]').forEach(input => {
-  input.addEventListener('change', () => {
-    const group = input.dataset.maxGroup;
-    const max = Number(input.dataset.max || 0);
-    const selected = Array.from(document.querySelectorAll(`input[data-max-group="${group}"]:checked`));
-    if (max && selected.length > max) {
-      input.checked = false;
-      alert(`Puede seleccionar máximo ${max} opciones en esta pregunta.`);
-    }
-  });
-});
 
 // ==================== INICIALIZACIÓN ====================
 

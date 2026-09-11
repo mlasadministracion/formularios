@@ -112,37 +112,11 @@
     font-weight: 700;
   }
 
-  /* Cabecera compacta para Página 2 */
-  .cabecera-p2 {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1.5px solid var(--azul);
-    padding-bottom: 3px;
-    margin-bottom: 4px;
-  }
-  .logo-small img { height: 24px; width: auto; display: block; }
-  .titulo-p2 { font-size: 11px; font-weight: 800; color: var(--azul); letter-spacing: 0.5px; }
-  .titulo-p2 span { font-size: 9.5px; font-weight: 700; color: var(--naranja); margin-left: 6px; }
-  .folio-p2 { font-size: 9.5px; color: var(--azul); font-weight: 700; }
-
-  .footer {
-    text-align: center;
-    color: var(--azul);
-    font-size: 8.5px;
-    font-weight: 800;
-    letter-spacing: 1.5px;
-    padding-top: 5px;
-    border-top: 1px solid var(--borde);
-    margin-top: auto;
-  }
-  .footer .stars { color: var(--naranja); margin-left: 6px; }
-
   /* ==================== CONTENEDOR DEL FORMULARIO ==================== */
   .hoja {
     width: 215.9mm;
     max-width: 820px;
-    margin: 18px auto 30px;
+    margin: 18px auto;
     background: var(--blanco);
     padding: 8mm 10mm;
     border: 1px solid #ccd6e0;
@@ -742,15 +716,10 @@
       max-width: 100% !important;
       padding: 0 !important;
       zoom: 1 !important;
-      page-break-after: always !important;
-      break-after: page !important;
-      page-break-inside: avoid !important;
-      break-inside: avoid !important;
-      height: auto !important;
-    }
-    #page2, .hoja:last-of-type {
       page-break-after: auto !important;
       break-after: auto !important;
+      page-break-inside: auto !important;
+      break-inside: auto !important;
     }
 
     .barra { break-after: avoid-page; page-break-after: avoid; }
@@ -874,8 +843,6 @@
 
 <!-- BARRA DE ACCIONES SUPERIOR -->
 <header class="toolbar no-print">
-  <button type="button" class="btn btn-secondary" onclick="document.getElementById('page1').scrollIntoView({behavior:'smooth'})" title="Ir a Página 1">📄 Hoja 1</button>
-  <button type="button" class="btn btn-secondary" onclick="document.getElementById('page2').scrollIntoView({behavior:'smooth'})" title="Ir a Página 2">📄 Hoja 2</button>
   <button type="button" class="btn btn-primary" onclick="imprimirConValidacion()">
     🖨️ Imprimir / Guardar como PDF
   </button>
@@ -905,7 +872,7 @@
   </div>
 </header>
 
-<div class="hoja" id="page1">
+<div class="hoja">
   <form id="form-matricula" method="POST" action="" onsubmit="return false">
 
   <!-- CABECERA -->
@@ -1178,21 +1145,6 @@
     <td colspan="8"><label for="hospital_clinica">CLÍNICA / HOSPITAL</label><input type="text" id="hospital_clinica" name="hospital_clinica" class="in" placeholder="Nombre de la institución o centro asistencial" title="Nombre del hospital o clínica"></td>
   </tr></table></div>
 
-  <footer class="footer">PÁGINA 1 DE 2 <span class="stars">★ ★ ★</span></footer>
-</div>
-
-<!-- ===================== PÁGINA 2: INFORMACIÓN MÉDICA Y COMPROMISO ===================== -->
-<div class="hoja" id="page2">
-  <!-- Cabecera compacta Página 2 -->
-  <div class="cabecera-p2">
-    <div class="logo-small"><img src="logo.png" alt="My Little Artists School"></div>
-    <div class="titulo-p2">HOJA DE MATRÍCULA 2026 <span>• INFORMACIÓN MÉDICA Y COMPROMISO</span></div>
-    <div class="folio-p2">
-      <span>Folio: <strong id="folio_p2_display">---</strong></span> &nbsp;|&nbsp; 
-      <span>Matrícula: <strong id="mat_p2_display">---</strong></span>
-    </div>
-  </div>
-
   <div class="barra barra--verde">MEDICAMENTOS Y ALERGIAS</div>
   <div class="tabla-contenedor"><table class="tabla-sec"><tr>
     <td colspan="6"><label for="med_actual">ACTUALMENTE SE LE SUMINISTRA</label><input type="text" id="med_actual" name="med_actual" class="in" placeholder="Medicamento, dosis y horarios (o 'Ninguno')" title="Medicamentos administrados en la actualidad"></td>
@@ -1312,9 +1264,8 @@
       <option value="Quinto"></option>
     </datalist>
 
-  <footer class="footer">PÁGINA 2 DE 2 <span class="stars">★ ★ ★</span></footer>
+  </form>
 </div>
-</form>
 
 <script>
 (function() {
@@ -1736,21 +1687,7 @@
   });
   if (selectGenero) selectGenero.addEventListener('change', actualizarGeneroPrint);
 
-  function sincronizarFolioP2() {
-    const fol = document.getElementById('folio');
-    const mat = document.getElementById('matricula_numero');
-    const folP2 = document.getElementById('folio_p2_display');
-    const matP2 = document.getElementById('mat_p2_display');
-    if (fol && folP2) folP2.textContent = fol.value.trim() || '---';
-    if (mat && matP2) matP2.textContent = mat.value.trim() || '---';
-  }
-  const folInput = document.getElementById('folio');
-  const matInput = document.getElementById('matricula_numero');
-  if (folInput) folInput.addEventListener('input', sincronizarFolioP2);
-  if (matInput) matInput.addEventListener('input', sincronizarFolioP2);
-
   window.addEventListener('beforeprint', () => {
-    sincronizarFolioP2();
     actualizarDocTipoPrint();
     actualizarGeneroPrint();
     const nac = document.getElementById('estudiante_fecha_nacimiento'); if (nac) calcularEdadEstudiante(nac.value);

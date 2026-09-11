@@ -938,28 +938,34 @@
     background: transparent;
   }
 
-  /* Perfil familiar y corresponsabilidad: tabla estándar alineada con el resto del formulario */
-  .subhead-sec {
-    background: #f0f4fa !important;
-    color: var(--azul) !important;
-    font-weight: 800 !important;
-    font-size: 9px !important;
-    letter-spacing: 0.5px !important;
-    padding: 2.5px 6px !important;
-    height: 20px !important;
-    vertical-align: middle !important;
-    border: 1px solid var(--borde) !important;
-    text-align: left !important;
+  /* Perfil familiar: tablas reales con la misma base de Contactos de emergencia */
+  .profile-table { margin-bottom: 2px; }
+  .profile-table th {
+    padding: 2px 5px;
+    background: #f1f5fa;
+    color: var(--azul);
+    font-size: 9px;
+    font-weight: 800;
+    line-height: 1.1;
+    text-align: left;
+    border: 1px solid var(--borde);
   }
-  .resaltar-otro {
-    background-color: var(--azul-soft) !important;
-    border-bottom: 1.5px solid var(--azul) !important;
-  }
+  .profile-table td { height: 35px; }
+  .profile-label .hint { color: var(--texto-muted); font-size: 7.5px; font-weight: 600; text-transform: none; }
+  .profile-options { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 1px solid var(--borde-light); }
+  .profile-options.one-column { grid-template-columns: 1fr; }
+  .profile-option { display: flex; gap: 3.5px; align-items: flex-start; min-height: 17px; padding: 2px 5px; color: #273746; font-size: 8px; font-weight: 600; line-height: 1.2; cursor: pointer; }
+  .profile-options:not(.one-column) .profile-option:nth-child(even) { border-left: 1px solid var(--borde); }
+  .profile-options:not(.one-column) .profile-option:nth-child(n + 3) { border-top: 1px solid var(--borde-light); }
+  .profile-options.one-column .profile-option + .profile-option { border-top: 1px solid var(--borde-light); }
+  .profile-option input { margin: 1px 0 0; flex: 0 0 auto; }
+  .profile-option input[type="text"] { width: 48mm; border: 0; border-bottom: 1px solid #444; font: inherit; outline: none; }
   @media print {
     #page3 .page-inner { justify-content: flex-start; }
     #page3 .barra { margin-top: .8mm !important; padding: 2.5px 5px !important; font-size: 10.5px !important; }
-    #page2 .subhead-sec { height: 18px !important; font-size: 8.5px !important; padding: 1.5px 4px !important; }
-    #page2 table.tabla-sec td { height: 28px !important; padding: 1.5px 4px !important; }
+    #page2 .profile-table td { padding: 1.5px 4px; }
+    #page2 .profile-label { margin-bottom: 1px; font-size: 7.8pt; }
+    #page2 .profile-option, #page3 .profile-option { font-size: 7.1pt; }
   }
 
   /* ==================== PÁGINA 3 - PROCEDIMIENTO Y REQUISITOS ==================== */
@@ -1386,9 +1392,6 @@
 
 <!-- BARRA DE ACCIONES SUPERIOR -->
 <header class="toolbar no-print">
-  <button type="button" class="btn btn-secondary" onclick="document.getElementById('page1').scrollIntoView({behavior:'smooth'})" title="Ir a Página 1">📄 Hoja 1</button>
-  <button type="button" class="btn btn-secondary" onclick="document.getElementById('page2').scrollIntoView({behavior:'smooth'})" title="Ir a Página 2">📄 Hoja 2</button>
-  <button type="button" class="btn btn-secondary" onclick="document.getElementById('page3').scrollIntoView({behavior:'smooth'})" title="Ir a Página 3">📄 Hoja 3</button>
   <button type="button" class="btn btn-primary" onclick="imprimirConValidacion()">
     🖨️ Imprimir / Guardar como PDF
   </button>
@@ -1433,37 +1436,20 @@
     </div>
     <div class="cabecera-derecha">
       <div class="folio">
-        <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 4px;">
-          <label for="fecha_ingreso_mes" style="font-size: 8.5px; font-weight: 800; color: var(--azul);">FECHA INGRESO:</label>
-          <div style="display: flex; gap: 4px; width: 120px;">
-            <select id="fecha_ingreso_mes" name="fecha_ingreso_mes" class="in-folio select-as-help" style="flex: 1.25; font-size: 8.5px; font-weight: 700; height: 18px; padding: 0 1px;" title="Mes de ingreso">
-              <option value="">Mes...</option>
-              <option value="Enero">Enero</option>
-              <option value="Febrero" selected>Febrero</option>
-              <option value="Marzo">Marzo</option>
-              <option value="Abril">Abril</option>
-              <option value="Mayo">Mayo</option>
-              <option value="Junio">Junio</option>
-              <option value="Julio">Julio</option>
-              <option value="Agosto">Agosto</option>
-              <option value="Septiembre">Septiembre</option>
-              <option value="Octubre">Octubre</option>
-              <option value="Noviembre">Noviembre</option>
-              <option value="Diciembre">Diciembre</option>
-            </select>
-            <select id="fecha_ingreso_anio" name="fecha_ingreso_anio" class="in-folio select-as-help" style="flex: 1; font-size: 8.5px; font-weight: 700; height: 18px; padding: 0 1px;" title="Año de ingreso">
-              <option value="2025">2025</option>
-              <option value="2026" selected>2026</option>
-              <option value="2027">2027</option>
-              <option value="2028">2028</option>
-              <option value="2029">2029</option>
-              <option value="2030">2030</option>
-            </select>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 2px;">
+          <label for="fecha_ingreso" style="font-size: 8.5px; font-weight: 800; color: var(--azul);">FECHA INGRESO:</label>
+          <div class="campo-fecha" style="width: 110px;">
+            <input type="text" id="fecha_ingreso" name="fecha_ingreso" class="in-folio in-fecha" style="width: 100%;" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off" title="Fecha de radicación o ingreso">
+            <button type="button" class="btn-cal no-print" tabindex="-1" title="Seleccionar fecha en calendario">📅</button>
           </div>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 2px;">
+          <label for="matricula" style="font-size: 8.5px; font-weight: 800; color: var(--azul);">MATRÍCULA Nº:</label>
+          <input type="text" id="matricula" name="matricula" class="in-folio" style="width: 110px;" placeholder="Ej. 2026-001" title="Número de matrícula">
         </div>
         <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px;">
           <label for="nuip" style="font-size: 8.5px; font-weight: 800; color: var(--azul);">NUIP:</label>
-          <input type="text" id="nuip" name="nuip" class="in-folio" style="width: 120px;" placeholder="Número único" title="Número único de identificación personal">
+          <input type="text" id="nuip" name="nuip" class="in-folio" style="width: 110px;" placeholder="Número único" title="Número único de identificación personal">
         </div>
       </div>
 
@@ -1776,246 +1762,36 @@
     </table>
   </div>
 
-  <!-- SECCIÓN: PERFIL FAMILIAR Y CORRESPONSABILIDAD -->
+  <!-- Las secciones de salud se trasladaron a la Hoja de Matrícula. -->
   <div class="barra barra--verde" style="margin-top: 3mm;">PERFIL FAMILIAR Y CORRESPONSABILIDAD</div>
-  <div class="tabla-contenedor">
-    <table class="tabla-sec">
-      <!-- SUBSECCIÓN A -->
-      <tr class="fila-subhead">
-        <td colspan="12" class="subhead-sec">A. ALINEACIÓN PEDAGÓGICA Y CRIANZA</td>
-      </tr>
-      <tr>
-        <td colspan="7">
-          <label for="razon_eleccion">¿CUÁL ES LA PRINCIPAL RAZÓN POR LA QUE ELIGEN EL COLEGIO?</label>
-          <input type="text" id="razon_eleccion" name="razon_eleccion" list="lista_razon_eleccion" class="in" placeholder="Seleccione una opción o escriba aquí..." autocomplete="off" title="Razón principal de elección del colegio">
-          <datalist id="lista_razon_eleccion">
-            <option value="Por el enfoque pedagógico y artístico">Por el enfoque pedagógico y artístico</option>
-            <option value="Por recomendación de otras familias del colegio">Por recomendación de otras familias del colegio</option>
-            <option value="Por la cercanía a nuestro hogar o lugar de trabajo">Por la cercanía a nuestro hogar o lugar de trabajo</option>
-            <option value="Por la infraestructura, seguridad y horarios">Por la infraestructura, seguridad y horarios</option>
-            <option value="Por los valores, formación integral y calidez humana">Por los valores, formación integral y calidez humana</option>
-            <option value="Por el proyecto formativo y metodología">Por el proyecto formativo y metodología</option>
-          </datalist>
-        </td>
-        <td colspan="5">
-          <label for="razon_eleccion_otro">SEGUNDA RAZÓN O ESPECIFICACIÓN</label>
-          <input type="text" id="razon_eleccion_otro" name="razon_eleccion_otro" list="lista_razon_eleccion" class="in" placeholder="Seleccione una opción o escriba aquí..." autocomplete="off" title="Segunda razón o especificación de elección">
-        </td>
-      </tr>
-      <tr>
-        <td colspan="7">
-          <label for="expectativas">¿QUÉ ESPERAN PRINCIPALMENTE QUE SU HIJO(A) LOGRE EN EL JARDÍN?</label>
-          <input type="text" id="expectativas" name="expectativas" list="lista_expectativas" class="in" placeholder="Seleccione una opción o escriba aquí..." autocomplete="off" title="Expectativa principal en el jardín">
-          <datalist id="lista_expectativas">
-            <option value="Desarrollo socioemocional, juego y convivencia sana">Desarrollo socioemocional, juego y convivencia sana</option>
-            <option value="Autonomía, hábitos e independencia en sus rutinas">Autonomía, hábitos e independencia en sus rutinas</option>
-            <option value="Preparación académica temprana (bases lectoescritura/números)">Preparación académica temprana (bases lectoescritura/números)</option>
-            <option value="Desarrollo motor, expresión artística y musical">Desarrollo motor, expresión artística y musical</option>
-            <option value="Afianzar valores, socialización y comunicación asertiva">Afianzar valores, socialización y comunicación asertiva</option>
-          </datalist>
-        </td>
-        <td colspan="5">
-          <label for="expectativas_otro">OTRA EXPECTATIVA / DETALLES</label>
-          <input type="text" id="expectativas_otro" name="expectativas_otro" list="lista_expectativas" class="in" placeholder="Seleccione una opción o escriba aquí..." autocomplete="off" title="Otra expectativa o detalle adicional">
-        </td>
-      </tr>
-      <tr>
-        <td colspan="7">
-          <label for="manejo_emocional">¿CÓMO MANEJAN LOS DESBORDES EMOCIONALES (PATALETAS) EN CASA?</label>
-          <input type="text" id="manejo_emocional" name="manejo_emocional" list="lista_manejo_emocional" class="in" placeholder="Seleccione una opción o escriba aquí..." autocomplete="off" title="Estrategia ante desbordes emocionales">
-          <datalist id="lista_manejo_emocional">
-            <option value="Acompañamiento y validación: contención, calma y diálogo posterior">Acompañamiento y validación: contención, calma y diálogo posterior</option>
-            <option value="Corrección firme y voz de mando: límites inmediatos y directrices claras">Corrección firme y voz de mando: límites inmediatos y directrices claras</option>
-            <option value="Distracción o compensación: cambio de actividad, juego o estímulo positivo">Distracción o compensación: cambio de actividad, juego o estímulo positivo</option>
-            <option value="Espacio de autorregulación: pausa / tiempo fuera reflexivo en lugar seguro">Espacio de autorregulación: pausa / tiempo fuera reflexivo en lugar seguro</option>
-            <option value="Diálogo reflexivo, acuerdos mutuos y escucha activa">Diálogo reflexivo, acuerdos mutuos y escucha activa</option>
-          </datalist>
-        </td>
-        <td colspan="5">
-          <label for="manejo_emocional_otro">OTRO MÉTODO / OBSERVACIÓN</label>
-          <input type="text" id="manejo_emocional_otro" name="manejo_emocional_otro" list="lista_manejo_emocional" class="in" placeholder="Seleccione una opción o escriba aquí..." autocomplete="off" title="Otro método u observación sobre el manejo emocional">
-        </td>
-      </tr>
-      <tr>
-        <td colspan="6">
-          <label for="pantallas">USO DE PANTALLAS (CELULAR, TABLET, TV)</label>
-          <input type="text" id="pantallas" name="pantallas" list="lista_pantallas" class="in" placeholder="Seleccione una opción o escriba aquí..." autocomplete="off" title="Política familiar sobre pantallas">
-          <datalist id="lista_pantallas">
-            <option value="Cero pantallas (sin exposición a pantallas en casa)">Cero pantallas (sin exposición a pantallas en casa)</option>
-            <option value="Uso controlado: menos de 30–60 minutos al día supervisado">Uso controlado: menos de 30–60 minutos al día supervisado</option>
-            <option value="Fines de semana exclusivamente, bajo supervisión">Fines de semana exclusivamente, bajo supervisión</option>
-            <option value="Uso educativo ocasional acompañado por un adulto">Uso educativo ocasional acompañado por un adulto</option>
-            <option value="Uso libre: acceso cuando lo solicita o para entretenimiento">Uso libre: acceso cuando lo solicita o para entretenimiento</option>
-          </datalist>
-        </td>
-        <td colspan="6">
-          <label for="pantallas_otro">DETALLE / HORARIO DE PANTALLAS</label>
-          <input type="text" id="pantallas_otro" name="pantallas_otro" list="lista_pantallas" class="in" placeholder="Seleccione una opción o escriba aquí..." autocomplete="off" title="Detalle u horario de uso de pantallas">
-        </td>
-      </tr>
-      <tr>
-        <td colspan="6">
-          <label for="autonomia_esfinteres">ETAPA DE CONTROL DE ESFÍNTERES</label>
-          <select id="autonomia_esfinteres" name="autonomia_esfinteres" class="in select-as-help" title="Etapa de control de esfínteres">
-            <option value="">Seleccione...</option>
-            <option value="independiente">Avisa y va al baño de manera independiente</option>
-            <option value="proceso">Está en proceso de dejar el pañal</option>
-            <option value="no_iniciado">No ha iniciado el proceso</option>
-          </select>
-        </td>
-        <td colspan="6">
-          <label for="habitos_autonomia">HÁBITOS DE AUTONOMÍA EN CASA</label>
-          <input type="text" id="habitos_autonomia" name="habitos_autonomia" list="lista_habitos_autonomia" class="in" placeholder="Seleccione una opción o escriba aquí..." autocomplete="off" title="Hábitos de autonomía en casa">
-          <datalist id="lista_habitos_autonomia">
-            <option value="Come solo(a) y recoge sus juguetes con instrucciones sencillas">Come solo(a) y recoge sus juguetes con instrucciones sencillas</option>
-            <option value="Come solo(a) alimentos sólidos de manera independiente">Come solo(a) alimentos sólidos de manera independiente</option>
-            <option value="Recoge y organiza sus juguetes y pertenencias">Recoge y organiza sus juguetes y pertenencias</option>
-            <option value="Se viste / desviste con apoyo o supervisión leve">Se viste / desviste con apoyo o supervisión leve</option>
-            <option value="Hábitos y rutinas básicas en proceso de consolidación">Hábitos y rutinas básicas en proceso de consolidación</option>
-          </datalist>
-        </td>
-      </tr>
-
-      <!-- SUBSECCIÓN B -->
-      <tr class="fila-subhead">
-        <td colspan="12" class="subhead-sec">B. ENTORNO FAMILIAR Y CONVIVENCIA</td>
-      </tr>
-      <tr>
-        <td colspan="12">
-          <label for="cuidador_principal">CUIDADOR PRINCIPAL (ADEMÁS DE PADRES)</label>
-          <input type="text" id="cuidador_principal" name="cuidador_principal" list="lista_cuidador_principal" class="in" placeholder="Seleccione una opción o escriba el nombre / parentesco del cuidador..." autocomplete="off" title="Cuidador principal en el día a día">
-          <datalist id="lista_cuidador_principal">
-            <option value="Únicamente los padres">Únicamente los padres</option>
-            <option value="Abuelos maternos / paternos">Abuelos maternos / paternos</option>
-            <option value="Tíos u otros familiares cercanos">Tíos u otros familiares cercanos</option>
-            <option value="Niñera / empleada de confianza en casa">Niñera / empleada de confianza en casa</option>
-            <option value="Otra institución (jardín o guardería anterior)">Otra institución (jardín o guardería anterior)</option>
-          </datalist>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="7">
-          <label for="valoracion_externa">POSTURA ANTE SUGERENCIA DE VALORACIÓN O APOYO EXTERNO</label>
-          <input type="text" id="valoracion_externa" name="valoracion_externa" list="lista_valoracion_externa" class="in" placeholder="Seleccione una opción o escriba postura..." autocomplete="off" title="Postura de la familia ante valoración externa">
-          <datalist id="lista_valoracion_externa">
-            <option value="Totalmente dispuestos: buscaríamos apoyo externo de inmediato">Totalmente dispuestos: buscaríamos apoyo externo de inmediato</option>
-            <option value="Abiertos a evaluar: revisaríamos el caso en equipo con el jardín">Abiertos a evaluar: revisaríamos el caso en equipo con el jardín</option>
-            <option value="Reservados: preferimos observar la evolución en el entorno escolar">Reservados: preferimos observar la evolución en el entorno escolar</option>
-            <option value="Ya cuenta con acompañamiento / terapia externa activa">Ya cuenta con acompañamiento / terapia externa activa</option>
-          </datalist>
-        </td>
-        <td colspan="5">
-          <label for="valoracion_externa_otro">OBSERVACIÓN / DETALLES DE POSTURA</label>
-          <input type="text" id="valoracion_externa_otro" name="valoracion_externa_otro" list="lista_valoracion_externa" class="in" placeholder="Seleccione o detalle observaciones..." autocomplete="off" title="Detalle adicional">
-        </td>
-      </tr>
-
-      <!-- SUBSECCIÓN C -->
-      <tr class="fila-subhead">
-        <td colspan="12" class="subhead-sec">C. VALIDACIÓN FINANCIERA Y LEGAL</td>
-      </tr>
-      <tr>
-        <td colspan="6">
-          <label for="responsable_costos">RESPONSABLE ECONÓMICO DIRECTO DE COSTOS EDUCATIVOS</label>
-          <input type="text" id="responsable_costos" name="responsable_costos" list="lista_responsable_costos" class="in" placeholder="Seleccione una opción o escriba responsable..." autocomplete="off" title="Responsable económico">
-          <datalist id="lista_responsable_costos">
-            <option value="Ambos padres por igual">Ambos padres por igual</option>
-            <option value="Padre de familia">Padre de familia</option>
-            <option value="Madre de familia">Madre de familia</option>
-            <option value="Un tercero / tutor legal">Un tercero / tutor legal</option>
-            <option value="Empresa / entidad patrocinadora">Empresa / entidad patrocinadora</option>
-          </datalist>
-        </td>
-        <td colspan="6">
-          <label for="responsable_costos_parentesco">PARENTESCO / DETALLES (SI ES TERCERO U OTRO)</label>
-          <input type="text" id="responsable_costos_parentesco" name="responsable_costos_parentesco" list="lista_responsable_costos" class="in" placeholder="Seleccione o especifique parentesco / empresa..." autocomplete="off" title="Parentesco o detalle del responsable">
-        </td>
-      </tr>
-      <tr>
-        <td colspan="6">
-          <label for="paz_salvo">¿CUENTA CON PAZ Y SALVO DE INSTITUCIÓN DE PROCEDENCIA?</label>
-          <input type="text" id="paz_salvo" name="paz_salvo" list="lista_paz_salvo" class="in" placeholder="Seleccione una opción o escriba estado..." autocomplete="off" title="Paz y Salvo de institución anterior">
-          <datalist id="lista_paz_salvo">
-            <option value="Sí cuenta con Paz y Salvo (soporte adjunto al expediente)">Sí cuenta con Paz y Salvo (soporte adjunto al expediente)</option>
-            <option value="No aplica: es el primer jardín infantil al que asiste">No aplica: es el primer jardín infantil al que asiste</option>
-            <option value="Pendiente por entregar (en trámite con institución anterior)">Pendiente por entregar (en trámite con institución anterior)</option>
-            <option value="En revisión administrativa directiva">En revisión administrativa directiva</option>
-          </datalist>
-        </td>
-        <td colspan="6">
-          <label for="paz_salvo_obs">OBSERVACIONES / DETALLES DE PAZ Y SALVO</label>
-          <input type="text" id="paz_salvo_obs" name="paz_salvo_obs" list="lista_paz_salvo" class="in" placeholder="Seleccione o detalle observaciones / fecha..." autocomplete="off" title="Detalle adicional de paz y salvo">
-        </td>
-      </tr>
-      <tr>
-        <td colspan="8">
-          <label>TÉRMINOS DE CONSULTA EN CENTRALES DE RIESGO</label>
-          <div style="font-size: 7.8px; font-weight: 500; color: #333; line-height: 1.22; padding: 2px 0;">
-            Autorizo expresamente a My Little Artists School para consultar antecedentes comerciales, crediticios y financieros en las centrales de riesgo autorizadas, con el fin de evaluar la viabilidad del perfil de pago familiar.
-          </div>
-        </td>
-        <td colspan="4">
-          <label for="autoriza_antecedentes">¿AUTORIZA CONSULTA FINANCIERA?</label>
-          <select id="autoriza_antecedentes" name="autoriza_antecedentes" class="in select-as-help" title="Autorización de consulta de antecedentes comerciales">
-            <option value="">Seleccione...</option>
-            <option value="si">Sí, autorizo expresamente</option>
-            <option value="no">No autorizo</option>
-          </select>
-        </td>
-      </tr>
-    </table>
-  </div>
-
-  <!-- SECCIÓN 6: ACEPTACIÓN DE TRATAMIENTO DE DATOS PERSONALES -->
-  <div class="barra barra--azul" style="margin-top: 2mm;">ACEPTACIÓN DE TRATAMIENTO DE DATOS PERSONALES (LEY 1581 DE 2012)</div>
-  <div style="border: 1px solid var(--borde); border-top: none; padding: 1.5mm 3mm 1mm; background: #fff; margin-bottom: 1mm;">
-    <div style="font-size: 6.8pt; line-height: 1.2; text-align: justify; color: #222; padding: 1.5mm 2.2mm; background: #fafcff; border: 1px solid #dce5f2; border-radius: 3px; margin-bottom: 1.2mm;">
-      <p style="margin: 0 0 1mm;">
-        <b>Autorización previa, expresa e informada:</b> Autorizo a <b>MY LITTLE ARTISTS SCHOOL</b> (en adelante la “Institución”), a recolectar, almacenar, usar, circular y/o suprimir mis datos personales y los de el menor de edad que represento legalmente (en adelante el “Tratamiento”), de conformidad con las siguientes finalidades:
-      </p>
+  
+      <div class="tabla-contenedor"><table class="tabla-sec profile-table"><thead><tr><th colspan="12">A. ALINEACIÓN PEDAGÓGICA Y CRIANZA</th></tr></thead><tbody>
+      <tr><td colspan="12"><label class="profile-label">¿Cuál es la principal razón por la que eligen My Little Artists School? <span class="hint">Seleccione máximo 2 opciones.</span></label><div class="profile-options">
+        <label class="profile-option"><input type="checkbox" name="razon_eleccion" value="enfoque_pedagogico_artistico" data-max-group="razon_eleccion" data-max="2">Por el enfoque pedagógico y artístico.</label><label class="profile-option"><input type="checkbox" name="razon_eleccion" value="recomendacion" data-max-group="razon_eleccion" data-max="2">Por recomendación de otras familias del jardín.</label><label class="profile-option"><input type="checkbox" name="razon_eleccion" value="cercania" data-max-group="razon_eleccion" data-max="2">Por la cercanía a nuestro hogar o lugar de trabajo.</label><label class="profile-option"><input type="checkbox" name="razon_eleccion" value="infraestructura" data-max-group="razon_eleccion" data-max="2">Por la infraestructura, seguridad y horarios.</label>
+      </div></td></tr>
+      <tr><td colspan="12"><label class="profile-label">¿Qué esperan principalmente que su hijo(a) logre durante su paso por este jardín infantil? <span class="hint">Seleccione máximo 2 opciones.</span></label><div class="profile-options">
+        <label class="profile-option"><input type="checkbox" name="expectativas" value="socioemocional" data-max-group="expectativas" data-max="2">Desarrollo socioemocional y juego: convivencia, creatividad y gestión sana de emociones.</label><label class="profile-option"><input type="checkbox" name="expectativas" value="autonomia" data-max-group="expectativas" data-max="2">Autonomía y hábitos: independencia en sus rutinas y seguridad en sí mismo.</label><label class="profile-option"><input type="checkbox" name="expectativas" value="academica" data-max-group="expectativas" data-max="2">Preparación académica temprana: bases de lectoescritura, matemáticas e idiomas.</label><label class="profile-option"><input type="checkbox" name="expectativas" value="motor_expresion" data-max-group="expectativas" data-max="2">Desarrollo motor y expresión: motricidad, música, arte y comunicación verbal.</label>
+      </div></td></tr>
+      <tr><td colspan="12"><label class="profile-label">¿Cómo se manejan habitualmente los desbordes emocionales (rabietas/pataletas) en casa?</label><div class="profile-options">
+        <label class="profile-option"><input type="radio" name="manejo_emocional" value="acompanamiento">Acompañamiento y validación: contención, calma y diálogo posterior.</label><label class="profile-option"><input type="radio" name="manejo_emocional" value="correccion_firme">Corrección firme y voz de mando: límites inmediatos y directrices firmes.</label><label class="profile-option"><input type="radio" name="manejo_emocional" value="distraccion">Distracción o compensación: otra actividad, juguete, premio o pantalla.</label><label class="profile-option"><input type="radio" name="manejo_emocional" value="autorregulacion">Espacio de autorregulación: tiempo fuera corto en un lugar seguro.</label>
+      </div></td></tr>
       
-      <ol style="margin: 0 0 1mm 2mm; padding-left: 2.2mm;">
-        <li style="margin-bottom: 0.6mm;">
-          <b>Finalidades respecto al representante legal del menor:</b> Envío de comunicaciones y contacto con el fin de brindar información sobre el proceso de admisión, llamado a entrevistas y solicitar información adicional necesaria para evaluar su solicitud; comunicar decisiones sobre el proceso de admisión; hacer seguimiento al proceso de los aspirantes; citación a entrevistas; conocer y verificar aplicaciones presentadas y resultado de las mismas; identificar al personal que acceda a las instalaciones de la Institución; y hacer uso de diversos medios de videovigilancia (“CCTV”) en diferentes lugares de las instalaciones.
-        </li>
-        <li style="margin-bottom: 0.6mm;">
-          <b>Finalidades respecto al menor de edad:</b> Conocer y verificar las aplicaciones presentadas y el resultado de las mismas; analizar la respectiva admisión a la Institución y el seguimiento académico que debe tener en caso de ser admitido; definir si la admisión garantiza un adecuado proceso académico y su bienestar; identificar al personal que acceda a las instalaciones; y hacer uso de diversos medios de videovigilancia en diferentes lugares de las instalaciones.
-        </li>
-      </ol>
-
-      <p style="margin: 0 0 0.8mm;">
-        <b>Videovigilancia y datos sensibles:</b> Declaro que tengo conocimiento de que la Institución hace videovigilancia y que esta información es considerada por la regulación colombiana de protección de datos como datos de naturaleza sensible. La información recolectada a través del CCTV se utilizará para fines de seguridad de las personas, los bienes e instalaciones de la Institución. Esta información puede ser empleada como prueba en cualquier tipo de proceso ante cualquier tipo de autoridad y organización. Así mismo, declaro que la autorización para el tratamiento de los datos sensibles arriba mencionados es facultativa y puede ser revocada en cualquier momento, salvo si existe una obligación legal que le permita a la Institución acceder y conservar la información.
-      </p>
-
-      <p style="margin: 0 0 0.8mm;">
-        <b>Derechos que asisten al titular:</b> Adicionalmente, manifiesto que conozco que me asisten los siguientes derechos: <b>1.</b> Conocer, actualizar y rectificar los datos personales cuando identifique que hay datos parciales, inexactos, incompletos, fraccionados o que induzcan a error. <b>2.</b> Solicitar prueba de la autorización otorgada a la Institución. <b>3.</b> Ser informado del uso que le es dado a sus datos personales. <b>4.</b> Presentar ante la Superintendencia de Industria y Comercio quejas por infracción a las normas de protección de datos establecidas en la Ley 1581 de 2012 y normas complementarias. <b>5.</b> Revocar la autorización otorgada y/o solicitar la supresión de sus datos personales cuando no se respeten los principios, derechos y garantías constitucionales y legales. <b>6.</b> Acceder en forma gratuita a sus datos personales.
-      </p>
-
-      <p style="margin: 0;">
-        <b>Política institucional y canales:</b> Declaro que tengo conocimiento de que la Institución ha implementado la Política de Tratamiento de Datos Personales, y que dicha Política está disponible en sus instalaciones y canales institucionales para su consulta. Manifiesto que leí y entendí las finalidades del Tratamiento y la Política de Privacidad de la Institución, y he sido informado sobre mis derechos a acceder, conocer, actualizar, rectificar y suprimir mis datos personales, los cuales podré ejercer a través de los canales institucionales de contacto y secretaría.
-      </p>
-    </div>
-
-    <!-- TABLA DE AUTORIZACIÓN INTERACTIVA -->
-    <table class="tabla-sec">
-      <tr>
-        <td colspan="8">
-          <label>DECLARACIÓN DE ACEPTACIÓN Y CONSENTIMIENTO EXPRESO</label>
-          <div style="font-size: 7.8px; font-weight: 500; color: #333; line-height: 1.2; padding: 1px 0;">
-            Manifiesto que leí y entendí las finalidades del Tratamiento y la Política de Protección de Datos de My Little Artists School. Autorizo de manera previa, expresa e informada el tratamiento de mis datos y los del menor que represento.
-          </div>
-        </td>
-        <td colspan="4">
-          <label for="acepta_tratamiento_datos">¿ACEPTA TRATAMIENTO DE DATOS?</label>
-          <select id="acepta_tratamiento_datos" name="acepta_tratamiento_datos" class="in select-as-help" title="Aceptación de tratamiento de datos personales (Ley 1581 de 2012)" required>
-            <option value="">Seleccione...</option>
-            <option value="si">Sí, autorizo expresamente</option>
-            <option value="no">No autorizo</option>
-          </select>
-        </td>
-      </tr>
-    </table>
-  </div>
+      <tr><td colspan="12"><label class="profile-label">¿Cuál es la política familiar respecto al uso de pantallas (celular, tablet, TV) con el niño(a)?</label><div class="profile-options">
+        <label class="profile-option"><input type="radio" name="pantallas" value="cero">Cero pantallas.</label><label class="profile-option"><input type="radio" name="pantallas" value="controlado">Uso controlado: menos de 30–60 minutos al día y supervisado.</label><label class="profile-option"><input type="radio" name="pantallas" value="libre">Uso libre: acceso cuando lo solicita o para entretenerse.</label>
+      </div></td></tr>
+      <tr><td colspan="12"><label class="profile-label">¿En qué etapa de autonomía y control de esfínteres se encuentra el niño(a)? <span class="hint">Seleccione todas las que apliquen.</span></label><div class="profile-options">
+        <label class="profile-option"><input type="checkbox" name="autonomia_esfinteres" value="independiente">Avisa y va al baño de manera independiente.</label><label class="profile-option"><input type="checkbox" name="autonomia_esfinteres" value="proceso">Está en proceso de dejar el pañal.</label><label class="profile-option"><input type="checkbox" name="autonomia_esfinteres" value="no_iniciado">No ha iniciado el proceso.</label><label class="profile-option"><input type="checkbox" name="autonomia_esfinteres" value="come_solo">Come solo(a) alimentos sólidos.</label><label class="profile-option"><input type="checkbox" name="autonomia_esfinteres" value="organiza_juguetes">Recoge y organiza sus juguetes con instrucciones sencillas.</label>
+      </div></td></tr>
+    </tbody></table></div>
+      <div class="tabla-contenedor"><table class="tabla-sec profile-table"><thead><tr><th colspan="12">B. ENTORNO FAMILIAR Y CONVIVENCIA</th></tr></thead><tbody>
+      <tr><td colspan="12"><label class="profile-label">Además de los padres, ¿quién es el cuidador principal del niño(a) en el día a día?</label><div class="profile-options"><label class="profile-option"><input type="radio" name="cuidador_principal" value="padres">Únicamente los padres.</label><label class="profile-option"><input type="radio" name="cuidador_principal" value="familiares">Abuelos u otros familiares.</label><label class="profile-option"><input type="radio" name="cuidador_principal" value="ninera">Niñera / empleada del servicio en casa.</label><label class="profile-option"><input type="radio" name="cuidador_principal" value="institucion">Otra institución (guardería anterior).</label><label class="profile-option"><input type="radio" name="cuidador_principal" value="otro">Otros: <input type="text" name="cuidador_otro" aria-label="Otro cuidador principal"></label></div></td></tr>
+      <tr><td colspan="12"><label class="profile-label">Si el jardín sugiere un acompañamiento o valoración externa, la postura de la familia es:</label><div class="profile-options"><label class="profile-option"><input type="radio" name="valoracion_externa" value="dispuestos">Totalmente dispuestos: buscaríamos apoyo externo de inmediato.</label><label class="profile-option"><input type="radio" name="valoracion_externa" value="abiertos">Abiertos a evaluar: revisaríamos el caso antes de decidir.</label><label class="profile-option"><input type="radio" name="valoracion_externa" value="reservados">Reservados: preferimos esperar porque puede superarse con el tiempo.</label></div></td></tr>
+    </tbody></table></div>
+      <div class="tabla-contenedor"><table class="tabla-sec profile-table"><thead><tr><th colspan="12">C. VALIDACIÓN FINANCIERA Y LEGAL</th></tr></thead><tbody>
+      <tr><td colspan="12"><label class="profile-label">Responsable económico directo de los costos educativos:</label><div class="profile-options"><label class="profile-option"><input type="radio" name="responsable_costos" value="padre">Padre.</label><label class="profile-option"><input type="radio" name="responsable_costos" value="madre">Madre.</label><label class="profile-option"><input type="radio" name="responsable_costos" value="ambos">Ambos padres por igual.</label><label class="profile-option"><input type="radio" name="responsable_costos" value="tercero">Un tercero / tutor legal. Parentesco: <input type="text" name="responsable_costos_parentesco" aria-label="Parentesco del responsable económico"></label></div></td></tr>
+      <tr><td colspan="12"><label class="profile-label">¿El aspirante cuenta con el Paz y Salvo de la institución o jardín de procedencia?</label><div class="profile-options one-column"><label class="profile-option"><input type="radio" name="paz_salvo" value="si">Sí cuenta con Paz y Salvo (adjuntar soporte físico o digital).</label><label class="profile-option"><input type="radio" name="paz_salvo" value="no_aplica">No aplica: es el primer jardín infantil al que asiste.</label><label class="profile-option"><input type="radio" name="paz_salvo" value="pendiente">No contamos con el documento en el momento (sujeto a revisión de la dirección).</label></div></td></tr>
+      <tr><td colspan="12"><label class="profile-label">Autorización de consulta de antecedentes comerciales</label><label class="profile-option"><input type="checkbox" name="autoriza_antecedentes" value="si">Sí, autorizo expresamente a My Little Artists School para consultar antecedentes comerciales, crediticios y financieros en las centrales de riesgo autorizadas, con el fin de evaluar la viabilidad del perfil de pago familiar.</label></td></tr>
+    </tbody></table></div>
   
 <footer class="footer">PÁGINA 2 DE 3 <span class="stars">★ ★ ★</span></footer>
 </section>
@@ -2645,11 +2421,16 @@ function fillDemoData() {
   const form = document.getElementById('admissionForm');
   if (!form) return;
 
-  // Fecha de ingreso (mes y año) y NUIP
-  const fechaIngresoMes = document.getElementById('fecha_ingreso_mes');
-  if (fechaIngresoMes) fechaIngresoMes.value = 'Febrero';
-  const fechaIngresoAnio = document.getElementById('fecha_ingreso_anio');
-  if (fechaIngresoAnio) fechaIngresoAnio.value = '2026';
+  // Fechas en formato DD/MM/AAAA y matrícula
+  const ahora = new Date();
+  const hoyDDMM = `${String(ahora.getDate()).padStart(2, '0')}/${String(ahora.getMonth() + 1).padStart(2, '0')}/${ahora.getFullYear()}`;
+  const fechaIngreso = document.getElementById('fecha_ingreso');
+  if (fechaIngreso) {
+    fechaIngreso.value = hoyDDMM;
+    validarFecha(fechaIngreso);
+  }
+  const mat = document.getElementById('matricula');
+  if (mat) mat.value = '2026-084';
   const nuip = document.getElementById('nuip');
   if (nuip) nuip.value = '1.024.895.412';
 
@@ -2690,23 +2471,7 @@ function fillDemoData() {
     'crecimiento3_fecha': '10/05/2025', 'crecimiento3_peso': '17.0', 'crecimiento3_talla': '103',
     'crecimiento4_fecha': '20/11/2025', 'crecimiento4_peso': '18.5', 'crecimiento4_talla': '108',
     'edad_lavado': '2 años', 'ultima_visita_odonto': '15/10/2025',
-    'conducta_vacunas': 'Esquema de vacunación al día según el PAI.',
-    'razon_eleccion': 'Por el enfoque pedagógico y artístico',
-    'razon_eleccion_otro': 'Recomendado por familiares y amigos cercanos.',
-    'expectativas': 'Desarrollo socioemocional, juego y convivencia sana',
-    'expectativas_otro': 'Potenciar su creatividad, empatía y autonomía.',
-    'manejo_emocional': 'Acompañamiento y validación: contención, calma y diálogo posterior',
-    'manejo_emocional_otro': 'Diálogo reflexivo con validación de emociones.',
-    'pantallas': 'Uso controlado: menos de 30–60 minutos al día supervisado',
-    'pantallas_otro': 'Fines de semana, máximo 40 minutos supervisados.',
-    'habitos_autonomia': 'Come solo(a) y recoge sus juguetes con instrucciones sencillas',
-    'cuidador_principal': 'Abuelos maternos en ocasiones especiales',
-    'valoracion_externa': 'Totalmente dispuestos: buscaríamos apoyo externo de inmediato',
-    'valoracion_externa_otro': 'Total apertura a trabajar en equipo con el jardín.',
-    'responsable_costos': 'Ambos padres por igual',
-    'responsable_costos_parentesco': 'Padres de familia (ambos por igual)',
-    'paz_salvo': 'Sí cuenta con Paz y Salvo (soporte adjunto al expediente)',
-    'paz_salvo_obs': 'Paz y salvo vigente adjunto al expediente.'
+    'conducta_vacunas': 'Esquema de vacunación al día según el PAI.'
   };
 
   Object.entries(fieldsVal).forEach(([idOrName, val]) => {
@@ -2722,9 +2487,16 @@ function fillDemoData() {
   // Selectores y opciones de ejemplo
   const demoSelects = {
     'medicina_prepagada': 'si',
-    'autonomia_esfinteres': 'independiente',
-    'autoriza_antecedentes': 'si',
-    'acepta_tratamiento_datos': 'si',
+    'parto': 'normal',
+    'gestacion': 'termino',
+    'lactancia': 'si',
+    'tetero': 'si',
+    'hospitalizado': 'no',
+    'frecuencia_cepillado': '3',
+    'no_le_gusta': 'si',
+    'caries': 'no',
+    'odonto_control': 'si',
+    'vacunas_esquema': 'si',
     'doc_curva': 'si', 'doc_crecimiento': 'si', 'doc_registro': 'si',
     'doc_tarjeta': 'no', 'doc_vacunas': 'si', 'doc_audio': 'si',
     'doc_odont': 'si', 'doc_medico': 'si', 'doc_eps': 'si',
@@ -2738,18 +2510,6 @@ function fillDemoData() {
 
   updateAllSelectHelp();
   updateProgress();
-}
-
-function toggleInputOtro(selectEl, inputId) {
-  const inputEl = document.getElementById(inputId);
-  if (!inputEl) return;
-  if (selectEl.value === 'otro' || selectEl.value === 'tercero') {
-    inputEl.focus();
-    inputEl.classList.add('resaltar-otro');
-  } else {
-    inputEl.classList.remove('resaltar-otro');
-  }
-  if (typeof updateProgress === 'function') updateProgress();
 }
 
 // ==================== PERSISTENCIA (LocalStorage) ====================
