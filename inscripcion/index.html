@@ -1478,9 +1478,28 @@
     }
     .academic-unified-table,
     .tabla-sec,
-    .fam,
-    .requirements-table {
+    .fam {
       min-width: 580px;
+    }
+    .requirements-table {
+      width: 100% !important;
+      min-width: 0 !important;
+      table-layout: auto !important;
+    }
+    .requirements-table td {
+      padding: 3px 4px !important;
+      font-size: 8pt !important;
+    }
+    .requirements-table .yn-col {
+      width: 72px !important;
+      min-width: 72px !important;
+      padding: 2px !important;
+    }
+    .requirements-table .in-doc-select {
+      width: 100% !important;
+      min-width: 68px !important;
+      font-size: 8pt !important;
+      height: 22px !important;
     }
 
     .signature-area {
@@ -2159,6 +2178,7 @@
     </ol>
 
     <!-- TABLA DE REQUISITOS DOCUMENTALES -->
+    <div class="tabla-contenedor">
     <table class="requirements-table" style="border: 1px solid var(--borde);">
       <tbody>
         <tr><td style="text-align: left; padding: 1.5px 5px;">1. Curva de crecimiento, talla y peso.</td><td class="yn-col" style="width: 25mm;"><select id="doc_curva" name="doc_curva" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
@@ -2175,6 +2195,7 @@
         <tr><td style="text-align: left; padding: 1.5px 5px;">12. Una foto familiar de 9×13 cm.</td><td class="yn-col" style="width: 25mm;"><select id="doc_foto9x13" name="doc_foto9x13" class="in select-as-help in-doc-select"><option value="">Seleccione...</option><option value="si">Sí</option><option value="no">No</option></select></td></tr>
       </tbody>
     </table>
+    </div>
 
     <!-- DECLARACIONES LEGALES -->
     <p class="legal-text" style="margin-top: 2.5mm; font-size: 7.8pt; line-height: 1.2; text-align: justify; color: #333;">
