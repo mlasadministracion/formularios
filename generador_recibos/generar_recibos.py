@@ -6,15 +6,54 @@ Genera un recibo PDF por cada estudiante en la hoja indicada.
 
 import sys
 import os
+
+# Asegurar codificación UTF-8 en stdout/stderr para consolas de Windows (✓, →, etc.)
+if hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
 import re
 import io
 import smtplib
 from email.message import EmailMessage
 import openpyxl
 from openpyxl.utils import get_column_letter
-from weasyprint import HTML
 import requests
 import config
+
+# En Windows, asegurar detección de GTK3 y silenciar warnings cosméticos de GLib-GIO
+if sys.platform == "win32":
+    for _dir in [r"C:\Program Files\GTK3-Runtime Win64\bin", r"C:\Program Files (x86)\GTK3-Runtime Win64\bin"]:
+        if os.path.isdir(_dir):
+            os.environ["PATH"] = _dir + ";" + os.environ.get("PATH", "")
+            if hasattr(os, "add_dll_directory"):
+                try:
+                    os.add_dll_directory(_dir)
+                except Exception:
+                    pass
+            try:
+                import ctypes
+                from ctypes import CFUNCTYPE, POINTER, Structure, c_char_p, c_int, c_size_t, c_ssize_t, c_void_p, cast, CDLL
+                _glib = CDLL(os.path.join(_dir, "libglib-2.0-0.dll"))
+                class _GLogField(Structure):
+                    _fields_ = [("key", c_char_p), ("value", c_void_p), ("length", c_ssize_t)]
+                _WRITER = CFUNCTYPE(c_int, c_int, POINTER(_GLogField), c_size_t, c_void_p)
+                @_WRITER
+                def _glib_writer(level, fields, n, user_data):
+                    for i in range(n):
+                        if fields[i].key == b"GLIB_DOMAIN" and cast(fields[i].value, c_char_p).value == b"GLib-GIO":
+                            return 1
+                    return _glib.g_log_writer_default(level, fields, n, user_data)
+                _glib_writer_ref = _glib_writer
+                _glib.g_log_set_writer_func(_glib_writer, None, None)
+            except Exception:
+                pass
+            break
+
+from weasyprint import HTML
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ARCHIVO_EXCEL = "https://docs.google.com/spreadsheets/d/1w7X_XNzXVqcvLIP5UThRDaPcZPwzbTXa/export?format=xlsx"
