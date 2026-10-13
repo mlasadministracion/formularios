@@ -1568,7 +1568,7 @@
     </div>
     <div style="flex: 1; text-align: center;">
       <h1 class="titulo">FORMULARIO DE ADMISIONES</h1>
-      <div class="subtitulo-cabecera">AÑO LECTIVO 2026</div>
+      <div class="subtitulo-cabecera">AÑO LECTIVO 2027</div>
     </div>
     <div class="cabecera-derecha">
       <div class="folio">
@@ -1592,11 +1592,12 @@
             </select>
             <select id="fecha_ingreso_anio" name="fecha_ingreso_anio" class="in-folio select-as-help" style="flex: 1; font-size: 8.5px; font-weight: 700; height: 18px; padding: 0 1px;" title="Año de ingreso">
               <option value="2025">2025</option>
-              <option value="2026" selected>2026</option>
-              <option value="2027">2027</option>
+              <option value="2026">2026</option>
+              <option value="2027" selected>2027</option>
               <option value="2028">2028</option>
               <option value="2029">2029</option>
               <option value="2030">2030</option>
+              <option value="2031">2031</option>
             </select>
           </div>
         </div>
@@ -1658,18 +1659,18 @@
         </tr>
         <tr>
           <td class="grade-label">Año</td>
-          <td><input class="small-input" name="anio_s" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2026)"></td>
-          <td><input class="small-input" name="anio_g" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2026)"></td>
-          <td><input class="small-input" name="anio_c" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2026)"></td>
-          <td><input class="small-input" name="anio_p" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2026)"></td>
-          <td><input class="small-input" name="anio_pj" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2026)"></td>
-          <td><input class="small-input" name="anio_j" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2026)"></td>
-          <td><input class="small-input" name="anio_t" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2026)"></td>
-          <td><input class="small-input" name="anio_1" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2026)"></td>
-          <td><input class="small-input" name="anio_2" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2026)"></td>
-          <td><input class="small-input" name="anio_3" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2026)"></td>
-          <td><input class="small-input" name="anio_4" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2026)"></td>
-          <td><input class="small-input" name="anio_5" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2026)"></td>
+          <td><input class="small-input" name="anio_s" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2027)"></td>
+          <td><input class="small-input" name="anio_g" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2027)"></td>
+          <td><input class="small-input" name="anio_c" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2027)"></td>
+          <td><input class="small-input" name="anio_p" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2027)"></td>
+          <td><input class="small-input" name="anio_pj" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2027)"></td>
+          <td><input class="small-input" name="anio_j" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2027)"></td>
+          <td><input class="small-input" name="anio_t" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2027)"></td>
+          <td><input class="small-input" name="anio_1" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2027)"></td>
+          <td><input class="small-input" name="anio_2" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2027)"></td>
+          <td><input class="small-input" name="anio_3" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2027)"></td>
+          <td><input class="small-input" name="anio_4" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2027)"></td>
+          <td><input class="small-input" name="anio_5" maxlength="4" placeholder="AAAA" title="Año lectivo (ej. 2027)"></td>
         </tr>
         <tr>
           <td class="grade-label">Edad</td>
@@ -2157,7 +2158,8 @@
     </table>
     </div>
   </div>
-  
+</div>
+
 <footer class="footer">PÁGINA 2 DE 3 <span class="stars">★ ★ ★</span></footer>
 </section>
 
@@ -2792,13 +2794,13 @@ function fillDemoData() {
   const fechaIngresoMes = document.getElementById('fecha_ingreso_mes');
   if (fechaIngresoMes) fechaIngresoMes.value = 'Febrero';
   const fechaIngresoAnio = document.getElementById('fecha_ingreso_anio');
-  if (fechaIngresoAnio) fechaIngresoAnio.value = '2026';
+  if (fechaIngresoAnio) fechaIngresoAnio.value = '2027';
   const nuip = document.getElementById('nuip');
   if (nuip) nuip.value = '1.024.895.412';
 
   // Nivel y grado
   const fieldsVal = {
-    'nivel_t': 'X', 'anio_t': '2026', 'edad_t': '5',
+    'nivel_t': 'X', 'anio_t': '2027', 'edad_t': '5',
     'nombres_nino': 'Valeria Gómez Restrepo',
     'fecha_nacimiento': '15/04/2021',
     'nacimiento_lugar': 'Bogotá D.C.',

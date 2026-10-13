@@ -17,38 +17,82 @@ correo electrónico.
 
 ## Requisitos
 
+### 1. Dependencias de Python (ambos sistemas)
+
 ```bash
-pip3 install --break-system-packages openpyxl weasyprint requests
+pip install openpyxl weasyprint requests
 ```
+*(En macOS o entornos protegidos puede requerirse `pip3 install --break-system-packages ...`, o en Windows `--user` si no se cuenta con permisos de administrador).*
 
-`weasyprint` necesita la librería de sistema `pango` para renderizar el PDF:
+### 2. Dependencia de sistema (Pango / GTK3)
 
+`weasyprint` necesita la biblioteca gráfica de sistema `pango` para compilar el HTML en PDF:
+
+#### En macOS
+Instalar mediante Homebrew:
 ```bash
 brew install pango
 ```
 
+#### En Windows
+Instalar el entorno de ejecución GTK3 que incluye Pango:
+
+* **Vía winget (Recomendado):**
+  ```powershell
+  winget install tschoonj.GTKForWindows
+  ```
+* **Vía instalador manual:**
+  Descargar y ejecutar el instalador `.exe` (versión 64-bit) desde [GTK for Windows Runtime Releases](https://github.com/tschoonj/GTK-for-Windows-Runtime-Environment-Installer/releases), asegurándose de marcar la opción para agregar GTK al `PATH` del sistema.
+
+> **Nota:** Después de instalar GTK en Windows, reiniciar la terminal (Git Bash, PowerShell o CMD) para que cargue las nuevas variables de entorno.
+
+
 ## Uso
 
+### Comando base
+
+#### En macOS / Linux
 ```bash
 python3 generar_recibos.py <NOMBRE_HOJA> [--enviar]
 ```
 
-- `<NOMBRE_HOJA>`: nombre exacto de la pestaña del Excel a procesar (ej. `AGOSTO`).
+#### En Windows (PowerShell, CMD o Git Bash)
+```powershell
+python generar_recibos.py <NOMBRE_HOJA> [--enviar]
+```
+*(También puedes usar el lanzador `py generar_recibos.py ...`).*
+
+---
+
+### Parámetros
+
+- `<NOMBRE_HOJA>`: nombre exacto de la pestaña del Excel a procesar (ej. `AGOSTO`, `OCTUBRE`).
 - `--enviar` (opcional): si se incluye, además de generar los PDF, envía cada
   recibo por correo a las direcciones de la columna `correo` de esa fila.
   Si se omite, el script solo genera los archivos localmente.
 
-Ejemplos:
+### Ejemplos prácticos
 
+#### macOS / Linux
 ```bash
 # Solo generar los PDF, sin enviar correos
-python3 generar_recibos.py AGOSTO
+python3 generar_recibos.py OCTUBRE
 
 # Generar y enviar por correo
-python3 generar_recibos.py AGOSTO --enviar
+python3 generar_recibos.py OCTUBRE --enviar
 ```
 
-Los PDF quedan en `recibos/AGOSTO/<NOMBRE ESTUDIANTE>.pdf`.
+#### Windows
+```powershell
+# Solo generar los PDF, sin enviar correos
+python generar_recibos.py OCTUBRE
+
+# Generar y enviar por correo
+python generar_recibos.py OCTUBRE --enviar
+```
+
+Los PDF quedan guardados en `recibos/<NOMBRE_HOJA>/<NOMBRE ESTUDIANTE>.pdf`.
+
 
 ## De dónde viene la información
 
