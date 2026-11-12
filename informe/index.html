@@ -233,7 +233,7 @@
         // =========================================================================
         // 1. PEGA AQUÍ LA URL DE TU GOOGLE APPS SCRIPT (Terminada en /exec)
         // =========================================================================
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyCmSR0VbYZO2D0FFw6Hw7MmxvLLOTz7At0pt5LhDbrhplog2ptCpa2c0QPyeC_J8az/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxzi5Slrdhr3E_2nj-gUGt6SjyH4rXxnor2axbJYTExl3-ySWymReXt-hAI4ODdLq-h/exec"
 
         // ID de tu hoja de Google Sheets
         const SHEET_ID = "1g9DMoZFe1iNHkLnpnMOhFA5XHmV_J750e0sQNhzZl8w";
@@ -281,8 +281,8 @@
             const alerta = document.getElementById('statusAlert');
             alerta.textContent = texto;
             alerta.className = `mb-6 p-4 rounded-2xl border-2 text-sm font-semibold shadow-sm ${esError
-                    ? 'bg-red-50 border-mlas-red/30 text-mlas-red'
-                    : 'bg-emerald-50 border-mlas-green/40 text-mlas-green'
+                ? 'bg-red-50 border-mlas-red/30 text-mlas-red'
+                : 'bg-emerald-50 border-mlas-green/40 text-mlas-green'
                 }`;
             alerta.classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
