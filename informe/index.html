@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MY LITTLES ARTISTS SCHOOL | Entrega de Boletines</title>
+    <title>MY LITTLE ARTISTS SCHOOL | Entrega de Boletines</title>
     <link rel="icon" type="image/webp" href="Logo MLAS.webp" />
 
     <!-- Tailwind CSS -->
@@ -58,7 +58,7 @@
                 <!-- Contenedor del Logo MLAS (.webp) -->
                 <div
                     class="group relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white shadow-md border-2 border-slate-100 p-1 flex items-center justify-center overflow-hidden shrink-0">
-                    <img id="logoImg" src="Logo MLAS.webp" alt="Logo MY LITTLES ARTISTS SCHOOL"
+                    <img id="logoImg" src="Logo MLAS.webp" alt="Logo MY LITTLE ARTISTS SCHOOL"
                         class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
                         onerror="intentarRutaAlternativa(this)" />
                     <div id="fallbackLogo" style="display:none;"
@@ -83,7 +83,7 @@
                         🎨 Agendamiento Escolar
                     </span>
                     <h1 class="font-display text-xl sm:text-2xl font-bold tracking-tight text-slate-900 leading-none">
-                        <span class="text-mlas-red">MY LITTLES</span>
+                        <span class="text-mlas-red">MY LITTLE</span>
                         <span class="text-mlas-blue"> ARTISTS</span>
                         <span class="text-mlas-green"> SCHOOL</span>
                     </h1>
@@ -218,7 +218,7 @@
     </main>
 
     <footer class="mt-12 py-5 text-center text-xs text-slate-400 border-t border-slate-200/60 bg-white/60">
-        <p class="font-semibold text-slate-600">MY LITTLES ARTISTS SCHOOL (MLAS)</p>
+        <p class="font-semibold text-slate-600">MY LITTLE ARTISTS SCHOOL (MLAS)</p>
         <p class="mt-0.5">Arte, ciencia y naturaleza para el crecimiento de nuestros niños</p>
     </footer>
 
@@ -274,8 +274,8 @@
             const alerta = document.getElementById('statusAlert');
             alerta.textContent = texto;
             alerta.className = `mb-6 p-4 rounded-2xl border-2 text-sm font-semibold shadow-sm ${esError
-                    ? 'bg-red-50 border-mlas-red/30 text-mlas-red'
-                    : 'bg-emerald-50 border-mlas-green/40 text-mlas-green'
+                ? 'bg-red-50 border-mlas-red/30 text-mlas-red'
+                : 'bg-emerald-50 border-mlas-green/40 text-mlas-green'
                 }`;
             alerta.classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -441,7 +441,7 @@
                 const resultado = await res.json();
 
                 if (resultado.status === 'ok') {
-                    mostrarMensaje(`¡Cita reservada con éxito para ${datos.estudiante} a las ${turnoSeleccionado.hora} (${turnoSeleccionado.fecha})! Te esperamos en MY LITTLES ARTISTS SCHOOL.`);
+                    mostrarMensaje(`¡Cita reservada con éxito para ${datos.estudiante} a las ${turnoSeleccionado.hora} (${turnoSeleccionado.fecha})! Te esperamos en MY LITTLE ARTISTS SCHOOL.`);
                     document.getElementById('formReserva').reset();
                     turnoSeleccionado = null;
                     const resumen = document.getElementById('resumenSeleccion');
