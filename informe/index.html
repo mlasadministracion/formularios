@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MY LITTLES ARTISTS SCHOOL | Entrega de Boletines</title>
+    <link rel="icon" type="image/webp" href="Logo MLAS.webp" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['Fredoka', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        mlas: {
+                            red: '#D62828',
+                            blue: '#104F9E',
+                            orange: '#F37021',
+                            green: '#4D8B31',
+                            cream: '#FFFDF9'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-mlas-cream min-h-screen font-sans text-slate-800 relative overflow-x-hidden flex flex-col">
+
+    <!-- Barra superior con los 4 colores del logo MLAS -->
+    <div class="h-2.5 w-full flex">
+        <div class="w-1/4 bg-mlas-red"></div>
+        <div class="w-1/4 bg-mlas-blue"></div>
+        <div class="w-1/4 bg-mlas-orange"></div>
+        <div class="w-1/4 bg-mlas-green"></div>
+    </div>
+
+    <!-- Encabezado Institucional -->
+    <header class="bg-white/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-20 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 py-3.5 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center gap-3.5">
+
+                <!-- Contenedor del Logo MLAS (.webp) -->
+                <div
+                    class="group relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white shadow-md border-2 border-slate-100 p-1 flex items-center justify-center overflow-hidden shrink-0">
+                    <img id="logoImg" src="Logo MLAS.webp" alt="Logo MY LITTLES ARTISTS SCHOOL"
+                        class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
+                        onerror="intentarRutaAlternativa(this)" />
+                    <div id="fallbackLogo" style="display:none;"
+                        class="w-full h-full grid-cols-2 grid-rows-2 rounded-xl overflow-hidden font-display font-bold text-white text-sm">
+                        <div class="bg-mlas-red flex items-center justify-center">M</div>
+                        <div class="bg-mlas-blue flex items-center justify-center">L</div>
+                        <div class="bg-mlas-orange flex items-center justify-center">A</div>
+                        <div class="bg-mlas-green flex items-center justify-center">S</div>
+                    </div>
+
+                    <label for="inputLogoLocal" title="Haz clic para cargar tu Logo MLAS.webp"
+                        class="opacity-0 group-hover:opacity-100 absolute inset-0 bg-slate-900/60 text-white text-[10px] font-bold flex flex-col items-center justify-center cursor-pointer transition-opacity text-center p-1">
+                        Cambiar WebP
+                    </label>
+                    <input type="file" id="inputLogoLocal" accept="image/webp,image/*" class="hidden"
+                        onchange="previsualizarLogoLocal(event)" />
+                </div>
+
+                <div>
+                    <span
+                        class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-mlas-orange/15 text-mlas-orange mb-0.5">
+                        🎨 Agendamiento Escolar
+                    </span>
+                    <h1 class="font-display text-xl sm:text-2xl font-bold tracking-tight text-slate-900 leading-none">
+                        <span class="text-mlas-red">MY LITTLES</span>
+                        <span class="text-mlas-blue"> ARTISTS</span>
+                        <span class="text-mlas-green"> SCHOOL</span>
+                    </h1>
+                    <p class="text-xs sm:text-sm text-slate-500 font-medium mt-0.5">
+                        Cita para Entrega de Boletines e Informe Pedagógico
+                    </p>
+                </div>
+            </div>
+
+            <button onclick="cargarHorarios()"
+                class="text-xs font-semibold bg-slate-100 hover:bg-mlas-blue hover:text-white text-slate-700 px-3.5 py-2.5 rounded-xl flex items-center gap-1.5 transition shadow-sm">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                Actualizar horarios
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-8 flex-1 w-full relative z-10">
+        <!-- Banner de bienvenida -->
+        <div
+            class="mb-7 bg-gradient-to-r from-mlas-blue via-[#1b5eb5] to-mlas-green rounded-3xl p-5 sm:p-6 text-white shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div class="space-y-1">
+                <h2 class="font-display text-lg sm:text-xl font-bold flex items-center gap-2">
+                    ✨ ¡Bienvenidos, familias de nuestros pequeños artistas!
+                </h2>
+                <p class="text-xs sm:text-sm text-blue-100 max-w-2xl">
+                    Selecciona el día y la hora que mejor se ajuste a tu disponibilidad. Una vez confirmes tu turno,
+                    quedará reservado exclusivamente para ti.
+                </p>
+            </div>
+            <!-- Bloques decorativos inspirados en la letra A del logo -->
+            <div class="hidden sm:flex items-end gap-1 shrink-0 bg-white/10 p-2.5 rounded-2xl">
+                <div class="w-4 h-4 rounded-sm bg-mlas-red"></div>
+                <div class="flex flex-col gap-1">
+                    <div class="w-4 h-4 rounded-sm bg-mlas-blue"></div>
+                    <div class="w-4 h-4 rounded-sm bg-slate-900"></div>
+                </div>
+                <div class="w-4 h-4 rounded-sm bg-mlas-orange"></div>
+            </div>
+        </div>
+
+        <!-- Alerta de confirmación o error -->
+        <div id="statusAlert" class="hidden mb-6 p-4 rounded-2xl border-2 text-sm font-semibold shadow-sm"></div>
+
+        <div class="grid md:grid-cols-12 gap-7">
+            <!-- PASO 1: Elegir Fecha y Hora -->
+            <div
+                class="md:col-span-7 bg-white p-6 rounded-3xl shadow-md border-2 border-slate-100 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-mlas-red to-mlas-orange"></div>
+
+                <div class="flex items-center justify-between mb-5">
+                    <h3 class="font-display text-lg font-bold text-slate-800 flex items-center gap-2.5">
+                        <span
+                            class="bg-mlas-orange text-white w-7 h-7 rounded-xl inline-flex items-center justify-center text-sm shadow-sm">1</span>
+                        Elige el Horario Disponible
+                    </h3>
+                    <span id="contadorLibres"
+                        class="text-xs font-bold px-2.5 py-1 rounded-full bg-mlas-green/15 text-mlas-green">
+                        Cargando...
+                    </span>
+                </div>
+
+                <div class="mb-5">
+                    <label class="block text-xs font-bold text-slate-600 uppercase tracking-wide mb-1.5">
+                        📅 Fecha de entrega
+                    </label>
+                    <select id="filtroFecha" onchange="mostrarHorarios()"
+                        class="w-full rounded-2xl border-2 border-slate-200 bg-slate-50/70 px-4 py-2.5 text-sm font-semibold text-slate-700 focus:border-mlas-blue focus:bg-white outline-none transition">
+                        <option value="TODAS">Todas las fechas disponibles</option>
+                    </select>
+                </div>
+
+                <div id="loading" class="py-14 text-center text-slate-500 text-sm flex flex-col items-center gap-2">
+                    <div class="w-8 h-8 border-4 border-mlas-orange border-t-transparent rounded-full animate-spin">
+                    </div>
+                    <span>Consultando horarios disponibles...</span>
+                </div>
+
+                <div id="contenedorHoras" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+            </div>
+
+            <!-- PASO 2: Datos del Estudiante y Acudiente -->
+            <div
+                class="md:col-span-5 bg-white p-6 rounded-3xl shadow-md border-2 border-slate-100 h-fit relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-mlas-blue to-mlas-green"></div>
+
+                <h3 class="font-display text-lg font-bold text-slate-800 mb-4 flex items-center gap-2.5">
+                    <span
+                        class="bg-mlas-blue text-white w-7 h-7 rounded-xl inline-flex items-center justify-center text-sm shadow-sm">2</span>
+                    Datos de Reserva
+                </h3>
+
+                <div id="resumenSeleccion"
+                    class="mb-5 p-4 rounded-2xl bg-slate-50 border-2 border-dashed border-slate-200 text-slate-500 text-xs flex items-center gap-3">
+                    <span>👈 Toca una de las horas disponibles a la izquierda para activar el formulario.</span>
+                </div>
+
+                <form id="formReserva" onsubmit="guardarCita(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Nombre del Pequeño Artista
+                            (Estudiante) *</label>
+                        <input type="text" id="estudiante" required placeholder="Nombre y apellido del niño(a)"
+                            class="w-full rounded-xl border-2 border-slate-200 px-3.5 py-2.5 text-sm focus:border-mlas-orange outline-none transition" />
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Nombre del Padre / Acudiente
+                            *</label>
+                        <input type="text" id="acudiente" required placeholder="Nombre y apellido del acudiente"
+                            class="w-full rounded-xl border-2 border-slate-200 px-3.5 py-2.5 text-sm focus:border-mlas-orange outline-none transition" />
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Celular / WhatsApp *</label>
+                        <input type="tel" id="telefono" required placeholder="Ej. 310 123 4567"
+                            class="w-full rounded-xl border-2 border-slate-200 px-3.5 py-2.5 text-sm focus:border-mlas-orange outline-none transition" />
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Observaciones (Opcional)</label>
+                        <input type="text" id="comentarios" placeholder="Algún comentario breve para la profe"
+                            class="w-full rounded-xl border-2 border-slate-200 px-3.5 py-2.5 text-sm focus:border-mlas-orange outline-none transition" />
+                    </div>
+
+                    <button type="submit" id="btnGuardar" disabled
+                        class="w-full bg-gradient-to-r from-mlas-red to-mlas-orange hover:from-red-700 hover:to-orange-600 disabled:from-slate-200 disabled:to-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed text-white font-display font-bold py-3.5 rounded-2xl text-sm transition shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+                        <span id="btnTexto">Confirmar Cita de Boletines</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="mt-12 py-5 text-center text-xs text-slate-400 border-t border-slate-200/60 bg-white/60">
+        <p class="font-semibold text-slate-600">MY LITTLES ARTISTS SCHOOL (MLAS)</p>
+        <p class="mt-0.5">Arte, ciencia y naturaleza para el crecimiento de nuestros niños</p>
+    </footer>
+
+    <script>
+        // =========================================================================
+        // 1. PEGA AQUÍ LA URL DE TU GOOGLE APPS SCRIPT (Terminada en /exec)
+        // =========================================================================
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbznEu7fExKwDGZj5jT66ZWITs7P1QqnW9UE7ijlR5U4ToVf5b2ZysG2S6coZAHVR3-M/exec";
+
+        // ID de tu hoja de Google Sheets
+        const SHEET_ID = "1g9DMoZFe1iNHkLnpnMOhFA5XHmV_J750e0sQNhzZl8w";
+        const RUTA_LOGO_WEBP = "Logo MLAS.webp";
+
+        let horarios = [];
+        let turnoSeleccionado = null;
+        let intentoLogo = 0;
+
+        // Cargar logo personalizado si existe
+        try {
+            const logoGuardado = localStorage.getItem('mlas_custom_logo_webp');
+            document.getElementById('logoImg').src = logoGuardado ? logoGuardado : RUTA_LOGO_WEBP;
+        } catch (e) {
+            document.getElementById('logoImg').src = RUTA_LOGO_WEBP;
+        }
+
+        function intentarRutaAlternativa(img) {
+            const alternativas = ["Logo%20MLAS.webp", "logo-mlas.webp", "logo.webp", "Logo MLAS.jpeg"];
+            if (intentoLogo < alternativas.length) {
+                img.src = alternativas[intentoLogo];
+                intentoLogo++;
+            } else {
+                img.style.display = 'none';
+                document.getElementById('fallbackLogo').style.display = 'grid';
+            }
+        }
+
+        function previsualizarLogoLocal(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const base64 = e.target.result;
+                const img = document.getElementById('logoImg');
+                img.src = base64;
+                img.style.display = 'block';
+                document.getElementById('fallbackLogo').style.display = 'none';
+                try { localStorage.setItem('mlas_custom_logo_webp', base64); } catch (err) { }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function mostrarMensaje(texto, esError = false) {
+            const alerta = document.getElementById('statusAlert');
+            alerta.textContent = texto;
+            alerta.className = `mb-6 p-4 rounded-2xl border-2 text-sm font-semibold shadow-sm ${esError
+                    ? 'bg-red-50 border-mlas-red/30 text-mlas-red'
+                    : 'bg-emerald-50 border-mlas-green/40 text-mlas-green'
+                }`;
+            alerta.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Lectura JSONP directa de Google Sheets (Funciona en file://, localhost y múltiples pestañas sin bloqueo CORS)
+        function cargarHorarios() {
+            const loading = document.getElementById('loading');
+            const contenedor = document.getElementById('contenedorHoras');
+            loading.classList.remove('hidden');
+            contenedor.innerHTML = '';
+
+            // Eliminar script previo si existe
+            const prevScript = document.getElementById('gvizScript');
+            if (prevScript) prevScript.remove();
+
+            const script = document.createElement('script');
+            script.id = 'gvizScript';
+            script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=responseHandler:procesarDatosHoja&headers=1&_=${Date.now()}`;
+            script.onerror = function () {
+                loading.classList.add('hidden');
+                mostrarMensaje("Error al leer la hoja de Google Sheets. Verifica tu conexión a internet.", true);
+            };
+            document.body.appendChild(script);
+        }
+
+        // Función que recibe automáticamente las filas desde Google Sheets
+        window.procesarDatosHoja = function (response) {
+            const loading = document.getElementById('loading');
+            loading.classList.add('hidden');
+
+            if (!response || !response.table) {
+                mostrarMensaje("No se encontraron datos en la hoja de cálculo.", true);
+                return;
+            }
+
+            const rows = response.table.rows || [];
+            horarios = [];
+
+            rows.forEach((r, idx) => {
+                const c = r.c || [];
+                const val = (col) => (c[col] ? String(c[col].f || c[col].v || '').trim() : '');
+                const fecha = val(0);
+                const hora = val(1);
+                const estado = val(2).toUpperCase();
+                const estudiante = val(3);
+
+                if (fecha && hora && fecha.toUpperCase() !== 'FECHA') {
+                    const estaOcupado = (estado === 'OCUPADO' || estudiante !== '');
+                    horarios.push({
+                        fila: idx + 2,
+                        fecha: fecha,
+                        hora: hora,
+                        disponible: !estaOcupado
+                    });
+                }
+            });
+
+            actualizarFiltroFechas();
+            mostrarHorarios();
+        };
+
+        function actualizarFiltroFechas() {
+            const disponibles = horarios.filter(h => h.disponible);
+            const fechas = [...new Set(disponibles.map(h => h.fecha))];
+
+            const selFecha = document.getElementById('filtroFecha');
+            const fechaActual = selFecha.value;
+
+            if (fechas.length === 1) {
+                selFecha.innerHTML = `<option value="${fechas[0]}">${fechas[0]}</option>`;
+            } else {
+                selFecha.innerHTML = '<option value="TODAS">Todas las fechas disponibles</option>' +
+                    fechas.map(f => `<option value="${f}">${f}</option>`).join('');
+                if (fechas.includes(fechaActual)) selFecha.value = fechaActual;
+            }
+        }
+
+        function mostrarHorarios() {
+            const contenedor = document.getElementById('contenedorHoras');
+            const contador = document.getElementById('contadorLibres');
+            const fecha = document.getElementById('filtroFecha').value;
+
+            const libres = horarios.filter(h => {
+                const coincideFecha = (fecha === 'TODAS' || h.fecha === fecha);
+                return h.disponible && coincideFecha;
+            });
+
+            contador.textContent = `${libres.length} ${libres.length === 1 ? 'turno libre' : 'turnos libres'}`;
+
+            if (libres.length === 0) {
+                contenedor.innerHTML = `
+          <div class="col-span-full py-12 text-center text-slate-400 text-sm bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200 px-4">
+            No hay horarios disponibles en la hoja de cálculo.<br>
+            <span class="text-xs text-slate-400">Asegúrate de haber escrito fechas en la Columna A y horas en la Columna B de tu Excel.</span>
+          </div>`;
+                return;
+            }
+
+            contenedor.innerHTML = libres.map(h => {
+                const activo = turnoSeleccionado && turnoSeleccionado.fila === h.fila;
+                return `
+          <button type="button" onclick="seleccionarTurno(${h.fila})"
+            class="group p-3.5 rounded-2xl border-2 text-center transition-all flex flex-col items-center justify-center ${activo
+                        ? 'bg-mlas-blue text-white border-mlas-blue shadow-lg scale-[1.03] ring-4 ring-mlas-blue/20'
+                        : 'bg-slate-50/80 hover:bg-mlas-orange/10 border-slate-200 hover:border-mlas-orange text-slate-800'
+                    }">
+            <span class="font-display text-base font-bold ${activo ? 'text-white' : 'text-slate-900 group-hover:text-mlas-orange'}">${h.hora}</span>
+            <span class="text-[11px] font-medium ${activo ? 'text-blue-100' : 'text-slate-500'} mt-0.5">${h.fecha}</span>
+          </button>
+        `;
+            }).join('');
+        }
+
+        function seleccionarTurno(fila) {
+            turnoSeleccionado = horarios.find(h => h.fila === fila);
+            mostrarHorarios();
+
+            const resumen = document.getElementById('resumenSeleccion');
+            const boton = document.getElementById('btnGuardar');
+
+            if (turnoSeleccionado) {
+                resumen.className = "mb-5 p-4 rounded-2xl bg-mlas-blue/10 border-2 border-mlas-blue/30 text-mlas-blue text-xs flex items-center gap-3";
+                resumen.innerHTML = `
+          <div class="bg-mlas-blue text-white p-2 rounded-xl shrink-0 font-bold">✓</div>
+          <div>
+            <span class="block font-bold uppercase text-[10px] tracking-wider text-mlas-orange">Horario seleccionado</span>
+            <strong class="text-sm font-display">${turnoSeleccionado.hora} — ${turnoSeleccionado.fecha}</strong>
+          </div>
+        `;
+                boton.disabled = false;
+            }
+        }
+
+        async function guardarCita(e) {
+            e.preventDefault();
+            if (!turnoSeleccionado) return;
+
+            if (!SCRIPT_URL || SCRIPT_URL.includes("PEGA_AQUI")) {
+                mostrarMensaje("Falta pegar la URL de tu Google Apps Script en la constante SCRIPT_URL (línea 202).", true);
+                return;
+            }
+
+            const boton = document.getElementById('btnGuardar');
+            const btnTexto = document.getElementById('btnTexto');
+            boton.disabled = true;
+            btnTexto.textContent = "Reservando tu horario...";
+
+            const datos = {
+                fila: turnoSeleccionado.fila,
+                estudiante: document.getElementById('estudiante').value.trim(),
+                acudiente: document.getElementById('acudiente').value.trim(),
+                telefono: document.getElementById('telefono').value.trim(),
+                comentarios: document.getElementById('comentarios').value.trim()
+            };
+
+            try {
+                const res = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(datos)
+                });
+                const resultado = await res.json();
+
+                if (resultado.status === 'ok') {
+                    mostrarMensaje(`¡Cita reservada con éxito para ${datos.estudiante} a las ${turnoSeleccionado.hora} (${turnoSeleccionado.fecha})! Te esperamos en MY LITTLES ARTISTS SCHOOL.`);
+                    document.getElementById('formReserva').reset();
+                    turnoSeleccionado = null;
+                    const resumen = document.getElementById('resumenSeleccion');
+                    resumen.className = "mb-5 p-4 rounded-2xl bg-slate-50 border-2 border-dashed border-slate-200 text-slate-500 text-xs flex items-center gap-3";
+                    resumen.innerHTML = `<span>👈 Toca una de las horas disponibles a la izquierda para activar el formulario.</span>`;
+                    cargarHorarios();
+                } else {
+                    mostrarMensaje(resultado.message || "Este horario acaba de ser reservado por otra familia. Por favor elige otra hora.", true);
+                    turnoSeleccionado = null;
+                    cargarHorarios();
+                }
+            } catch (err) {
+                mostrarMensaje("Ocurrió un error al guardar. Verifica que en Google Apps Script 'Quién tiene acceso' esté en 'Cualquier persona'.", true);
+                boton.disabled = false;
+            } finally {
+                btnTexto.textContent = "Confirmar Cita de Boletines";
+            }
+        }
+
+        // Iniciar carga al abrir
+        cargarHorarios();
+    </script>
+</body>
+
+</html>
