@@ -31,6 +31,7 @@
                             blue: '#104F9E',
                             orange: '#F37021',
                             green: '#4D8B31',
+                            yellow: '#FBBF24',
                             cream: '#FFFDF9'
                         }
                     }
@@ -83,7 +84,7 @@
                         🎨 Agendamiento Escolar
                     </span>
                     <h1 class="font-display text-xl sm:text-2xl font-bold tracking-tight text-slate-900 leading-none">
-                        <span class="text-mlas-red">MY </span>
+                        <span class="text-mlas-red">MY</span>
                         <span class="text-mlas-blue"> LITTLE</span>
                         <span class="text-mlas-orange"> ARTISTS</span>
                         <span class="text-mlas-green"> SCHOOL</span>
@@ -94,7 +95,7 @@
                 </div>
             </div>
 
-            <button onclick="cargarHorarios()"
+            <button onclick="cargarHorarios(false)"
                 class="text-xs font-semibold bg-slate-100 hover:bg-mlas-blue hover:text-white text-slate-700 px-3.5 py-2.5 rounded-xl flex items-center gap-1.5 transition shadow-sm">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -232,20 +233,17 @@
 
     <script>
         // =========================================================================
-        // 1. PEGA AQUÍ LA URL DE TU GOOGLE APPS SCRIPT (Terminada en /exec)
+        // PEGA AQUÍ TU URL DE GOOGLE APPS SCRIPT (Terminada en /exec)
         // =========================================================================
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwyxBigH7vql4B3rt7AtS3nXg8eHJhbrU0zghQ124cF2nKoZp_a5eHZfu9xRlIPob35/exec"
-
-
-        // ID de tu hoja de Google Sheets
-        const SHEET_ID = "1g9DMoZFe1iNHkLnpnMOhFA5XHmV_J750e0sQNhzZl8w";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzm37rhPi4FGkTT50vW_qCxQv5bBNSODQpEYMtdZZjcL1QFbw_4BSjANwJdrQVwRKMU/exec";
         const RUTA_LOGO_WEBP = "Logo MLAS.webp";
+        const LOCAL_CACHE_KEY = "mlas_horarios_cache_v1";
 
         let horarios = [];
         let turnoSeleccionado = null;
         let intentoLogo = 0;
 
-        // Cargar logo personalizado si existe
+        // 1. Cargar logo
         try {
             const logoGuardado = localStorage.getItem('mlas_custom_logo_webp');
             document.getElementById('logoImg').src = logoGuardado ? logoGuardado : RUTA_LOGO_WEBP;
@@ -290,57 +288,62 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Lectura JSONP directa de Google Sheets
-        function cargarHorarios() {
+        // 2. Carga ultrarrápida desde caché local + sincronización en segundo plano
+        async function cargarHorarios(silencioso = false) {
             const loading = document.getElementById('loading');
             const contenedor = document.getElementById('contenedorHoras');
-            loading.classList.remove('hidden');
-            contenedor.innerHTML = '';
 
-            const prevScript = document.getElementById('gvizScript');
-            if (prevScript) prevScript.remove();
+            try {
+                const cacheLocal = localStorage.getItem(LOCAL_CACHE_KEY);
+                if (cacheLocal && horarios.length === 0) {
+                    horarios = JSON.parse(cacheLocal);
+                    actualizarFiltroFechas();
+                    mostrarHorarios();
+                    loading.classList.add('hidden');
+                    silencioso = true;
+                }
+            } catch (e) { }
 
-            const script = document.createElement('script');
-            script.id = 'gvizScript';
-            script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=responseHandler:procesarDatosHoja&headers=1&_=${Date.now()}`;
-            script.onerror = function () {
+            if (!silencioso) {
+                loading.classList.remove('hidden');
+                contenedor.innerHTML = '';
+            }
+
+            if (!SCRIPT_URL || SCRIPT_URL.includes("PEGA_AQUI")) {
                 loading.classList.add('hidden');
-                mostrarMensaje("Error al leer la hoja de Google Sheets. Verifica tu conexión a internet.", true);
-            };
-            document.body.appendChild(script);
-        }
-
-        window.procesarDatosHoja = function (response) {
-            const loading = document.getElementById('loading');
-            loading.classList.add('hidden');
-
-            if (!response || !response.table) {
-                mostrarMensaje("No se encontraron datos en la hoja de cálculo.", true);
+                mostrarMensaje("Falta configurar SCRIPT_URL en el archivo index.html (línea 207).", true);
                 return;
             }
 
-            const rows = response.table.rows || [];
-            horarios = [];
+            try {
+                const res = await fetch(SCRIPT_URL);
+                const json = await res.json();
+                procesarDatosHoja(json);
+            } catch (err) {
+                const prevScript = document.getElementById('gasJsonp');
+                if (prevScript) prevScript.remove();
 
-            rows.forEach((r, idx) => {
-                const c = r.c || [];
-                const val = (col) => (c[col] ? String(c[col].f || c[col].v || '').trim() : '');
-                const fecha = val(0);
-                const hora = val(1);
-                const estado = val(2).toUpperCase();
-                const estudiante = val(3);
+                const script = document.createElement('script');
+                script.id = 'gasJsonp';
+                script.src = `${SCRIPT_URL}?callback=procesarDatosHoja&_=${Date.now()}`;
+                script.onerror = function () {
+                    loading.classList.add('hidden');
+                    if (!silencioso) mostrarMensaje("No se pudo conectar con el servidor de horarios.", true);
+                };
+                document.body.appendChild(script);
+            }
+        }
 
-                if (fecha && hora && fecha.toUpperCase() !== 'FECHA') {
-                    const estaOcupado = (estado === 'OCUPADO' || estudiante !== '');
-                    horarios.push({
-                        fila: idx + 2,
-                        fecha: fecha,
-                        hora: hora,
-                        disponible: !estaOcupado
-                    });
-                }
-            });
+        window.procesarDatosHoja = function (response) {
+            document.getElementById('loading').classList.add('hidden');
 
+            if (!response || response.status !== 'ok') {
+                mostrarMensaje("Error al obtener los horarios disponibles.", true);
+                return;
+            }
+
+            horarios = response.data || [];
+            try { localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(horarios)); } catch (e) { }
             actualizarFiltroFechas();
             mostrarHorarios();
         };
@@ -376,8 +379,7 @@
             if (libres.length === 0) {
                 contenedor.innerHTML = `
           <div class="col-span-full py-12 text-center text-slate-400 text-sm bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200 px-4">
-            No hay horarios disponibles en la hoja de cálculo.<br>
-            <span class="text-xs text-slate-400">Asegúrate de haber escrito fechas en la Columna A y horas en la Columna B de tu Excel.</span>
+            No hay horarios disponibles en este momento.
           </div>`;
                 return;
             }
@@ -417,22 +419,22 @@
             }
         }
 
+        // 3. Guardado con actualización visual instantánea
         async function guardarCita(e) {
             e.preventDefault();
             if (!turnoSeleccionado) return;
 
-            if (!SCRIPT_URL || SCRIPT_URL.includes("PEGA_AQUI")) {
-                mostrarMensaje("Falta pegar la URL de tu Google Apps Script en la constante SCRIPT_URL (línea 207).", true);
-                return;
-            }
-
             const boton = document.getElementById('btnGuardar');
             const btnTexto = document.getElementById('btnTexto');
+            const filaReservada = turnoSeleccionado.fila;
+            const horaReservada = turnoSeleccionado.hora;
+            const fechaReservada = turnoSeleccionado.fecha;
+
             boton.disabled = true;
-            btnTexto.textContent = "Reservando tu horario...";
+            btnTexto.textContent = "Confirmando tu turno...";
 
             const datos = {
-                fila: turnoSeleccionado.fila,
+                fila: filaReservada,
                 estudiante: document.getElementById('estudiante').value.trim(),
                 acudiente: document.getElementById('acudiente').value.trim(),
                 telefono: document.getElementById('telefono').value.trim(),
@@ -449,27 +451,31 @@
                 const resultado = await res.json();
 
                 if (resultado.status === 'ok') {
-                    mostrarMensaje(`¡Cita reservada con éxito para ${datos.estudiante} a las ${turnoSeleccionado.hora} (${turnoSeleccionado.fecha})! Te esperamos en MY LITTLE ARTISTS SCHOOL.`);
+                    horarios = horarios.map(h => h.fila === filaReservada ? { ...h, disponible: false } : h);
+                    try { localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(horarios)); } catch (err) { }
+
+                    mostrarMensaje(`¡Cita reservada con éxito para ${datos.estudiante} a las ${horaReservada} (${fechaReservada})! Revisa tu correo electrónico.`);
                     document.getElementById('formReserva').reset();
                     turnoSeleccionado = null;
                     const resumen = document.getElementById('resumenSeleccion');
                     resumen.className = "mb-5 p-4 rounded-2xl bg-slate-50 border-2 border-dashed border-slate-200 text-slate-500 text-xs flex items-center gap-3";
                     resumen.innerHTML = `<span>👈 Toca una de las horas disponibles a la izquierda para activar el formulario.</span>`;
-                    cargarHorarios();
+
+                    actualizarFiltroFechas();
+                    mostrarHorarios();
                 } else {
                     mostrarMensaje(resultado.message || "Este horario acaba de ser reservado por otra familia. Por favor elige otra hora.", true);
                     turnoSeleccionado = null;
-                    cargarHorarios();
+                    cargarHorarios(false);
                 }
             } catch (err) {
-                mostrarMensaje("Ocurrió un error al guardar. Verifica que en Google Apps Script 'Quién tiene acceso' esté en 'Cualquier persona'.", true);
+                mostrarMensaje("Ocurrió un error al guardar. Intenta nuevamente.", true);
                 boton.disabled = false;
             } finally {
                 btnTexto.textContent = "Confirmar Cita de Boletines";
             }
         }
 
-        // Iniciar carga al abrir
         cargarHorarios();
     </script>
 </body>

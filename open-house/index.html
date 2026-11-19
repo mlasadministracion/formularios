@@ -1,0 +1,651 @@
+He actualizado tu archivo `index.html` para habilitar campos de texto dinámicos y obligatorios cuando el usuario
+seleccione **"Otro"** tanto en la cantidad de asistentes como en el medio por el cual conoció el jardín.
+
+**No necesitas tocar tu Google Apps Script ni tu Excel:** el código de JavaScript toma automáticamente lo que el padre
+digite en esos cuadros nuevos y lo envía limpio en las mismas columnas (`asistentes` y `comoConocio`).
+
+Aquí tienes el archivo **`index.html` completo** listo para reemplazar (solo recuerda pegar tu enlace `/exec` en la
+constante `SCRIPT_URL`):
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MY LITTLE ARTISTS SCHOOL | Agenda tu Open House</title>
+    <link rel="icon" type="image/webp" href="Logo MLAS.webp" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['Fredoka', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        mlas: {
+                            red: '#D62828',
+                            blue: '#104F9E',
+                            orange: '#F37021',
+                            green: '#4D8B31',
+                            yellow: '#FBBF24',
+                            cream: '#FFFDF9'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-mlas-cream min-h-screen font-sans text-slate-800 relative overflow-x-hidden flex flex-col">
+
+    <!-- Barra superior con los 4 colores del logo MLAS -->
+    <div class="h-2.5 w-full flex">
+        <div class="w-1/4 bg-mlas-red"></div>
+        <div class="w-1/4 bg-mlas-blue"></div>
+        <div class="w-1/4 bg-mlas-orange"></div>
+        <div class="w-1/4 bg-mlas-green"></div>
+    </div>
+
+    <!-- Encabezado Institucional -->
+    <header class="bg-white/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-20 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 py-3.5 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center gap-3.5">
+
+                <!-- Logo MLAS (.webp) -->
+                <div
+                    class="group relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white shadow-md border-2 border-slate-100 p-1 flex items-center justify-center overflow-hidden shrink-0">
+                    <img id="logoImg" src="Logo MLAS.webp" alt="Logo MY LITTLE ARTISTS SCHOOL"
+                        class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
+                        onerror="intentarRutaAlternativa(this)" />
+                    <div id="fallbackLogo" style="display:none;"
+                        class="w-full h-full grid-cols-2 grid-rows-2 rounded-xl overflow-hidden font-display font-bold text-white text-sm">
+                        <div class="bg-mlas-red flex items-center justify-center">M</div>
+                        <div class="bg-mlas-blue flex items-center justify-center">L</div>
+                        <div class="bg-mlas-orange flex items-center justify-center">A</div>
+                        <div class="bg-mlas-green flex items-center justify-center">S</div>
+                    </div>
+                </div>
+
+                <div>
+                    <span
+                        class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-mlas-green/15 text-mlas-green mb-0.5">
+                        🏫 Open House • Visita Guiada
+                    </span>
+                    <h1 class="font-display text-xl sm:text-2xl font-bold tracking-tight text-slate-900 leading-none">
+                        <span class="text-mlas-red">MY</span>
+                        <span class="text-mlas-blue"> LITTLE</span>
+                        <span class="text-mlas-orange"> ARTISTS</span>
+                        <span class="text-mlas-green"> SCHOOL</span>
+                    </h1>
+                    <p class="text-xs sm:text-sm text-slate-500 font-medium mt-0.5">
+                        Conoce nuestro proyecto pedagógico de arte, ciencia y naturaleza
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <a href="https://maps.app.goo.gl/9sE7ZfWV28FxNNib7" target="_blank" rel="noopener"
+                    class="text-xs font-semibold bg-mlas-green/10 hover:bg-mlas-green hover:text-white text-mlas-green px-3.5 py-2.5 rounded-xl flex items-center gap-1.5 transition">
+                    📍 Cómo llegar
+                </a>
+                <button onclick="cargarHorarios(false)"
+                    class="text-xs font-semibold bg-slate-100 hover:bg-mlas-blue hover:text-white text-slate-700 px-3.5 py-2.5 rounded-xl flex items-center gap-1.5 transition shadow-sm">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    Actualizar
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-8 flex-1 w-full relative z-10">
+        <!-- Banner de bienvenida -->
+        <div
+            class="mb-7 bg-gradient-to-r from-mlas-blue via-[#1b5eb5] to-mlas-green rounded-3xl p-5 sm:p-6 text-white shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div class="space-y-1.5">
+                <h2 class="font-display text-lg sm:text-xl font-bold flex items-center gap-2">
+                    ✨ ¡Ven a vivir la experiencia My Little Artists School!
+                </h2>
+                <p class="text-xs sm:text-sm text-blue-100 max-w-2xl">
+                    Agenda una visita personalizada de <strong>1 hora</strong> para recorrer nuestros espacios, resolver
+                    todas tus inquietudes y descubrir cómo potenciamos el talento de tu hijo(a).
+                </p>
+                <div class="pt-1">
+                    <a href="https://maps.app.goo.gl/9sE7ZfWV28FxNNib7" target="_blank" rel="noopener"
+                        class="inline-flex items-center gap-1.5 text-xs font-bold bg-white/15 hover:bg-white/25 text-white px-3 py-1.5 rounded-lg transition">
+                        📍 Ubicación del jardín: Ver en Google Maps ↗
+                    </a>
+                </div>
+            </div>
+            <!-- Bloques decorativos MLAS -->
+            <div class="hidden sm:flex items-end gap-1 shrink-0 bg-white/10 p-2.5 rounded-2xl">
+                <div class="w-4 h-4 rounded-sm bg-mlas-red"></div>
+                <div class="flex flex-col gap-1">
+                    <div class="w-4 h-4 rounded-sm bg-mlas-blue"></div>
+                    <div class="w-4 h-4 rounded-sm bg-slate-900"></div>
+                </div>
+                <div class="w-4 h-4 rounded-sm bg-mlas-orange"></div>
+            </div>
+        </div>
+
+        <!-- Alerta de confirmación o error -->
+        <div id="statusAlert" class="hidden mb-6 p-4 rounded-2xl border-2 text-sm font-semibold shadow-sm"></div>
+
+        <div class="grid lg:grid-cols-12 gap-7">
+            <!-- PASO 1: Elegir Fecha y Hora -->
+            <div
+                class="lg:col-span-5 bg-white p-6 rounded-3xl shadow-md border-2 border-slate-100 h-fit relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-mlas-red to-mlas-orange"></div>
+
+                <div class="flex items-center justify-between mb-5">
+                    <h3 class="font-display text-lg font-bold text-slate-800 flex items-center gap-2.5">
+                        <span
+                            class="bg-mlas-orange text-white w-7 h-7 rounded-xl inline-flex items-center justify-center text-sm shadow-sm">1</span>
+                        Elige Día y Hora
+                    </h3>
+                    <span id="contadorLibres"
+                        class="text-xs font-bold px-2.5 py-1 rounded-full bg-mlas-green/15 text-mlas-green">
+                        Cargando...
+                    </span>
+                </div>
+
+                <div class="mb-5">
+                    <label class="block text-xs font-bold text-slate-600 uppercase tracking-wide mb-1.5">
+                        📅 Filtrar por fecha
+                    </label>
+                    <select id="filtroFecha" onchange="mostrarHorarios()"
+                        class="w-full rounded-2xl border-2 border-slate-200 bg-slate-50/70 px-4 py-2.5 text-sm font-semibold text-slate-700 focus:border-mlas-blue focus:bg-white outline-none transition">
+                        <option value="TODAS">Todas las fechas disponibles</option>
+                    </select>
+                </div>
+
+                <div id="loading" class="py-14 text-center text-slate-500 text-sm flex flex-col items-center gap-2">
+                    <div class="w-8 h-8 border-4 border-mlas-orange border-t-transparent rounded-full animate-spin">
+                    </div>
+                    <span>Consultando horarios disponibles...</span>
+                </div>
+
+                <div id="contenedorHoras" class="grid grid-cols-2 gap-3"></div>
+            </div>
+
+            <!-- PASO 2: Formulario Open House -->
+            <div
+                class="lg:col-span-7 bg-white p-6 rounded-3xl shadow-md border-2 border-slate-100 h-fit relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-mlas-blue to-mlas-green"></div>
+
+                <h3 class="font-display text-lg font-bold text-slate-800 mb-4 flex items-center gap-2.5">
+                    <span
+                        class="bg-mlas-blue text-white w-7 h-7 rounded-xl inline-flex items-center justify-center text-sm shadow-sm">2</span>
+                    Datos para tu Visita
+                </h3>
+
+                <div id="resumenSeleccion"
+                    class="mb-5 p-4 rounded-2xl bg-slate-50 border-2 border-dashed border-slate-200 text-slate-500 text-xs flex items-center gap-3">
+                    <span>👈 Selecciona un horario disponible a la izquierda para activar el formulario.</span>
+                </div>
+
+                <form id="formOpenHouse" onsubmit="guardarVisita(event)" class="space-y-4">
+                    <!-- Datos del Acudiente -->
+                    <div class="grid sm:grid-cols-2 gap-3.5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Nombre del padre / madre /
+                                acudiente *</label>
+                            <input type="text" id="acudiente" required placeholder="Nombre completo"
+                                class="w-full rounded-xl border-2 border-slate-200 px-3.5 py-2.5 text-sm focus:border-mlas-orange outline-none transition" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Profesión *</label>
+                            <input type="text" id="profesion" required placeholder="Ej. Ingeniero, Médica, Diseñador..."
+                                class="w-full rounded-xl border-2 border-slate-200 px-3.5 py-2.5 text-sm focus:border-mlas-orange outline-none transition" />
+                        </div>
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-3.5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Número de celular / WhatsApp
+                                *</label>
+                            <input type="tel" id="celular" required placeholder="Ej. 310 123 4567"
+                                class="w-full rounded-xl border-2 border-slate-200 px-3.5 py-2.5 text-sm focus:border-mlas-orange outline-none transition" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Correo electrónico *</label>
+                            <input type="email" id="correo" required placeholder="correo@ejemplo.com"
+                                class="w-full rounded-xl border-2 border-slate-200 px-3.5 py-2.5 text-sm focus:border-mlas-orange outline-none transition" />
+                        </div>
+                    </div>
+
+                    <hr class="border-slate-100" />
+
+                    <!-- Datos del Niño(a) -->
+                    <div class="grid sm:grid-cols-3 gap-3.5">
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Nombre del niño(a) *</label>
+                            <input type="text" id="nino" required placeholder="Nombre y apellido del pequeño(a)"
+                                class="w-full rounded-xl border-2 border-slate-200 px-3.5 py-2.5 text-sm focus:border-mlas-orange outline-none transition" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Edad *</label>
+                            <input type="text" id="edad" required placeholder="Ej. 2 años y medio"
+                                class="w-full rounded-xl border-2 border-slate-200 px-3.5 py-2.5 text-sm focus:border-mlas-orange outline-none transition" />
+                        </div>
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-3.5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Ciudad donde reside *</label>
+                            <input type="text" id="ciudad" required placeholder="Ej. Madrid, Mosquera, Funza, Bogotá..."
+                                class="w-full rounded-xl border-2 border-slate-200 px-3.5 py-2.5 text-sm focus:border-mlas-orange outline-none transition" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">¿Es su primer jardín? *</label>
+                            <select id="primerJardin" required onchange="toggleJardinActual()"
+                                class="w-full rounded-xl border-2 border-slate-200 bg-white px-3.5 py-2.5 text-sm focus:border-mlas-orange outline-none transition">
+                                <option value="Sí">Sí, es su primer jardín</option>
+                                <option value="No">No, ya asiste a uno</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Campo condicional: solo aparece si marca "No" -->
+                    <div id="grupoJardinActual" class="hidden">
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Nombre del jardín actual *</label>
+                        <input type="text" id="jardinActual"
+                            placeholder="Escribe el nombre del jardín al que asiste actualmente"
+                            class="w-full rounded-xl border-2 border-mlas-blue/40 bg-blue-50/30 px-3.5 py-2.5 text-sm focus:border-mlas-blue outline-none transition" />
+                    </div>
+
+                    <hr class="border-slate-100" />
+
+                    <!-- Logística de la visita con opciones "Otro" dinámicas -->
+                    <div class="grid sm:grid-cols-2 gap-3.5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">¿Cuántas personas asistirán?
+                                *</label>
+                            <select id="asistentes" required onchange="toggleOtroAsistentes()"
+                                class="w-full rounded-xl border-2 border-slate-200 bg-white px-3.5 py-2.5 text-sm focus:border-mlas-orange outline-none transition">
+                                <option value="1 adulto + niño(a)">1 adulto + niño(a)</option>
+                                <option value="2 adultos + niño(a)" selected>2 adultos (Papá y Mamá) + niño(a)</option>
+                                <option value="3 familiares + niño(a)">3 familiares + niño(a)</option>
+                                <option value="OTRO">Otro (especificar cantidad/quiénes)...</option>
+                            </select>
+                            <div id="grupoOtroAsistentes" class="hidden mt-2">
+                                <input type="text" id="otroAsistentesTexto"
+                                    placeholder="Ej. 4 adultos (padres y abuelos) + niño"
+                                    class="w-full rounded-xl border-2 border-mlas-orange/50 bg-orange-50/30 px-3.5 py-2 text-sm focus:border-mlas-orange outline-none transition" />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">¿Cómo conoció My Little Artists
+                                School? *</label>
+                            <select id="comoConocio" required onchange="toggleOtroComoConocio()"
+                                class="w-full rounded-xl border-2 border-slate-200 bg-white px-3.5 py-2.5 text-sm focus:border-mlas-orange outline-none transition">
+                                <option value="" disabled selected>Selecciona una opción...</option>
+                                <option value="Instagram / Facebook">Instagram / Facebook</option>
+                                <option value="Google / Búsqueda en Internet">Google / Búsqueda en Internet</option>
+                                <option value="Recomendación de otra familia">Recomendación de otra familia</option>
+                                <option value="Pasando frente al jardín / Fachada">Pasando frente al jardín</option>
+                                <option value="OTRO">Otro (especificar)...</option>
+                            </select>
+                            <div id="grupoOtroComoConocio" class="hidden mt-2">
+                                <input type="text" id="otroComoConocioTexto"
+                                    placeholder="Cuéntanos cómo nos conociste..."
+                                    class="w-full rounded-xl border-2 border-mlas-orange/50 bg-orange-50/30 px-3.5 py-2 text-sm focus:border-mlas-orange outline-none transition" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btnGuardar" disabled
+                        class="w-full bg-gradient-to-r from-mlas-red via-mlas-orange to-mlas-green hover:opacity-95 disabled:from-slate-200 disabled:to-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed text-white font-display font-bold py-3.5 rounded-2xl text-sm transition shadow-md hover:shadow-lg flex items-center justify-center gap-2 mt-2">
+                        <span id="btnTexto">Agendar Visita Open House</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="mt-12 py-5 text-center text-xs text-slate-400 border-t border-slate-200/60 bg-white/60">
+        <p class="font-semibold text-slate-600">MY LITTLE ARTISTS SCHOOL (MLAS)</p>
+        <p class="mt-0.5">Arte, ciencia y naturaleza para el crecimiento de nuestros niños</p>
+    </footer>
+
+    <script>
+        // =========================================================================
+        // PEGA AQUÍ LA URL DE TU GOOGLE APPS SCRIPT DEL OPEN HOUSE (/exec)
+        // =========================================================================
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyVOg9a6zzMqRMQ_S74x6sDGLhVRjQoW8UcnsAtXGGTkFvOn1e5b36Yq4QS2iBJ1ZKk/exec";
+        const RUTA_LOGO_WEBP = "Logo MLAS.webp";
+        const LOCAL_CACHE_KEY = "mlas_openhouse_cache_v1";
+
+        let horarios = [];
+        let turnoSeleccionado = null;
+        let intentoLogo = 0;
+
+        function intentarRutaAlternativa(img) {
+            const alternativas = ["Logo%20MLAS.webp", "logo-mlas.webp", "logo.webp", "Logo MLAS.jpeg"];
+            if (intentoLogo < alternativas.length) {
+                img.src = alternativas[intentoLogo];
+                intentoLogo++;
+            } else {
+                img.style.display = 'none';
+                document.getElementById('fallbackLogo').style.display = 'grid';
+            }
+        }
+
+        function toggleJardinActual() {
+            const esPrimer = document.getElementById('primerJardin').value;
+            const grupo = document.getElementById('grupoJardinActual');
+            const input = document.getElementById('jardinActual');
+            if (esPrimer === 'No') {
+                grupo.classList.remove('hidden');
+                input.required = true;
+            } else {
+                grupo.classList.add('hidden');
+                input.required = false;
+                input.value = '';
+            }
+        }
+
+        function toggleOtroAsistentes() {
+            const val = document.getElementById('asistentes').value;
+            const grupo = document.getElementById('grupoOtroAsistentes');
+            const input = document.getElementById('otroAsistentesTexto');
+            if (val === 'OTRO') {
+                grupo.classList.remove('hidden');
+                input.required = true;
+                input.focus();
+            } else {
+                grupo.classList.add('hidden');
+                input.required = false;
+                input.value = '';
+            }
+        }
+
+        function toggleOtroComoConocio() {
+            const val = document.getElementById('comoConocio').value;
+            const grupo = document.getElementById('grupoOtroComoConocio');
+            const input = document.getElementById('otroComoConocioTexto');
+            if (val === 'OTRO') {
+                grupo.classList.remove('hidden');
+                input.required = true;
+                input.focus();
+            } else {
+                grupo.classList.add('hidden');
+                input.required = false;
+                input.value = '';
+            }
+        }
+
+        // Valida en el navegador que la fecha/hora de la fila no sea anterior al momento actual
+        function esFechaFutura(fechaStr, horaStr) {
+            try {
+                const p = fechaStr.trim().split(/[-/]/);
+                let anio, mes, dia;
+                if (p[0].length === 4) {
+                    anio = parseInt(p[0], 10);
+                    mes = parseInt(p[1], 10) - 1;
+                    dia = parseInt(p[2], 10);
+                } else {
+                    dia = parseInt(p[0], 10);
+                    mes = parseInt(p[1], 10) - 1;
+                    anio = parseInt(p[2], 10);
+                }
+
+                const t = horaStr.toUpperCase().replace(/\./g, '').trim();
+                const esPM = t.includes('PM');
+                const esAM = t.includes('AM');
+                const nums = t.replace(/[^0-9:]/g, '').split(':');
+                let h = parseInt(nums[0] || '0', 10);
+                const m = parseInt(nums[1] || '0', 10);
+
+                if (esPM && h < 12) h += 12;
+                else if (esAM && h === 12) h = 0;
+
+                const fechaCita = new Date(anio, mes, dia, h, m, 0);
+                return fechaCita.getTime() > Date.now();
+            } catch (e) {
+                return true;
+            }
+        }
+
+        function mostrarMensaje(texto, esError = false) {
+            const alerta = document.getElementById('statusAlert');
+            alerta.textContent = texto;
+            alerta.className = `mb-6 p-4 rounded-2xl border-2 text-sm font-semibold shadow-sm ${esError
+                ? 'bg-red-50 border-mlas-red/30 text-mlas-red'
+                : 'bg-emerald-50 border-mlas-green/40 text-mlas-green'
+                }`;
+            alerta.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        async function cargarHorarios(silencioso = false) {
+            const loading = document.getElementById('loading');
+            const contenedor = document.getElementById('contenedorHoras');
+
+            try {
+                const cacheLocal = localStorage.getItem(LOCAL_CACHE_KEY);
+                if (cacheLocal && horarios.length === 0) {
+                    horarios = JSON.parse(cacheLocal).filter(h => esFechaFutura(h.fecha, h.hora));
+                    actualizarFiltroFechas();
+                    mostrarHorarios();
+                    loading.classList.add('hidden');
+                    silencioso = true;
+                }
+            } catch (e) { }
+
+            if (!silencioso) {
+                loading.classList.remove('hidden');
+                contenedor.innerHTML = '';
+            }
+
+            if (!SCRIPT_URL || SCRIPT_URL.includes("PEGA_AQUI")) {
+                loading.classList.add('hidden');
+                mostrarMensaje("Falta configurar SCRIPT_URL en el archivo index.html.", true);
+                return;
+            }
+
+            try {
+                const res = await fetch(SCRIPT_URL);
+                const json = await res.json();
+                procesarDatosHoja(json);
+            } catch (err) {
+                const prevScript = document.getElementById('gasJsonp');
+                if (prevScript) prevScript.remove();
+
+                const script = document.createElement('script');
+                script.id = 'gasJsonp';
+                script.src = `${SCRIPT_URL}?callback=procesarDatosHoja&_=${Date.now()}`;
+                script.onerror = function () {
+                    loading.classList.add('hidden');
+                    if (!silencioso) mostrarMensaje("No se pudo conectar con el servidor de horarios.", true);
+                };
+                document.body.appendChild(script);
+            }
+        }
+
+        window.procesarDatosHoja = function (response) {
+            document.getElementById('loading').classList.add('hidden');
+
+            if (!response || response.status !== 'ok') {
+                mostrarMensaje("Error al obtener los horarios disponibles.", true);
+                return;
+            }
+
+            horarios = (response.data || []).filter(h => esFechaFutura(h.fecha, h.hora));
+            try { localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(horarios)); } catch (e) { }
+            actualizarFiltroFechas();
+            mostrarHorarios();
+        };
+
+        function actualizarFiltroFechas() {
+            const disponibles = horarios.filter(h => h.disponible && esFechaFutura(h.fecha, h.hora));
+            const fechas = [...new Set(disponibles.map(h => h.fecha))];
+
+            const selFecha = document.getElementById('filtroFecha');
+            const fechaActual = selFecha.value;
+
+            if (fechas.length === 1) {
+                selFecha.innerHTML = `<option value="${fechas[0]}">${fechas[0]}</option>`;
+            } else {
+                selFecha.innerHTML = '<option value="TODAS">Todas las fechas disponibles</option>' +
+                    fechas.map(f => `<option value="${f}">${f}</option>`).join('');
+                if (fechas.includes(fechaActual)) selFecha.value = fechaActual;
+            }
+        }
+
+        function mostrarHorarios() {
+            const contenedor = document.getElementById('contenedorHoras');
+            const contador = document.getElementById('contadorLibres');
+            const fecha = document.getElementById('filtroFecha').value;
+
+            const libres = horarios.filter(h => {
+                const coincideFecha = (fecha === 'TODAS' || h.fecha === fecha);
+                return h.disponible && coincideFecha && esFechaFutura(h.fecha, h.hora);
+            });
+
+            contador.textContent = `${libres.length} ${libres.length === 1 ? 'cupo libre' : 'cupos libres'}`;
+
+            if (libres.length === 0) {
+                contenedor.innerHTML = `
+          <div class="col-span-full py-12 text-center text-slate-400 text-sm bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200 px-4">
+            No hay horarios próximos disponibles en este momento.
+          </div>`;
+                return;
+            }
+
+            contenedor.innerHTML = libres.map(h => {
+                const activo = turnoSeleccionado && turnoSeleccionado.fila === h.fila;
+                return `
+          <button type="button" onclick="seleccionarTurno(${h.fila})"
+            class="group p-3.5 rounded-2xl border-2 text-center transition-all flex flex-col items-center justify-center ${activo
+                        ? 'bg-mlas-blue text-white border-mlas-blue shadow-lg scale-[1.03] ring-4 ring-mlas-blue/20'
+                        : 'bg-slate-50/80 hover:bg-mlas-orange/10 border-slate-200 hover:border-mlas-orange text-slate-800'
+                    }">
+            <span class="font-display text-base font-bold ${activo ? 'text-white' : 'text-slate-900 group-hover:text-mlas-orange'}">${h.hora}</span>
+            <span class="text-[11px] font-medium ${activo ? 'text-blue-100' : 'text-slate-500'} mt-0.5">${h.fecha}</span>
+            <span class="text-[10px] font-semibold mt-1 px-2 py-0.5 rounded-full ${activo ? 'bg-white/20 text-white' : 'bg-mlas-green/10 text-mlas-green'}">1 hora</span>
+          </button>
+        `;
+            }).join('');
+        }
+
+        function seleccionarTurno(fila) {
+            turnoSeleccionado = horarios.find(h => h.fila === fila);
+            mostrarHorarios();
+
+            const resumen = document.getElementById('resumenSeleccion');
+            const boton = document.getElementById('btnGuardar');
+
+            if (turnoSeleccionado) {
+                resumen.className = "mb-5 p-4 rounded-2xl bg-mlas-green/10 border-2 border-mlas-green/30 text-mlas-green text-xs flex items-center gap-3";
+                resumen.innerHTML = `
+          <div class="bg-mlas-green text-white p-2 rounded-xl shrink-0 font-bold">✓</div>
+          <div>
+            <span class="block font-bold uppercase text-[10px] tracking-wider text-mlas-orange">Visita Open House seleccionada (1 hora)</span>
+            <strong class="text-sm font-display text-slate-900">${turnoSeleccionado.hora} — ${turnoSeleccionado.fecha}</strong>
+          </div>
+        `;
+                boton.disabled = false;
+            }
+        }
+
+        async function guardarVisita(e) {
+            e.preventDefault();
+            if (!turnoSeleccionado) return;
+
+            const boton = document.getElementById('btnGuardar');
+            const btnTexto = document.getElementById('btnTexto');
+            const filaReservada = turnoSeleccionado.fila;
+            const horaReservada = turnoSeleccionado.hora;
+            const fechaReservada = turnoSeleccionado.fecha;
+
+            // Resolver valor final si el usuario eligió "Otro"
+            const selAsistentes = document.getElementById('asistentes').value;
+            const asistentesFinal = selAsistentes === 'OTRO'
+                ? document.getElementById('otroAsistentesTexto').value.trim()
+                : selAsistentes;
+
+            const selComoConocio = document.getElementById('comoConocio').value;
+            const comoConocioFinal = selComoConocio === 'OTRO'
+                ? `Otro: ${document.getElementById('otroComoConocioTexto').value.trim()}`
+                : selComoConocio;
+
+            boton.disabled = true;
+            btnTexto.textContent = "Agendando tu visita...";
+
+            const datos = {
+                fila: filaReservada,
+                acudiente: document.getElementById('acudiente').value.trim(),
+                correo: document.getElementById('correo').value.trim(),
+                profesion: document.getElementById('profesion').value.trim(),
+                nino: document.getElementById('nino').value.trim(),
+                edad: document.getElementById('edad').value.trim(),
+                ciudad: document.getElementById('ciudad').value.trim(),
+                celular: document.getElementById('celular').value.trim(),
+                primerJardin: document.getElementById('primerJardin').value,
+                jardinActual: document.getElementById('jardinActual').value.trim(),
+                asistentes: asistentesFinal,
+                comoConocio: comoConocioFinal
+            };
+
+            try {
+                const res = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(datos)
+                });
+                const resultado = await res.json();
+
+                if (resultado.status === 'ok') {
+                    horarios = horarios.map(h => h.fila === filaReservada ? { ...h, disponible: false } : h);
+                    try { localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(horarios)); } catch (err) { }
+
+                    mostrarMensaje(`¡Visita Open House confirmada para la familia de ${datos.nino} el ${fechaReservada} a las ${horaReservada}! Te enviamos un correo con el enlace de Google Maps y la invitación a tu calendario.`);
+                    document.getElementById('formOpenHouse').reset();
+                    toggleJardinActual();
+                    toggleOtroAsistentes();
+                    toggleOtroComoConocio();
+                    turnoSeleccionado = null;
+
+                    const resumen = document.getElementById('resumenSeleccion');
+                    resumen.className = "mb-5 p-4 rounded-2xl bg-slate-50 border-2 border-dashed border-slate-200 text-slate-500 text-xs flex items-center gap-3";
+                    resumen.innerHTML = `<span>👈 Selecciona un horario disponible a la izquierda para activar el formulario.</span>`;
+
+                    actualizarFiltroFechas();
+                    mostrarHorarios();
+                } else {
+                    mostrarMensaje(resultado.message || "Este horario acaba de ser tomado. Por favor elige otro.", true);
+                    turnoSeleccionado = null;
+                    cargarHorarios(false);
+                }
+            } catch (err) {
+                mostrarMensaje("Ocurrió un error al agendar. Intenta nuevamente.", true);
+                boton.disabled = false;
+            } finally {
+                btnTexto.textContent = "Agendar Visita Open House";
+            }
+        }
+
+        cargarHorarios();
+    </script>
+</body>
+
+</html>
