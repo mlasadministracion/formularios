@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MY LITTLE ARTISTS SCHOOL | Solicitud de Uniformes 2027</title>
+    <link rel="icon" type="image/webp" href="Logo MLAS.webp" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['Fredoka', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        mlas: {
+                            red: '#D62828',
+                            blue: '#104F9E',
+                            orange: '#F37021',
+                            green: '#4D8B31',
+                            yellow: '#FBBF24',
+                            cream: '#FFFDF9'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-mlas-cream min-h-screen font-sans text-slate-800 relative overflow-x-hidden flex flex-col">
+
+    <!-- Barra superior con los 4 colores del logo MLAS -->
+    <div class="h-2.5 w-full flex">
+        <div class="w-1/4 bg-mlas-red"></div>
+        <div class="w-1/4 bg-mlas-blue"></div>
+        <div class="w-1/4 bg-mlas-orange"></div>
+        <div class="w-1/4 bg-mlas-green"></div>
+    </div>
+
+    <!-- Encabezado Institucional -->
+    <header class="bg-white/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-20 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 py-3.5 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center gap-3.5">
+
+                <!-- Logo MLAS (.webp) -->
+                <div
+                    class="group relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white shadow-md border-2 border-slate-100 p-1 flex items-center justify-center overflow-hidden shrink-0">
+                    <img id="logoImg" src="Logo MLAS.webp" alt="Logo MY LITTLE ARTISTS SCHOOL"
+                        class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
+                        onerror="intentarRutaAlternativa(this)" />
+                    <div id="fallbackLogo" style="display:none;"
+                        class="w-full h-full grid-cols-2 grid-rows-2 rounded-xl overflow-hidden font-display font-bold text-white text-sm">
+                        <div class="bg-mlas-red flex items-center justify-center">M</div>
+                        <div class="bg-mlas-blue flex items-center justify-center">L</div>
+                        <div class="bg-mlas-orange flex items-center justify-center">A</div>
+                        <div class="bg-mlas-green flex items-center justify-center">S</div>
+                    </div>
+                </div>
+
+                <div>
+                    <span
+                        class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-mlas-blue/10 text-mlas-blue mb-0.5">
+                        👕 Dotación Escolar <span class="lblAnio">2027</span>
+                    </span>
+                    <h1 class="font-display text-xl sm:text-2xl font-bold tracking-tight text-slate-900 leading-none">
+                        <span class="text-mlas-red">MY</span>
+                        <span class="text-mlas-blue"> LITTLE</span>
+                        <span class="text-mlas-orange"> ARTISTS</span>
+                        <span class="text-mlas-green"> SCHOOL</span>
+                    </h1>
+                    <p class="text-xs sm:text-sm text-slate-500 font-medium mt-0.5">
+                        Formato de Solicitud de Uniformes • <span id="lblNitHeader">NIT 902.069.730-8</span>
+                    </p>
+                </div>
+            </div>
+
+            <a href="#guiaTallas"
+                class="text-xs font-bold bg-mlas-orange/15 hover:bg-mlas-orange hover:text-white text-mlas-orange px-4 py-2.5 rounded-xl flex items-center gap-1.5 transition">
+                📏 Ver Guía de Tallas (cm)
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-1 w-full relative z-10">
+        <!-- Banner informativo -->
+        <div
+            class="mb-7 bg-gradient-to-r from-mlas-blue via-[#1b5eb5] to-mlas-green rounded-3xl p-5 sm:p-6 text-white shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div class="space-y-1">
+                <h2 class="font-display text-lg sm:text-xl font-bold flex items-center gap-2">
+                    ✨ Solicitud de Uniformes Oficiales <span class="lblAnio">2027</span>
+                </h2>
+                <p class="text-xs sm:text-sm text-blue-100 max-w-2xl">
+                    Selecciona las tallas y cantidades de cada prenda (o arma el <strong>Uniforme Completo por <span
+                            class="lblPrecioCompleto">$518.000</span></strong>). Al enviar el formulario recibirás una
+                    copia en tu correo con el resumen y los datos de pago.
+                </p>
+            </div>
+            <div
+                class="bg-white/15 backdrop-blur-sm px-4 py-2.5 rounded-2xl text-right shrink-0 border border-white/20">
+                <span class="block text-[10px] uppercase tracking-wider text-blue-100 font-bold">Uniforme Completo (5
+                    prendas)</span>
+                <span class="font-display text-2xl font-bold text-white lblPrecioCompleto">$518.000</span>
+            </div>
+        </div>
+
+        <!-- Alerta de confirmación o error -->
+        <div id="statusAlert" class="hidden mb-6 p-5 rounded-2xl border-2 text-sm font-semibold shadow-sm"></div>
+
+        <form id="formUniformes" onsubmit="enviarSolicitud(event)" class="grid lg:grid-cols-12 gap-7">
+
+            <!-- COLUMNA IZQUIERDA (7 cols): Selección de Prendas, Tallas y Guía -->
+            <div class="lg:col-span-7 space-y-6">
+
+                <!-- Tarjeta 1: Selección de Prendas -->
+                <div class="bg-white p-6 rounded-3xl shadow-md border-2 border-slate-100 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-mlas-red to-mlas-orange"></div>
+
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+                        <h3 class="font-display text-lg font-bold text-slate-800 flex items-center gap-2.5">
+                            <span
+                                class="bg-mlas-orange text-white w-7 h-7 rounded-xl inline-flex items-center justify-center text-sm shadow-sm">1</span>
+                            Selecciona Prendas y Tallas
+                        </h3>
+                        <button type="button" onclick="seleccionarSetCompleto()"
+                            class="text-xs font-bold bg-mlas-green/15 hover:bg-mlas-green hover:text-white text-mlas-green px-3 py-1.5 rounded-xl transition">
+                            + Marcar 1 de cada prenda (Uniforme Completo)
+                        </button>
+                    </div>
+
+                    <div class="space-y-3" id="listaPrendas">
+                        <!-- Chaqueta -->
+                        <div
+                            class="p-3.5 rounded-2xl border-2 border-slate-100 bg-slate-50/60 hover:border-mlas-blue/30 transition flex flex-wrap sm:flex-nowrap items-center justify-between gap-3">
+                            <div class="flex-1 min-w-[180px]">
+                                <span class="font-display font-bold text-slate-800 text-sm block">Chaqueta de
+                                    sudadera</span>
+                                <span id="precioChaquetaLbl" class="text-xs font-bold text-mlas-blue">$137.000
+                                    c/u</span>
+                            </div>
+                            <div class="flex items-center gap-2.5">
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-500 uppercase">Talla</label>
+                                    <select id="chaquetaTalla"
+                                        class="rounded-xl border-2 border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold text-slate-700 focus:border-mlas-orange outline-none">
+                                        <option value="2">Talla 2</option>
+                                        <option value="4" selected>Talla 4</option>
+                                        <option value="6">Talla 6</option>
+                                        <option value="8">Talla 8</option>
+                                        <option value="10">Talla 10</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-500 uppercase">Cant.</label>
+                                    <input type="number" id="chaquetaCant" min="0" max="10" value="0"
+                                        onchange="recalcularTotal()" oninput="recalcularTotal()"
+                                        class="w-16 rounded-xl border-2 border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold text-center text-slate-800 focus:border-mlas-orange outline-none" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Buso Sudadera -->
+                        <div
+                            class="p-3.5 rounded-2xl border-2 border-slate-100 bg-slate-50/60 hover:border-mlas-blue/30 transition flex flex-wrap sm:flex-nowrap items-center justify-between gap-3">
+                            <div class="flex-1 min-w-[180px]">
+                                <span class="font-display font-bold text-slate-800 text-sm block">Buso sudadera</span>
+                                <span id="precioBusoLbl" class="text-xs font-bold text-mlas-blue">$112.000 c/u</span>
+                            </div>
+                            <div class="flex items-center gap-2.5">
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-500 uppercase">Talla</label>
+                                    <select id="busoTalla"
+                                        class="rounded-xl border-2 border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold text-slate-700 focus:border-mlas-orange outline-none">
+                                        <option value="2">Talla 2</option>
+                                        <option value="4" selected>Talla 4</option>
+                                        <option value="6">Talla 6</option>
+                                        <option value="8">Talla 8</option>
+                                        <option value="10">Talla 10</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-500 uppercase">Cant.</label>
+                                    <input type="number" id="busoCant" min="0" max="10" value="0"
+                                        onchange="recalcularTotal()" oninput="recalcularTotal()"
+                                        class="w-16 rounded-xl border-2 border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold text-center text-slate-800 focus:border-mlas-orange outline-none" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pantalón Sudadera -->
+                        <div
+                            class="p-3.5 rounded-2xl border-2 border-slate-100 bg-slate-50/60 hover:border-mlas-blue/30 transition flex flex-wrap sm:flex-nowrap items-center justify-between gap-3">
+                            <div class="flex-1 min-w-[180px]">
+                                <span class="font-display font-bold text-slate-800 text-sm block">Pantalón
+                                    sudadera</span>
+                                <span id="precioPantalonLbl" class="text-xs font-bold text-mlas-blue">$129.000
+                                    c/u</span>
+                            </div>
+                            <div class="flex items-center gap-2.5">
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-500 uppercase">Talla</label>
+                                    <select id="pantalonTalla"
+                                        class="rounded-xl border-2 border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold text-slate-700 focus:border-mlas-orange outline-none">
+                                        <option value="2">Talla 2</option>
+                                        <option value="4" selected>Talla 4</option>
+                                        <option value="6">Talla 6</option>
+                                        <option value="8">Talla 8</option>
+                                        <option value="10">Talla 10</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-500 uppercase">Cant.</label>
+                                    <input type="number" id="pantalonCant" min="0" max="10" value="0"
+                                        onchange="recalcularTotal()" oninput="recalcularTotal()"
+                                        class="w-16 rounded-xl border-2 border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold text-center text-slate-800 focus:border-mlas-orange outline-none" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Camiseta tipo polo -->
+                        <div
+                            class="p-3.5 rounded-2xl border-2 border-slate-100 bg-slate-50/60 hover:border-mlas-blue/30 transition flex flex-wrap sm:flex-nowrap items-center justify-between gap-3">
+                            <div class="flex-1 min-w-[180px]">
+                                <span class="font-display font-bold text-slate-800 text-sm block">Camiseta tipo
+                                    polo</span>
+                                <span id="precioPoloLbl" class="text-xs font-bold text-mlas-blue">$76.000 c/u</span>
+                            </div>
+                            <div class="flex items-center gap-2.5">
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-500 uppercase">Talla</label>
+                                    <select id="poloTalla"
+                                        class="rounded-xl border-2 border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold text-slate-700 focus:border-mlas-orange outline-none">
+                                        <option value="2">Talla 2</option>
+                                        <option value="4" selected>Talla 4</option>
+                                        <option value="6">Talla 6</option>
+                                        <option value="8">Talla 8</option>
+                                        <option value="10">Talla 10</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-500 uppercase">Cant.</label>
+                                    <input type="number" id="poloCant" min="0" max="10" value="0"
+                                        onchange="recalcularTotal()" oninput="recalcularTotal()"
+                                        class="w-16 rounded-xl border-2 border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold text-center text-slate-800 focus:border-mlas-orange outline-none" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pantaloneta -->
+                        <div
+                            class="p-3.5 rounded-2xl border-2 border-slate-100 bg-slate-50/60 hover:border-mlas-blue/30 transition flex flex-wrap sm:flex-nowrap items-center justify-between gap-3">
+                            <div class="flex-1 min-w-[180px]">
+                                <span class="font-display font-bold text-slate-800 text-sm block">Pantaloneta</span>
+                                <span id="precioPantalonetaLbl" class="text-xs font-bold text-mlas-blue">$64.000
+                                    c/u</span>
+                            </div>
+                            <div class="flex items-center gap-2.5">
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-500 uppercase">Talla</label>
+                                    <select id="pantalonetaTalla"
+                                        class="rounded-xl border-2 border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold text-slate-700 focus:border-mlas-orange outline-none">
+                                        <option value="2">Talla 2</option>
+                                        <option value="4" selected>Talla 4</option>
+                                        <option value="6">Talla 6</option>
+                                        <option value="8">Talla 8</option>
+                                        <option value="10">Talla 10</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-500 uppercase">Cant.</label>
+                                    <input type="number" id="pantalonetaCant" min="0" max="10" value="0"
+                                        onchange="recalcularTotal()" oninput="recalcularTotal()"
+                                        class="w-16 rounded-xl border-2 border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold text-center text-slate-800 focus:border-mlas-orange outline-none" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 2: Guía de Tallas Oficial en cm -->
+                <div id="guiaTallas" class="bg-white p-6 rounded-3xl shadow-md border-2 border-slate-100">
+                    <h3 class="font-display text-base font-bold text-slate-800 mb-3 flex items-center gap-2">
+                        📏 Guía de Tallas (Medidas en cm)
+                    </h3>
+                    <div class="overflow-x-auto rounded-2xl border border-slate-200">
+                        <table class="w-full text-xs text-center border-collapse">
+                            <thead>
+                                <tr class="bg-slate-100 text-slate-700 font-bold">
+                                    <th class="p-2.5 border-b border-slate-200">Talla</th>
+                                    <th class="p-2.5 border-b border-slate-200">Espalda</th>
+                                    <th class="p-2.5 border-b border-slate-200">Contorno pecho</th>
+                                    <th class="p-2.5 border-b border-slate-200">Largo manga</th>
+                                    <th class="p-2.5 border-b border-slate-200">Largo chaqueta</th>
+                                    <th class="p-2.5 border-b border-slate-200">Contorno caderas</th>
+                                    <th class="p-2.5 border-b border-slate-200">Largo pantalón</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 text-slate-600 font-medium">
+                                <tr class="hover:bg-blue-50/40">
+                                    <td class="p-2 font-bold text-mlas-blue">2</td>
+                                    <td>14</td>
+                                    <td>18</td>
+                                    <td>36</td>
+                                    <td>34</td>
+                                    <td>16,5</td>
+                                    <td>54</td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/40">
+                                    <td class="p-2 font-bold text-mlas-blue">4</td>
+                                    <td>15</td>
+                                    <td>19</td>
+                                    <td>38</td>
+                                    <td>40</td>
+                                    <td>17</td>
+                                    <td>60</td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/40">
+                                    <td class="p-2 font-bold text-mlas-blue">6</td>
+                                    <td>16,5</td>
+                                    <td>20</td>
+                                    <td>42</td>
+                                    <td>44</td>
+                                    <td>18</td>
+                                    <td>68</td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/40">
+                                    <td class="p-2 font-bold text-mlas-blue">8</td>
+                                    <td>17</td>
+                                    <td>21</td>
+                                    <td>42</td>
+                                    <td>50</td>
+                                    <td>19</td>
+                                    <td>76</td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/40">
+                                    <td class="p-2 font-bold text-mlas-blue">10</td>
+                                    <td>19</td>
+                                    <td>23</td>
+                                    <td>44</td>
+                                    <td>52</td>
+                                    <td>21</td>
+                                    <td>85</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLUMNA DERECHA (5 cols): Datos del Estudiante, Total y Pago -->
+            <div class="lg:col-span-5 space-y-6">
+                <div class="bg-white p-6 rounded-3xl shadow-md border-2 border-slate-100 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-mlas-blue to-mlas-green"></div>
+
+                    <h3 class="font-display text-lg font-bold text-slate-800 mb-4 flex items-center gap-2.5">
+                        <span
+                            class="bg-mlas-blue text-white w-7 h-7 rounded-xl inline-flex items-center justify-center text-sm shadow-sm">2</span>
+                        Datos del Estudiante y Envío
+                    </h3>
+
+                    <div class="space-y-3.5 relative">
+                        <!-- Ancla invisible para que Chrome active el motor completo de direcciones y rellene el celular local sin +57 -->
+                        <input type="text" name="address" autocomplete="street-address" tabindex="-1" aria-hidden="true"
+                            style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" />
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Nombre del estudiante *</label>
+                            <input type="text" id="estudiante" name="estudiante" autocomplete="off" required
+                                placeholder="Nombre y apellido del niño(a)"
+                                class="w-full rounded-xl border-2 border-slate-200 px-3.5 py-2.5 text-sm focus:border-mlas-orange outline-none transition" />
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Nombre del acudiente *</label>
+                            <input type="text" id="acudiente" name="name" autocomplete="name" required
+                                placeholder="Nombre completo de quien solicita"
+                                class="w-full rounded-xl border-2 border-slate-200 px-3.5 py-2.5 text-sm focus:border-mlas-orange outline-none transition" />
+                        </div>
+
+                        <div class="grid sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Celular / WhatsApp *</label>
+                                <input type="tel" id="celular" name="tel" autocomplete="tel-national"
+                                    oninput="limpiarTelefono(this)" required placeholder="Ej. 310 123 4567"
+                                    class="w-full rounded-xl border-2 border-slate-200 px-3.5 py-2.5 text-sm focus:border-mlas-orange outline-none transition" />
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Correo electrónico *</label>
+                                <input type="email" id="correo" name="email" autocomplete="email" required
+                                    placeholder="correo@ejemplo.com"
+                                    class="w-full rounded-xl border-2 border-slate-200 px-3.5 py-2.5 text-sm focus:border-mlas-orange outline-none transition" />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Observaciones (Opcional)</label>
+                            <textarea id="observaciones" name="observaciones" rows="2"
+                                placeholder="Indicaciones adicionales sobre tallas o entrega..."
+                                class="w-full rounded-xl border-2 border-slate-200 px-3.5 py-2 text-sm focus:border-mlas-orange outline-none transition"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Resumen de Total a Pagar -->
+                    <div class="mt-5 p-4 rounded-2xl bg-slate-50 border-2 border-slate-200">
+                        <div class="flex items-center justify-between text-xs text-slate-500 mb-1">
+                            <span>Prendas seleccionadas:</span>
+                            <span id="resumenPrendas" class="font-bold text-slate-700">0 prendas</span>
+                        </div>
+                        <div id="badgeCompleto" class="hidden mb-2">
+                            <span
+                                class="inline-block text-[11px] font-bold bg-mlas-green/15 text-mlas-green px-2.5 py-0.5 rounded-full">
+                                ✓ Incluye Uniforme Completo (<span class="lblPrecioCompleto">$518.000</span>)
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between pt-2 border-t border-slate-200">
+                            <span class="font-display font-bold text-sm text-slate-800">TOTAL A PAGAR:</span>
+                            <span id="totalPagarTexto" class="font-display text-2xl font-bold text-mlas-green">$0</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btnGuardar" disabled
+                        class="w-full mt-4 bg-gradient-to-r from-mlas-red via-mlas-orange to-mlas-green hover:opacity-95 disabled:from-slate-200 disabled:to-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed text-white font-display font-bold py-3.5 rounded-2xl text-sm transition shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+                        <span id="btnTexto">Enviar Solicitud de Uniforme</span>
+                    </button>
+                </div>
+
+                <!-- Nota oficial de entrega y pago -->
+                <div
+                    class="bg-amber-50/90 p-5 rounded-3xl border-2 border-mlas-orange/30 text-xs text-slate-700 space-y-2">
+                    <h4 class="font-display font-bold text-sm text-mlas-orange flex items-center gap-1.5">
+                        💳 Nota de Entrega y Pago
+                    </h4>
+                    <p class="leading-relaxed">
+                        El despacho del uniforme está sujeto a la confirmación del pago. Realiza el depósito o
+                        transferencia a:
+                    </p>
+                    <div
+                        class="bg-white p-3 rounded-xl border border-amber-200/80 font-semibold text-slate-800 space-y-1">
+                        <p>• Cuenta de ahorros Bancolombia: <span id="lblBancolombia"
+                                class="text-mlas-blue font-bold">38300012283</span></p>
+                        <p>• Llave Bre-B: <span id="lblLlave" class="text-mlas-blue font-bold">0092553987</span></p>
+                    </div>
+                    <p class="leading-relaxed">
+                        Remite el soporte junto con el correo de confirmación a <strong
+                            id="lblCorreosSoporte">contabilidadgmas@gmail.com y mlas.administracion@gmail.com</strong>
+                        con asunto: <em>Pago Uniforme y nombre del alumno</em>.
+                    </p>
+                    <p class="font-bold text-mlas-green pt-1">
+                        ⏱️ El periodo de entrega es de <span id="lblDiasEntrega">10 días hábiles</span> a partir de la
+                        recepción del correo.
+                    </p>
+                </div>
+            </div>
+        </form>
+    </main>
+
+    <footer class="mt-12 py-5 text-center text-xs text-slate-400 border-t border-slate-200/60 bg-white/60">
+        <p id="lblFooterInstitucional" class="font-semibold text-slate-600">MY LITTLE ARTISTS SCHOOL S.A.S. • NIT
+            902.069.730-8 • CEL 311 2579268</p>
+        <p class="mt-0.5">Madrid, Cundinamarca • Arte, ciencia y naturaleza para el crecimiento de nuestros niños</p>
+    </footer>
+
+    <script>
+        // =========================================================================
+        // CONSTANTES CENTRALIZADAS EN EL HTML (Edita precios, cuentas o copias aquí)
+        // =========================================================================
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwTtTY5jOXD-obvlLjccrT5yYlaexAFHBZHLh46Y1U0wWGFRQLGnJu4FUTIH4JbcakzCg/exec";
+        const RUTA_LOGO_WEBP = "Logo MLAS.webp";
+
+        const PRECIOS = {
+            chaqueta: 137000,
+            buso: 112000,
+            pantalon: 129000,
+            polo: 76000,
+            pantaloneta: 64000
+        };
+
+        const CONFIG_COLEGIO = {
+            anio: "2027",
+            nombreColegio: "MY LITTLE ARTISTS SCHOOL S.A.S.",
+            nit: "NIT 902.069.730-8",
+            ciudad: "Madrid, Cundinamarca",
+            celularColegio: "311 2579268",
+            cuentaBancolombia: "38300012283",
+            llaveBreB: "0092553987",
+            correosSoporte: "contabilidadgmas" + "@gmail.com y " + "mlas.administracion" + "@gmail.com",
+            correosCopiaAdmin: "mlas.administracion" + "@gmail.com",
+            diasEntrega: "10 días hábiles"
+        };
+
+        function limpiarTelefono(input) {
+            let soloNumeros = input.value.replace(/\D/g, '');
+            if (soloNumeros.startsWith('57') && soloNumeros.length > 10) {
+                soloNumeros = soloNumeros.slice(2);
+            }
+            input.value = soloNumeros;
+        }
+
+        function inicializarConstantesUI() {
+            const fmt = (v) => '$' + Number(v).toLocaleString('es-CO');
+            const totalSet = PRECIOS.chaqueta + PRECIOS.buso + PRECIOS.pantalon + PRECIOS.polo + PRECIOS.pantaloneta;
+
+            document.getElementById('precioChaquetaLbl').textContent = `${fmt(PRECIOS.chaqueta)} c/u`;
+            document.getElementById('precioBusoLbl').textContent = `${fmt(PRECIOS.buso)} c/u`;
+            document.getElementById('precioPantalonLbl').textContent = `${fmt(PRECIOS.pantalon)} c/u`;
+            document.getElementById('precioPoloLbl').textContent = `${fmt(PRECIOS.polo)} c/u`;
+            document.getElementById('precioPantalonetaLbl').textContent = `${fmt(PRECIOS.pantaloneta)} c/u`;
+
+            document.querySelectorAll('.lblPrecioCompleto').forEach(el => el.textContent = fmt(totalSet));
+            document.querySelectorAll('.lblAnio').forEach(el => el.textContent = CONFIG_COLEGIO.anio);
+
+            document.getElementById('lblNitHeader').textContent = CONFIG_COLEGIO.nit;
+            document.getElementById('lblBancolombia').textContent = CONFIG_COLEGIO.cuentaBancolombia;
+            document.getElementById('lblLlave').textContent = CONFIG_COLEGIO.llaveBreB;
+            document.getElementById('lblCorreosSoporte').textContent = CONFIG_COLEGIO.correosSoporte;
+            document.getElementById('lblDiasEntrega').textContent = CONFIG_COLEGIO.diasEntrega;
+            document.getElementById('lblFooterInstitucional').textContent =
+                `${CONFIG_COLEGIO.nombreColegio} • ${CONFIG_COLEGIO.nit} • CEL ${CONFIG_COLEGIO.celularColegio}`;
+        }
+
+        let intentoLogo = 0;
+        function intentarRutaAlternativa(img) {
+            const alternativas = ["Logo%20MLAS.webp", "logo-mlas.webp", "logo.webp", "Logo MLAS.jpeg"];
+            if (intentoLogo < alternativas.length) {
+                img.src = alternativas[intentoLogo];
+                intentoLogo++;
+            } else {
+                img.style.display = 'none';
+                document.getElementById('fallbackLogo').style.display = 'grid';
+            }
+        }
+
+        function seleccionarSetCompleto() {
+            ['chaquetaCant', 'busoCant', 'pantalonCant', 'poloCant', 'pantalonetaCant'].forEach(id => {
+                const input = document.getElementById(id);
+                if (Number(input.value) === 0) input.value = 1;
+            });
+            recalcularTotal();
+        }
+
+        function recalcularTotal() {
+            const cChaqueta = Math.max(0, Number(document.getElementById('chaquetaCant').value || 0));
+            const cBuso = Math.max(0, Number(document.getElementById('busoCant').value || 0));
+            const cPantalon = Math.max(0, Number(document.getElementById('pantalonCant').value || 0));
+            const cPolo = Math.max(0, Number(document.getElementById('poloCant').value || 0));
+            const cPantaloneta = Math.max(0, Number(document.getElementById('pantalonetaCant').value || 0));
+
+            const totalPrendas = cChaqueta + cBuso + cPantalon + cPolo + cPantaloneta;
+            const totalPesos =
+                (cChaqueta * PRECIOS.chaqueta) +
+                (cBuso * PRECIOS.buso) +
+                (cPantalon * PRECIOS.pantalon) +
+                (cPolo * PRECIOS.polo) +
+                (cPantaloneta * PRECIOS.pantaloneta);
+
+            document.getElementById('resumenPrendas').textContent = `${totalPrendas} ${totalPrendas === 1 ? 'prenda' : 'prendas'}`;
+            document.getElementById('totalPagarTexto').textContent = '$' + totalPesos.toLocaleString('es-CO');
+
+            const tieneSetCompleto = (cChaqueta >= 1 && cBuso >= 1 && cPantalon >= 1 && cPolo >= 1 && cPantaloneta >= 1);
+            const badge = document.getElementById('badgeCompleto');
+            if (tieneSetCompleto) badge.classList.remove('hidden');
+            else badge.classList.add('hidden');
+
+            document.getElementById('btnGuardar').disabled = (totalPrendas === 0);
+            return totalPesos;
+        }
+
+        function mostrarMensaje(texto, esError = false) {
+            const alerta = document.getElementById('statusAlert');
+            alerta.innerHTML = texto;
+            alerta.className = `mb-6 p-5 rounded-2xl border-2 text-sm font-semibold shadow-sm ${esError
+                ? 'bg-red-50 border-mlas-red/30 text-mlas-red'
+                : 'bg-emerald-50 border-mlas-green/40 text-mlas-green'
+                }`;
+            alerta.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        async function enviarSolicitud(e) {
+            e.preventDefault();
+
+            if (!SCRIPT_URL || SCRIPT_URL.includes("PEGA_AQUI")) {
+                mostrarMensaje("Falta configurar SCRIPT_URL en el archivo index.html.", true);
+                return;
+            }
+
+            const boton = document.getElementById('btnGuardar');
+            const btnTexto = document.getElementById('btnTexto');
+            boton.disabled = true;
+            btnTexto.textContent = "Registrando solicitud...";
+
+            const totalCalculado = recalcularTotal();
+
+            const chaquetaCant = Number(document.getElementById('chaquetaCant').value || 0);
+            const busoCant = Number(document.getElementById('busoCant').value || 0);
+            const pantalonCant = Number(document.getElementById('pantalonCant').value || 0);
+            const poloCant = Number(document.getElementById('poloCant').value || 0);
+            const pantalonetaCant = Number(document.getElementById('pantalonetaCant').value || 0);
+
+            const chaquetaTalla = document.getElementById('chaquetaTalla').value;
+            const busoTalla = document.getElementById('busoTalla').value;
+            const pantalonTalla = document.getElementById('pantalonTalla').value;
+            const poloTalla = document.getElementById('poloTalla').value;
+            const pantalonetaTalla = document.getElementById('pantalonetaTalla').value;
+
+            const detallePrendas = [
+                { nombre: 'Chaqueta de sudadera', talla: chaquetaTalla, cant: chaquetaCant, unitario: PRECIOS.chaqueta },
+                { nombre: 'Buso sudadera', talla: busoTalla, cant: busoCant, unitario: PRECIOS.buso },
+                { nombre: 'Pantalón sudadera', talla: pantalonTalla, cant: pantalonCant, unitario: PRECIOS.pantalon },
+                { nombre: 'Camiseta tipo polo', talla: poloTalla, cant: poloCant, unitario: PRECIOS.polo },
+                { nombre: 'Pantaloneta', talla: pantalonetaTalla, cant: pantalonetaCant, unitario: PRECIOS.pantaloneta }
+            ].filter(item => item.cant > 0);
+
+            const datos = {
+                estudiante: document.getElementById('estudiante').value.trim(),
+                acudiente: document.getElementById('acudiente').value.trim(),
+                celular: document.getElementById('celular').value.trim(),
+                correo: document.getElementById('correo').value.trim(),
+                chaquetaTalla,
+                chaquetaCant,
+                busoTalla,
+                busoCant,
+                pantalonTalla,
+                pantalonCant,
+                poloTalla,
+                poloCant,
+                pantalonetaTalla,
+                pantalonetaCant,
+                total: totalCalculado,
+                detallePrendas,
+                configCorreo: CONFIG_COLEGIO,
+                observaciones: document.getElementById('observaciones').value.trim()
+            };
+
+            try {
+                const res = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(datos)
+                });
+                const resultado = await res.json();
+
+                if (resultado.status === 'ok') {
+                    const totalFmt = '$' + Number(totalCalculado).toLocaleString('es-CO');
+                    mostrarMensaje(
+                        `✅ ¡Solicitud registrada con éxito para <strong>${datos.estudiante}</strong> por un valor total de <strong>${totalFmt}</strong>!<br>` +
+                        `<span class="font-normal text-slate-700 block mt-1">Te enviamos el resumen completo a <strong>${datos.correo}</strong>. Recuerda enviar el soporte de pago (Bancolombia <strong>${CONFIG_COLEGIO.cuentaBancolombia}</strong> / Llave <strong>${CONFIG_COLEGIO.llaveBreB}</strong>) a <strong>${CONFIG_COLEGIO.correosSoporte}</strong> con asunto: <em>Pago Uniforme ${datos.estudiante}</em>.</span>`
+                    );
+                    document.getElementById('formUniformes').reset();
+                    recalcularTotal();
+                } else {
+                    mostrarMensaje(resultado.message || "No se pudo registrar la solicitud. Intenta nuevamente.", true);
+                    boton.disabled = false;
+                }
+            } catch (err) {
+                mostrarMensaje("Ocurrió un error de conexión al enviar la solicitud. Intenta nuevamente.", true);
+                boton.disabled = false;
+            } finally {
+                btnTexto.textContent = "Enviar Solicitud de Uniforme";
+            }
+        }
+
+        inicializarConstantesUI();
+    </script>
+</body>
+
+</html>
