@@ -168,8 +168,7 @@
 
     <!-- Pie de Página -->
     <footer class="mt-8 py-5 text-center text-xs text-slate-400 border-t border-slate-200/60 bg-white/60">
-        <p id="lblFooterInstitucional" class="font-semibold text-slate-600">MY LITTLE ARTISTS SCHOOL S.A.S. • NIT
-            902.069.730-8</p>
+        <p id="lblFooterInstitucional" class="font-semibold text-slate-600">MY LITTLE ARTISTS SCHOOL S.A.S.</p>
         <p class="mt-0.5">Todos los derechos reservados • Madrid, Cundinamarca</p>
     </footer>
 
@@ -179,7 +178,6 @@
         // =========================================================================
         const CONFIG_PORTAL = {
             nombreColegio: "MY LITTLE ARTISTS SCHOOL S.A.S.",
-            nit: "NIT 902.069.730-8",
             ciudad: "Madrid, Cundinamarca",
             celularVisible: "+57 311 2579268",
             whatsappNumero: "573112579268",
@@ -219,8 +217,7 @@
         function renderizarPortal() {
             document.getElementById('lblCiudad').textContent = CONFIG_PORTAL.ciudad;
             document.getElementById('lblCelularWpp').textContent = CONFIG_PORTAL.celularVisible;
-            document.getElementById('lblFooterInstitucional').textContent =
-                `${CONFIG_PORTAL.nombreColegio} • ${CONFIG_PORTAL.nit}`;
+            document.getElementById('lblFooterInstitucional').textContent = CONFIG_PORTAL.nombreColegio;
 
             document.getElementById('btnGoogleMaps').href = CONFIG_PORTAL.googleMapsUrl;
             document.getElementById('btnFacebook').href = CONFIG_PORTAL.facebookUrl;
