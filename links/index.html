@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="overflow-x-hidden">
 
 <head>
     <meta charset="UTF-8" />
@@ -7,260 +7,487 @@
     <title>MY LITTLE ARTISTS SCHOOL | Enlaces Oficiales</title>
     <link rel="icon" type="image/webp" href="Logo MLAS.webp" />
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Tipografías -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        display: ['Fredoka', 'sans-serif'],
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                    },
-                    colors: {
-                        mlas: {
-                            red: '#D62828',
-                            blue: '#104F9E',
-                            orange: '#F37021',
-                            green: '#4D8B31',
-                            yellow: '#FBBF24',
-                            cream: '#FFFDF9'
-                        }
+    <!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                fontFamily: {
+                    display: ['Fredoka', 'sans-serif'],
+                    body: ['Nunito', 'sans-serif'],
+                },
+                colors: {
+                    mlas: {
+                        red: '#D62828',
+                        blue: '#104F9E',
+                        orange: '#F37021',
+                        green: '#4D8B31',
+                        yellow: '#FBBF24',
+                        cream: '#FFFDF9'
                     }
+                },
+                boxShadow: {
+                    'soft': '0 8px 30px rgba(0,0,0,0.06)',
+                    'glow': '0 0 25px rgba(243, 112, 33, 0.25)',
                 }
             }
         }
-    </script>
+    }
+</script>
+<style>
+    body {
+        font-family: 'Nunito', sans-serif;
+        background-color: #FFFDF9;
+        background-image:
+            radial-gradient(circle at 10% 20%, rgba(251, 191, 36, 0.12) 0%, transparent 20%),
+            radial-gradient(circle at 90% 80%, rgba(214, 40, 40, 0.08) 0%, transparent 25%),
+            radial-gradient(circle at 50% 50%, rgba(16, 79, 158, 0.06) 0%, transparent 50%);
+        background-attachment: fixed;
+    }
+
+    .font-display {
+        font-family: 'Fredoka', sans-serif;
+    }
+
+    .blob {
+        position: absolute;
+        filter: blur(40px);
+        z-index: 0;
+        opacity: 0.6;
+        animation: float 10s ease-in-out infinite alternate;
+    }
+
+    @keyframes float {
+        0% {
+            transform: translateY(0px) rotate(0deg) scale(1);
+        }
+
+        100% {
+            transform: translateY(-20px) rotate(10deg) scale(1.05);
+        }
+    }
+
+    .link-card {
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .link-card:hover {
+        transform: translateY(-3px) scale(1.01);
+    }
+
+    .link-card:active {
+        transform: translateY(1px) scale(0.99);
+    }
+
+    @keyframes subtlePulse {
+
+        0%,
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        50% {
+            opacity: 0.85;
+            transform: scale(1.03);
+        }
+    }
+
+    .pulse-badge {
+        animation: subtlePulse 2.5s infinite ease-in-out;
+    }
+
+    .toast-enter {
+        animation: slideUp 0.3s ease-out forwards;
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translate(-50%, 20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+    }
+</style>
 </head>
 
-<body class="bg-mlas-cream min-h-screen font-sans text-slate-800 relative overflow-x-hidden flex flex-col">
+<body class="min-h-screen text-slate-800 relative flex flex-col items-center justify-between overflow-x-hidden">
 
     <!-- Barra superior con los 4 colores del logo MLAS -->
-    <div class="h-2.5 w-full flex shrink-0">
+    <div class="h-2.5 w-full flex fixed top-0 left-0 right-0 z-50">
         <div class="w-1/4 bg-mlas-red"></div>
         <div class="w-1/4 bg-mlas-blue"></div>
         <div class="w-1/4 bg-mlas-orange"></div>
         <div class="w-1/4 bg-mlas-green"></div>
     </div>
 
-    <!-- Contenedor Principal Centrado -->
-    <main class="max-w-xl mx-auto px-4 py-10 flex-1 w-full flex flex-col items-center">
+    <!-- Subtle Artistic Floating Blobs -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none z-0" aria-hidden="true">
+        <div class="blob bg-amber-200 w-72 h-72 rounded-full top-10 -left-20"></div>
+        <div class="blob bg-rose-200 w-80 h-80 rounded-full top-1/3 -right-20" style="animation-delay: -3s;"></div>
+        <div class="blob bg-sky-200 w-72 h-72 rounded-full bottom-10 -left-10" style="animation-delay: -5s;"></div>
+    </div>
 
-        <!-- Cabecera Institucional -->
-        <div class="text-center mb-8 flex flex-col items-center">
-            <!-- Logo MLAS (.webp) -->
+    <!-- Main Container -->
+    <div class="w-full max-w-md mx-auto relative z-10 flex-grow flex flex-col items-center pt-6 p-4 sm:p-6">
+
+        <!-- Top Action Bar (Share & Contact Quick Buttons) -->
+        <div class="w-full flex justify-between items-center mb-6 pt-2">
             <div
-                class="group relative w-28 h-28 sm:w-32 sm:h-32 rounded-3xl bg-white shadow-lg border-2 border-slate-100 p-2 flex items-center justify-center overflow-hidden mb-4">
-                <img id="logoImg" src="Logo MLAS.webp" alt="Logo MY LITTLE ARTISTS SCHOOL"
-                    class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
-                    onerror="intentarRutaAlternativa(this)" />
-                <div id="fallbackLogo" style="display:none;"
-                    class="w-full h-full grid-cols-2 grid-rows-2 rounded-2xl overflow-hidden font-display font-bold text-white text-xl">
-                    <div class="bg-mlas-red flex items-center justify-center">M</div>
-                    <div class="bg-mlas-blue flex items-center justify-center">L</div>
-                    <div class="bg-mlas-orange flex items-center justify-center">A</div>
-                    <div class="bg-mlas-green flex items-center justify-center">S</div>
+                class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white/90 backdrop-blur-md rounded-full border border-amber-200/60 text-xs font-bold text-slate-700 shadow-sm">
+                <span class="w-2.5 h-2.5 rounded-full bg-mlas-green animate-pulse"></span>
+                Inscripciones 2026 Abiertas
+            </div>
+
+            <button onclick="copyPageUrl()"
+                class="p-2.5 bg-white/90 hover:bg-white backdrop-blur-md rounded-full shadow-sm hover:shadow-md border border-slate-200 text-slate-600 transition-all active:scale-95 flex items-center justify-center group"
+                title="Compartir esta página">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 group-hover:text-mlas-orange transition-colors"
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Header / Profile Section -->
+        <header class="text-center mb-8 flex flex-col items-center">
+            <!-- Logo Frame (Ampliado con p-6/p-7 sin recortes) -->
+            <div class="relative mb-5 group">
+                <div
+                    class="absolute -inset-1.5 bg-gradient-to-r from-mlas-red via-mlas-orange to-mlas-blue rounded-full blur opacity-75 group-hover:opacity-100 transition duration-500 group-hover:scale-105">
+                </div>
+
+                <div
+                    class="relative w-48 h-48 sm:w-52 sm:h-52 rounded-full bg-white p-6 sm:p-7 shadow-xl flex items-center justify-center overflow-hidden">
+                    <img src="Logo MLAS.webp" alt="My Little Artists School Logo" class="w-full h-full object-contain"
+                        onerror="this.onerror=null; this.src='https://mlasadministracion.github.io/formularios/uniforme/Logo%20MLAS.webp'; this.onerror=function(){this.src='./logo.webp'; this.onerror=function(){this.src='https://placehold.co/200x200/FFFDF9/D62828?text=MLAS';};};" />
                 </div>
             </div>
 
-            <span
-                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-mlas-blue/10 text-mlas-blue mb-2">
-                🎨 Portal Institucional • <span id="lblCiudad">Madrid, Cundinamarca</span>
-            </span>
-
-            <h1 class="font-display text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 leading-tight">
+            <!-- Multicolor Title & Subtitle -->
+            <h1 class="font-display text-2xl sm:text-3xl font-bold tracking-tight leading-snug mb-1">
                 <span class="text-mlas-red">MY</span>
                 <span class="text-mlas-blue"> LITTLE</span>
                 <span class="text-mlas-orange"> ARTISTS</span>
                 <span class="text-mlas-green"> SCHOOL</span>
             </h1>
 
-            <p class="text-xs sm:text-sm text-slate-500 font-medium mt-1.5 max-w-md">
-                Arte, ciencia y naturaleza para el crecimiento de nuestros niños. Selecciona el trámite o portal al que
-                deseas ingresar:
+            <p class="text-sm font-semibold text-slate-600 mb-3 max-w-xs leading-relaxed">
+                Jardín Infantil • Educación Inicial con Arte y Amor <span class="inline-block animate-bounce">🎨</span>✨
             </p>
-        </div>
 
-        <!-- Lista Dinámica de Enlaces Principales -->
-        <div id="contenedorEnlaces" class="w-full space-y-4"></div>
+            <!-- Location Badge -->
+            <div
+                class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-slate-100/90 rounded-full text-xs font-bold text-slate-700 border border-slate-200/80 shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-mlas-red" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                Madrid, Cundinamarca
+            </div>
+        </header>
 
-        <!-- Sección de Ubicación y Contacto Directo -->
-        <div class="w-full mt-8 pt-6 border-t border-slate-200/80 space-y-3">
+        <!-- Links Container -->
+        <main class="w-full flex flex-col gap-4 mb-8">
 
-            <!-- Botón Ubicación Google Maps -->
-            <a id="btnGoogleMaps" href="#" target="_blank" rel="noopener noreferrer"
-                class="w-full bg-white hover:bg-blue-50/70 border-2 border-mlas-blue/25 hover:border-mlas-blue rounded-2xl p-4 flex items-center justify-between shadow-sm transition group">
-                <div class="flex items-center gap-3.5">
-                    <div
-                        class="w-11 h-11 rounded-xl bg-mlas-blue/15 text-mlas-blue flex items-center justify-center text-xl group-hover:scale-105 transition">
-                        📍
+            <div
+                class="text-xs font-extrabold text-slate-400 uppercase tracking-wider px-2 pt-1 flex items-center gap-2">
+                <span>Enlaces Principales</span>
+                <div class="h-px bg-slate-200 flex-grow"></div>
+            </div>
+
+            <!-- LINK 1: Agendar Open House -->
+            <a href="https://mlasadministracion.github.io/formularios/open-house/" target="_blank"
+                class="link-card relative group bg-gradient-to-r from-mlas-red via-mlas-orange to-mlas-yellow p-0.5 rounded-2xl shadow-soft hover:shadow-glow">
+                <div class="bg-white rounded-[14px] p-4 flex items-center justify-between gap-2 h-full">
+                    <div class="flex items-center gap-3.5">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-orange-100 text-mlas-orange flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m0 0h4m-4 0V11m0 0V7m0 4h4m-4 0H7" />
+                            </svg>
+                        </div>
+                        <div class="text-left">
+                            <div class="flex flex-wrap items-center gap-2 mb-0.5">
+                                <h3
+                                    class="font-display font-bold text-base text-slate-800 group-hover:text-mlas-orange transition-colors">
+                                    Agendar Open House</h3>
+                                <span
+                                    class="pulse-badge bg-mlas-red text-white text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full tracking-wide shrink-0">
+                                    ¡Inscríbete!
+                                </span>
+                            </div>
+                            <p class="text-xs text-slate-500">Conoce nuestras instalaciones y modelo educativo</p>
+                        </div>
                     </div>
-                    <div>
-                        <span class="font-display font-bold text-sm text-slate-800 block">¿Cómo llegar al jardín?</span>
-                        <span class="text-xs text-slate-500 font-medium">Ver ubicación en Google Maps • Madrid,
-                            Cundinamarca</span>
+                    <div
+                        class="text-slate-400 group-hover:text-mlas-orange group-hover:translate-x-1 transition-all pl-2 shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
                     </div>
                 </div>
-                <span
-                    class="text-xs font-bold text-mlas-blue bg-mlas-blue/10 px-3 py-1.5 rounded-xl group-hover:bg-mlas-blue group-hover:text-white transition shrink-0">
-                    Abrir mapa →
-                </span>
             </a>
 
-            <!-- Botón Directo de Contacto WhatsApp -->
-            <a id="btnWhatsappDirecto" href="#" target="_blank" rel="noopener noreferrer"
-                class="w-full bg-white hover:bg-emerald-50/80 border-2 border-mlas-green/30 hover:border-mlas-green rounded-2xl p-4 flex items-center justify-between shadow-sm transition group">
+            <!-- LINK 2: Atención a Padres y Citas -->
+            <button onclick="openModal('modal-citas')"
+                class="link-card w-full text-left bg-white border border-slate-100 hover:border-slate-200 p-4 rounded-2xl shadow-soft flex items-center justify-between gap-3 group">
                 <div class="flex items-center gap-3.5">
                     <div
-                        class="w-11 h-11 rounded-xl bg-mlas-green/15 text-mlas-green flex items-center justify-center text-xl group-hover:scale-105 transition">
-                        💬
+                        class="w-12 h-12 rounded-xl bg-blue-100 text-mlas-blue flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M8 7V3m8 3V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
                     </div>
                     <div>
-                        <span class="font-display font-bold text-sm text-slate-800 block">¿Tienes dudas o necesitas
-                            ayuda?</span>
-                        <span class="text-xs text-slate-500 font-medium">Escríbenos por WhatsApp • <span
-                                id="lblCelularWpp">+57 311 2579268</span></span>
+                        <h3
+                            class="font-display font-bold text-base text-slate-800 group-hover:text-mlas-blue transition-colors">
+                            Atención a Padres y Citas</h3>
+                        <p class="text-xs text-slate-500">Horarios e información de contacto</p>
                     </div>
                 </div>
-                <span
-                    class="text-xs font-bold text-mlas-green bg-mlas-green/10 px-3 py-1.5 rounded-xl group-hover:bg-mlas-green group-hover:text-white transition shrink-0">
-                    Contactar →
-                </span>
-            </a>
-        </div>
-
-        <!-- Redes Sociales Oficiales -->
-        <div class="w-full mt-7 text-center">
-            <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-3">Síguenos en nuestras redes
-                sociales</p>
-            <div class="flex items-center justify-center gap-3.5">
-                <!-- Facebook -->
-                <a id="btnFacebook" href="#" target="_blank" rel="noopener noreferrer"
-                    class="flex-1 max-w-[190px] bg-white hover:bg-blue-50 border-2 border-slate-200/90 hover:border-[#1877F2] text-slate-700 hover:text-[#1877F2] font-display font-bold text-xs py-3 px-4 rounded-2xl shadow-sm flex items-center justify-center gap-2 transition">
-                    <svg class="w-4 h-4 fill-current text-[#1877F2]" viewBox="0 0 24 24" aria-hidden="true">
-                        <path
-                            d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+                <div class="text-slate-300 group-hover:text-slate-500 group-hover:translate-x-0.5 transition-all shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                     </svg>
-                    Facebook
-                </a>
+                </div>
+            </button>
 
+            <div
+                class="text-xs font-extrabold text-slate-400 uppercase tracking-wider px-2 pt-2 flex items-center gap-2">
+                <span>Contacto & Ubicación</span>
+                <div class="h-px bg-slate-200 flex-grow"></div>
+            </div>
+
+            <!-- LINK 3: WhatsApp Directo -->
+            <a href="https://wa.me/573112579268?text=Hola,%20deseo%20obtener%20información%20sobre%20My%20Little%20Artists%20School"
+                target="_blank"
+                class="link-card w-full text-left bg-emerald-500/10 border border-emerald-200 p-4 rounded-2xl shadow-soft flex items-center justify-between gap-3 group">
+                <div class="flex items-center gap-3.5">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                            <path
+                                d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3
+                            class="font-display font-bold text-base text-slate-800 group-hover:text-emerald-600 transition-colors">
+                            Contáctanos por WhatsApp</h3>
+                        <p class="text-xs text-slate-500">+57 311 2579268 • Atención directa</p>
+                    </div>
+                </div>
+                <div class="text-emerald-500 group-hover:translate-x-1 transition-transform shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- LINK 4: Ubicación Google Maps -->
+            <a href="https://maps.app.goo.gl/XzeeFSMme84tyVjCA" target="_blank"
+                class="link-card w-full text-left bg-white border border-slate-100 hover:border-slate-200 p-4 rounded-2xl shadow-soft flex items-center justify-between gap-3 group">
+                <div class="flex items-center gap-3.5">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-red-100 text-mlas-red flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3
+                            class="font-display font-bold text-base text-slate-800 group-hover:text-mlas-red transition-colors">
+                            Cómo llegar (Google Maps)</h3>
+                        <p class="text-xs text-slate-500">Madrid, Cundinamarca</p>
+                    </div>
+                </div>
+                <div class="text-slate-300 group-hover:text-slate-500 group-hover:translate-x-0.5 transition-all shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                </div>
+            </a>
+
+        </main>
+
+        <!-- Social Media Icons Footer -->
+        <div class="w-full text-center mt-2 mb-6">
+            <p class="text-xs font-bold text-slate-400 mb-3 uppercase tracking-wider">Síguenos en redes</p>
+            <div class="flex items-center justify-center gap-4">
                 <!-- Instagram -->
-                <a id="btnInstagram" href="#" target="_blank" rel="noopener noreferrer"
-                    class="flex-1 max-w-[190px] bg-white hover:bg-pink-50 border-2 border-slate-200/90 hover:border-[#E4405F] text-slate-700 hover:text-[#E4405F] font-display font-bold text-xs py-3 px-4 rounded-2xl shadow-sm flex items-center justify-center gap-2 transition">
-                    <svg class="w-4 h-4 fill-current text-[#E4405F]" viewBox="0 0 24 24" aria-hidden="true">
+                <a href="https://www.instagram.com/mylittle_artistschool/" target="_blank"
+                    class="w-10 h-10 rounded-full bg-white border border-slate-100 shadow-sm flex items-center justify-center text-slate-600 hover:text-rose-500 hover:scale-110 transition-all"
+                    title="Instagram">
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
                         <path
                             d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                     </svg>
-                    Instagram
+                </a>
+
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/profile.php?id=61596946131333" target="_blank"
+                    class="w-10 h-10 rounded-full bg-white border border-slate-100 shadow-sm flex items-center justify-center text-slate-600 hover:text-blue-600 hover:scale-110 transition-all"
+                    title="Facebook">
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                        <path
+                            d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.5 5H18V0h-3.808C10.592 0 9 1.583 9 4.615V8z" />
+                    </svg>
+                </a>
+
+                <!-- WhatsApp Direct FootIcon -->
+                <a href="https://wa.me/573112579268" target="_blank"
+                    class="w-10 h-10 rounded-full bg-white border border-slate-100 shadow-sm flex items-center justify-center text-slate-600 hover:text-emerald-500 hover:scale-110 transition-all"
+                    title="WhatsApp Directo">
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                        <path
+                            d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                    </svg>
                 </a>
             </div>
         </div>
 
-    </main>
+        <!-- Footer Notice -->
+        <footer class="text-center text-xs text-slate-400 py-2">
+            <p>© 2026 My Little Artists School</p>
+            <p class="text-[11px] text-slate-400 mt-0.5">Madrid, Cundinamarca • Colombia</p>
+        </footer>
 
-    <!-- Pie de Página -->
-    <footer class="mt-8 py-5 text-center text-xs text-slate-400 border-t border-slate-200/60 bg-white/60">
-        <p id="lblFooterInstitucional" class="font-semibold text-slate-600">MY LITTLE ARTISTS SCHOOL S.A.S.</p>
-        <p class="mt-0.5">Todos los derechos reservados • Madrid, Cundinamarca</p>
-    </footer>
+    </div>
+
+    <!-- MODAL: AGENDAMIENTO DE CITAS -->
+    <div id="modal-citas"
+        class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div
+            class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl relative animate-in fade-in zoom-in duration-200">
+            <button onclick="closeModal('modal-citas')"
+                class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            <div class="w-12 h-12 bg-blue-100 text-mlas-blue rounded-2xl flex items-center justify-center mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M8 7V3m8 3V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+            </div>
+            <h3 class="font-display text-xl font-bold text-slate-800 mb-2">Atención a Padres</h3>
+            <p class="text-xs text-slate-500 mb-4">Nuestro horario de atención administrativa y pedagógica es de Lunes a
+                Viernes de 7:30 AM a 4:30 PM.</p>
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 mb-5 text-xs text-slate-600 space-y-2">
+                <div class="flex items-center gap-2">
+                    <span class="font-semibold text-slate-800">📍 Ubicación:</span> Madrid, Cundinamarca
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="font-semibold text-slate-800">📞 Teléfono / WhatsApp:</span> +57 311 2579268
+                </div>
+            </div>
+            <a href="https://wa.me/573112579268?text=Hola,%20quisiera%20agendar%20una%20cita%20de%20atenci%C3%B3n%20a%20padres"
+                target="_blank"
+                class="w-full py-3 bg-mlas-blue hover:bg-blue-800 text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-colors">
+                Agendar por WhatsApp
+            </a>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast"
+        class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs font-bold px-4 py-2.5 rounded-full shadow-lg opacity-0 pointer-events-none transition-all z-50 flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+        <span id="toast-message">¡Enlace copiado al portapapeles!</span>
+    </div>
 
     <script>
-        // =========================================================================
-        // CONFIGURACIÓN CENTRALIZADA DE ENLACES (Edita títulos o URLs aquí)
-        // =========================================================================
-        const CONFIG_PORTAL = {
-            nombreColegio: "MY LITTLE ARTISTS SCHOOL S.A.S.",
-            ciudad: "Madrid, Cundinamarca",
-            celularVisible: "+57 311 2579268",
-            whatsappNumero: "573112579268",
-            whatsappMensaje: "Hola, me gustaría recibir información sobre MY LITTLE ARTISTS SCHOOL.",
-            googleMapsUrl: "https://maps.app.goo.gl/XzeeFSMme84tyVjCA",
-            facebookUrl: "https://www.facebook.com/profile.php?id=61596946131333",
-            instagramUrl: "https://www.instagram.com/mylittle_artistschool/"
-        };
-
-        const ENLACES_MLAS = [
-            {
-                titulo: "Agendar Open House",
-                descripcion: "Conoce nuestras instalaciones, proyecto pedagógico y equipo docente",
-                url: "https://mlasadministracion.github.io/formularios/open-house/",
-                icono: "🎨",
-                etiqueta: "Admisiones",
-                colorBorde: "hover:border-mlas-green",
-                colorIconoBg: "bg-mlas-green/15 text-mlas-green",
-                colorBadge: "bg-mlas-green/10 text-mlas-green",
-                colorBarra: "from-mlas-green to-mlas-blue",
-                activo: true
-            }
-        ];
-
-        let intentoLogo = 0;
-        function intentarRutaAlternativa(img) {
-            const alternativas = ["Logo%20MLAS.webp", "logo-mlas.webp", "logo.webp", "Logo MLAS.jpeg"];
-            if (intentoLogo < alternativas.length) {
-                img.src = alternativas[intentoLogo];
-                intentoLogo++;
-            } else {
-                img.style.display = 'none';
-                document.getElementById('fallbackLogo').style.display = 'grid';
-            }
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
         }
 
-        function renderizarPortal() {
-            document.getElementById('lblCiudad').textContent = CONFIG_PORTAL.ciudad;
-            document.getElementById('lblCelularWpp').textContent = CONFIG_PORTAL.celularVisible;
-            document.getElementById('lblFooterInstitucional').textContent = CONFIG_PORTAL.nombreColegio;
-
-            document.getElementById('btnGoogleMaps').href = CONFIG_PORTAL.googleMapsUrl;
-            document.getElementById('btnFacebook').href = CONFIG_PORTAL.facebookUrl;
-            document.getElementById('btnInstagram').href = CONFIG_PORTAL.instagramUrl;
-
-            const urlWpp = `https://wa.me/${CONFIG_PORTAL.whatsappNumero}?text=${encodeURIComponent(CONFIG_PORTAL.whatsappMensaje)}`;
-            document.getElementById('btnWhatsappDirecto').href = urlWpp;
-
-            const contenedor = document.getElementById('contenedorEnlaces');
-            contenedor.innerHTML = ENLACES_MLAS
-                .filter(item => item.activo)
-                .map(item => `
-          <a href="${item.url}"
-             class="block bg-white rounded-3xl p-5 shadow-md border-2 border-slate-100 ${item.colorBorde} transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg relative overflow-hidden group">
-            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${item.colorBarra}"></div>
-            
-            <div class="flex items-center justify-between gap-4">
-              <div class="flex items-center gap-4">
-                <div class="w-14 h-14 rounded-2xl ${item.colorIconoBg} flex items-center justify-center text-2xl shrink-0 group-hover:scale-105 transition-transform">
-                  ${item.icono}
-                </div>
-                <div>
-                  <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${item.colorBadge} mb-1">
-                    ${item.etiqueta}
-                  </span>
-                  <h2 class="font-display text-base sm:text-lg font-bold text-slate-800 group-hover:text-slate-950 leading-snug">
-                    ${item.titulo}
-                  </h2>
-                  <p class="text-xs text-slate-500 font-medium mt-0.5 leading-relaxed">
-                    ${item.descripcion}
-                  </p>
-                </div>
-              </div>
-
-              <div class="w-9 h-9 rounded-xl bg-slate-50 group-hover:bg-slate-900 group-hover:text-white text-slate-400 flex items-center justify-center font-bold text-sm shrink-0 transition-colors">
-                →
-              </div>
-            </div>
-          </a>
-        `).join('');
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
         }
 
-        renderizarPortal();
+        window.onclick = function (event) {
+            ['modal-citas'].forEach(id => {
+                const modal = document.getElementById(id);
+                if (modal && event.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+        }
+
+        async function copyPageUrl() {
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'My Little Artists School',
+                        text: 'Página de enlaces oficiales de My Little Artists School (MLAS)',
+                        url: window.location.href,
+                    });
+                    return;
+                } catch (err) {
+                    // Fallback si el usuario cancela o no es soportado
+                }
+            }
+
+            const dummy = document.createElement('input');
+            document.body.appendChild(dummy);
+            dummy.value = window.location.href;
+            dummy.select();
+
+            try {
+                document.execCommand('copy');
+                showToast('¡Enlace de la página copiado!');
+            } catch (err) {
+                showToast('No se pudo copiar el enlace');
+            }
+
+            document.body.removeChild(dummy);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.innerText = message;
+
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            toast.classList.add('toast-enter');
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'pointer-events-none');
+                toast.classList.remove('toast-enter');
+            }, 2600);
+        }
     </script>
 </body>
 
